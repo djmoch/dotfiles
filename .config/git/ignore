@@ -1,0 +1,12 @@
+*.class
+*.pyc
+*.pyo
+*/.git/*
+.git
+__pycache__
+.project
+.pydevproject
+*.sqlite3
+.DS_Store
+tags
+.netrwhist

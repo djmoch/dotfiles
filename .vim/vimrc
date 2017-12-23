@@ -1,0 +1,379 @@
+set nocompatible
+
+" Vim starting {{{
+if has('vim_starting')
+    if (has('win32') || has('win64'))
+        set undodir=$HOME/vimfiles/undo
+        if v:servername !~ '.*[0-9]$'
+            silent! execute '!rmdir /S /Q "'.$HOME.'/vimfiles/vimtemp" &&'
+                        \ ' mkdir "'.$HOME.'/vimfiles/vimtemp"'
+        endif
+        set backupdir=$HOME/vimfiles/vimtemp//
+        set directory=$HOME/vimfiles/vimtemp//
+        set spellfile=$HOME/vimfiles/en.utf-8.add
+        if exists('$HOME') && has('gui_running') && (argc() == 0)
+            cd $HOME
+        endif
+    else
+        set undodir=$HOME/.vim/undo
+        if v:servername !~ '.*[0-9]$'
+            silent! execute '!rm -rf "'.$HOME.'/.vim/vimtemp"'
+            silent! execute '!mkdir "'.$HOME.'/.vim/vimtemp"'
+        endif
+        set backupdir=$HOME/.vim/vimtemp//
+        set directory=$HOME/.vim/vimtemp//
+        set spellfile=$HOME/.vim/en.utf-8.add
+    endif
+    if has('win32') || has('win64') || $PATH =~ 'cygdrive'
+        set fileformats=dos,unix
+    endif
+    set encoding=utf-8
+    set undofile
+    if isdirectory(expand('~/Documents/src/vim_plugins'))
+        set packpath+=~/Documents/src/vim_plugins
+    endif
+    syntax on
+    filetype plugin indent on
+endif
+" }}}
+
+" Globals {{{
+let g:gutentags_project_root = ['.git','.project','.svn']
+let delimitMate_expand_space = 1
+let delimitMate_expand_cr    = 1
+if exists('$TMUX')
+    packadd vim-slime
+    let g:slime_no_mappings      = 1
+    let g:slime_target           = 'tmux'
+    let g:slime_paste_file       = tempname()
+    let g:slime_default_config   = {"socket_name": split($TMUX, ",")[0], "target_pane": ":.2"}
+endif
+" }}}
+
+" Helper functions {{{
+function! MyFileEncoding()
+    if &fileencoding != ''
+        return '['.&fileencoding.']'
+    else
+        return ''
+    endif
+endfunction
+
+function! MyHexToggle()
+    if !&binary
+        setlocal binary
+        setlocal nonumber
+        let l:modified = &modified
+        %!xxd
+        if &ft
+            let b:filetype = &ft
+        endif
+        setlocal ft=xxd
+        let &modified = l:modified
+    else
+        setlocal nobinary
+        setlocal number
+        let l:modified = &modified
+        %!xxd -r
+        if exists('b:filetype')
+            let &ft=b:filetype
+        else
+            setlocal ft=
+        endif
+        let &modified = l:modified
+    endif
+endfunction
+
+function! MySkeleton()
+    let l:skelfiles = glob('~/.vim/skel/*.skel', v:false, v:true)
+    let l:idx = 1
+    let l:msg = 'Available licenses:'
+    for l:skelfile in l:skelfiles
+        let l:msg .= "\n\t".l:idx."\t".l:skelfile
+        let l:idx += 1
+    endfor
+    let l:msg .= "\n\t".l:idx."\tNone"
+    echo l:msg
+    let l:selection = 0
+    while l:selection < 1 || l:selection > l:idx
+        let l:selection = input("Use license: ")
+    endwhile
+    if l:selection == l:idx
+        return
+    endif
+    let l:skel = readfile(l:skelfiles[l:selection - 1])
+    let l:comments = split(&comments, ',')
+    for l:token in l:comments
+        if l:token =~ '^b\?:'
+            let l:comment = substitute(l:token, '^b\?:', '', '')
+            let l:comment .= ' '
+        endif
+    endfor
+    let l:idx = 0
+    for l:line in l:skel
+        let l:line = l:comment . l:line
+        let l:line = substitute(l:line, '{{ year }}', "\\=strftime('%Y')", '')
+        let l:skel[l:idx] = l:line
+        let l:idx += 1
+    endfor
+
+    let l:lines = join(l:skel, "\n")
+    silent execute '0put =printf(\"%s\", l:lines)'
+    set modified
+    normal G
+endfunction
+
+function! MyWinWidth()
+    let l:textwidth = &tw ? &tw : 80
+    if &number
+        let l:numwidth = &numberwidth > len(line('$')) + 1 ?
+                    \ &numberwidth : len(line('$')) + 1
+    else
+        let l:numwidth = 0
+    endif
+    return winwidth(0) > (2 * l:textwidth) + (2 * l:numwidth)
+endfunction
+
+function! MyScratchBuffer() abort
+    let l:wincmd = MyWinWidth() ? 'vnew' : 'new'
+    exec l:wincmd
+    setlocal bufhidden=hide buftype=nofile noswapfile
+endfunction
+
+function! MyPasteStatus()
+    if &paste && get(w:,'active_window',0)
+        return '[p]'
+    else
+        return ''
+    endif
+endfunction
+
+function! MySpellStatus()
+    if &spell
+        return '[s]'
+    else
+        return ''
+    endif
+endfunction
+
+function! MyDiffOpt()
+    if MyWinWidth()
+        set diffopt+=vertical
+    else
+        set diffopt-=vertical
+    endif
+endfunction
+
+function! MyItalicize()
+    if exists('*execute')
+        let l:higroups = split(execute(':highlight'), '\n')
+        for l:group in l:higroups
+            if l:group =~# 'gui=[\w,]*italic'
+                let l:groupname = split(l:group)[0]
+                let l:ctermcmd = ''
+                for l:token in split(l:group)
+                    if l:token =~# '^cterm='
+                        let l:ctermcmd = l:token
+                    endif
+                endfor
+                if l:ctermcmd == ''
+                    let l:ctermcmd = 'cterm=italic'
+                else
+                    if l:ctermcmd !~# 'italic'
+                        let l:ctermcmd = l:ctermcmd.',italic'
+                    endif
+                endif
+                execute 'highlight '.l:groupname.' '.l:ctermcmd
+            endif
+        endfor
+    endif
+endfunction
+
+function! MyShowMode()
+    if get(w:, 'active_window', 0)
+        return '['.mode().']'
+    else
+        return ''
+    endif
+endfunction
+
+function! OptStatus(function)
+    if exists('*'.a:function)
+        return call(a:function, [])
+    else
+        return ''
+    endif
+endfunction
+
+function! InitializeClasspath()
+    if(filereadable('.vim_java_classpath'))
+        so .vim_java_classpath
+    endif
+endfunction
+
+function! BuildJavaMakeprg()
+    if exists('b:vim_java_classpath')
+        let &makeprg = &makeprg.' -cp '.b:vim_java_classpath
+    endif
+endfunction
+
+function! MyNewWindow(...)
+    if a:0 == 0
+        let l:filename = ''
+    else
+        let l:filename = a:1
+    endif
+    if MyWinWidth()
+        execute 'vnew '.l:filename
+    else
+        execute 'new '.l:filename
+    endif
+endfunction
+
+function! MyHelp(topic)
+    if MyWinWidth()
+        execute 'vert help '.a:topic
+    else
+        execute 'help '.a:topic
+    endif
+endfunction
+
+function! MyBuffer(buffer)
+    let l:splitcmd = MyWinWidth() ? 'vsplit' : 'split'
+    execute l:splitcmd
+    execute bufnr(a:buffer).'buffer'
+endfunction
+" }}}
+
+" Commands {{{
+if has('mac')
+    command! -range=% IX silent execute <line1>.','.<line2>."w !curl -n -F"
+                \ ."'f:1=<-' ix.io | tr -d '\\n' | "
+                \."reattach-to-user-namespace pbcopy"
+endif
+command! -complete=file -nargs=? New call MyNewWindow(<f-args>)
+command! -complete=help -nargs=1 Help call MyHelp(<f-args>)
+command! -complete=buffer -nargs=1 Buffer call MyBuffer(<f-args>)
+" }}}
+
+" Auto-commands {{{
+augroup myvimrc
+    autocmd!
+    if has('win32') || has('win64')
+        autocmd BufWritePost _*imrc silent! execute '!attrib +H'
+                    \.bufname('%') | so % | call MyItalicize()
+    else
+        autocmd BufWritePost *imrc so % | call MyItalicize()
+    endif
+    autocmd VimResized * wincmd = | call MyDiffOpt()
+    autocmd User GoyoEnter Limelight
+    autocmd User GoyoLeave Limelight!
+    autocmd QuickFixCmdPost [^l]* nested cwindow
+    autocmd QuickFixCmdPost    l* nested lwindow
+    autocmd QuickFixCmdPre [^l]* nested silent! cclose
+    autocmd QuickFixCmdPre    l* nested silent! lclose
+    autocmd BufNewFile *.py,*.cpp,*.java call MySkeleton()
+    autocmd VimEnter * let w:active_window = 1 | call MyItalicize() | call MyDiffOpt()
+    autocmd WinEnter * let w:active_window = 1
+    autocmd WinLeave * unlet! w:active_window
+    if has('win32') || has('win64')
+        autocmd GuiEnter * simalt ~x
+    elseif has('gui_macvim')
+        autocmd GuiEnter * set fullscreen
+    endif
+    autocmd ColorScheme * call MyItalicize()
+augroup END
+" }}}
+
+" Key mappings {{{
+let mapleader=";"
+nnoremap rc :New $MYVIMRC<CR>
+nnoremap <Leader>g :GrepJob!<Space>
+nnoremap <Leader>' :vnew<CR>
+nnoremap <Leader>- :new<CR>
+nnoremap <Leader>e :e **/
+nnoremap <Leader>s :call MyScratchBuffer()<CR>
+nnoremap <Leader>n :New<Space>
+nnoremap <Leader>h :Help<Space>
+nnoremap <Leader>l :ls<CR>:b
+nnoremap <leader>b :Buffer<Space>
+nnoremap <leader>x :call MyHexToggle()<CR>
+if exists('$TMUX')
+    xmap <leader>r <Plug>SlimeRegionSend
+    nmap <leader>r <Plug>SlimeMotionSend
+    nmap <leader>rr <Plug>SlimeLineSend
+endif
+if has('win32') || has('win64')
+    nnoremap <Leader>o :execute 'silent ! start '.expand('<cWORD>')<CR>
+elseif $PATH =~ 'cygdrive'
+    nnoremap <Leader>o :execute 'silent !cygstart '
+                \ .expand(shellescape('<cWORD>')) \| redraw!<CR>
+elseif has('mac')
+    nnoremap <Leader>o :execute 'silent !open '
+                \ .expand(shellescape('<cWORD>')) \| redraw!<CR>
+endif
+nnoremap <Leader>c :silent! execute 'cclose' \|
+            \ silent! execute 'lclose'<CR>
+nnoremap <F4> :setlocal spell spelllang=en_us<CR>
+nnoremap <F5> :nohl<CR>
+nnoremap <F6> :call MySkeleton()<CR>
+nnoremap <F8> :Goyo<CR>
+if has('win32') || has('win64')
+    nnoremap <F9> :MakeJob! %:S<CR>
+else
+    nnoremap <F9> :MakeJob! %<CR>
+endif
+" }}}
+
+" General options {{{
+set statusline=%{MyShowMode()}%{MySpellStatus()}%{MyPasteStatus()}%<%f%m
+set statusline+=%r%h%q%w%{OptStatus('fugitive#statusline')}%=[%{&ff}]
+set statusline+=%{MyFileEncoding()}%y%{OptStatus('ObsessionStatus')}
+set statusline+=[%p%%][Ln:%l/%L,Col:%v]
+colorscheme apprentice
+set ttyfast
+if $TERM_PROGRAM=="iTerm.app" || $PATH =~ 'cygdrive' || $COLORTERM =="truecolor"
+    set termguicolors
+    if $TERM=='tmux-256color'
+        set t_8f=[38;2;%lu;%lu;%lum
+        set t_8b=[48;2;%lu;%lu;%lum
+    endif
+endif
+set nowrap
+set noshowmode
+set showcmd
+set expandtab
+set textwidth=72
+set softtabstop=4
+set shiftwidth=4
+set autoindent
+set visualbell
+set smartcase
+set number
+set foldmethod=marker
+set ttimeoutlen=0
+if !exists('$TMUX')
+    set clipboard+=unnamed
+endif
+set laststatus=2
+set wildmenu
+set wildmode=longest:full,full
+set nofileignorecase
+set history=10000
+set hlsearch
+set incsearch
+set backspace=indent,eol,start
+set backup
+set wildignore+=tags,*.class,*.pyc,*.pyo,__pycache__,*.o
+if has('win32') || has('win64')
+    set grepprg=findstr\ /n\ /S
+    set viminfo+=n$HOME/vimfiles/viminfo
+else
+    set grepprg=ag\ --vimgrep\ --ignore=tags\ -p\ ~/.config/git/ignore\
+                \ $*
+    set grepformat=%f:%l:%c:%m
+    set viminfo+=n$HOME/.vim/viminfo
+endif
+set autowrite
+set pastetoggle=<F2>
+" }}}

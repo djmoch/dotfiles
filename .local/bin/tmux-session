@@ -1,0 +1,95 @@
+#!/usr/bin/env bash
+if [[ "$1" == "-r" ]]
+then
+    for line in $(tmux list-sessions -F "#S")
+    do
+        session=$(echo $line | sed 's~:~~')
+        echo $session
+        case $session in
+            iterm)
+                tmux setw -t $session:1 main-pane-width $(($(tput cols) - 80))
+                tmux selectl -t $session:1 main-vertical
+                ;;
+            code)
+                tmux setw -t $session:1 main-pane-width $(($(tput cols) - 80))
+                tmux selectl -t $session:1 main-vertical
+                ;;
+            chat)
+                tmux setw -t $session:1 main-pane-width $(($(tput cols) - 30))
+                tmux selectl -t $session:1 main-vertical
+                ;;
+            *)
+                return
+        esac
+    done
+    exit
+fi
+
+if tmux list-sessions 2> /dev/null | grep $1 > /dev/null 2>&1
+then
+    tmux attach-session -t $1
+    exit
+fi
+if echo $1 | grep iterm > /dev/null 2>&1
+then
+    name=iterm
+    tmux new-session -d -x $(tput cols) -y $(tput lines) -s $name vim
+    tmux rename-window -t $name:1 code
+    tmux setw main-pane-width $(($(tput cols) - 80))
+    tmux splitw
+    tmux selectl main-vertical
+    if echo $1 | grep chat > /dev/null 2>&1
+    then
+        tmux new-window -t $name -n "chat" irssi
+        tmux setw main-pane-width $(($(tput cols) - 30))
+        tmux splitw -h cat ~/.irssi/nicklistfifo
+        tmux selectl main-vertical
+        tmux select-pane -t $name:2.1
+        tmux send-keys -t $name:2.1 "/nicklist fifo" "C-m" "/keyring" "C-m" "/keyring reset"
+        tmux new-window -t $name -n "social" tootstream
+        tmux send-keys -t $name:3.1 "stream home" "C-m"
+        tmux splitw -h rainbowstream
+    fi
+    tmux new-window -t $name -n "mail" mutt
+    if echo $1 | grep rss > /dev/null 2>&1
+    then
+        tmux splitw -h newsboat
+        tmux renamew "mail-&-rss"
+    fi
+    tmux new-window -t $name -n vitals htop
+    uname=$(uname -s)
+    case $uname in
+        *Darwin*)
+            tmux splitw -h nettop
+            ;;
+        *Linux*)
+            tmux splitw -h sudo jnettop
+            ;;
+    esac
+    tmux new-window -t $name -n simplenote sncli
+fi
+if [[ $1 == "code" ]]
+then
+    name=code
+    tmux new-session -d -x $(tput cols) -y $(tput lines) -s $name vim
+    tmux rename-window -t $name:1 code
+    tmux setw main-pane-width $(($(tput cols) - 80))
+    tmux splitw
+    tmux selectl main-vertical
+fi
+if [[ $1 == "notes" ]]
+then
+    name=notes
+    tmux new-session -d -x $(tput cols) -y $(tput lines) -s $name sncli
+fi
+if [[ $1 == "chat" ]]
+then
+    name=chat
+    tmux new-session -d -x $(tput cols) -y $(tput lines) -s $name irssi
+    tmux setw main-pane-width $(($(tput cols) - 30))
+    tmux splitw -h cat ~/.irssi/nicklistfifo
+    tmux selectl main-vertical
+fi
+tmux select-window -t $name:1
+tmux select-pane -t $name:1.1
+tmux attach-session -t $name

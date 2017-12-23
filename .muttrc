@@ -1,0 +1,49 @@
+ignore *
+unignore from: subject to cc date x-mailer x-url user-agent
+
+hdr_order date from to cc subject
+
+macro index \eb "<search>~b " "search in message bodies"
+
+macro index,pager,attach,compose \cb "\
+<enter-command> set my_pipe_decode=\$pipe_decode pipe_decode<Enter>\
+<pipe-message> urlview<Enter>\
+<enter-command> set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<Enter>" \
+"call urlview to extract URLs out of a message"
+
+macro generic,pager <F1> "<shell-escape> less /usr/local/Cellar/mutt/1.6.2/share/doc/mutt/manual.txt<Enter>" "show Mutt documentation"
+
+macro index,pager y "<change-folder>?<toggle-mailboxes>" "show incoming mailboxes list"
+
+set sort="reverse-threads"
+set strict_threads="yes"
+set sort_browser="reverse-date"
+set sort_aux="last-date-received"
+set query_command = "khard email --parsable --search-in-source-files '%s'"
+unset collapse_unread
+
+bind browser y exit
+bind index - collapse-thread
+bind index _ collapse-all
+
+mime_lookup application/octet-stream
+set mailcap_path="~/.config/mutt/mailcap"
+
+attachments   +A */.*
+attachments   -A text/x-vcard application/pgp.*
+attachments   -A application/x-pkcs7-.*
+attachments   +I text/plain
+attachments   -A message/external-body
+attachments   -I message/external-body
+
+auto_view text/html
+alternative_order text/plain text/enriched text/html
+
+set imap_authenticators="login"
+set smtp_authenticators="login"
+
+source ~/.config/mutt/smime
+source ~/.config/mutt/gpg
+source ~/.mutt/account.default
+source ~/.mutt/account.macros
+source ~/.config/mutt/colors

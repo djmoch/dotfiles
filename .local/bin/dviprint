@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+if [[ -n "$1" ]]
+then
+    dvips -o - $1 | lpr
+else
+    echo "error: no file name given" >&2
+fi
