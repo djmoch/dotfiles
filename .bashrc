@@ -1,16 +1,23 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-if [[ -f ~/.bashrc.local ]]
+if [[ -f $HOME/.bashrc.local ]]
 then
-    source ~/.bashrc.local
+    source $HOME/.bashrc.local
 fi
 
 export EDITOR=vim
-export GOPATH=~/.go
+export GOPATH=$HOME/.go
 
 # Turn on colors
-export LSCOLORS=ExFxBxDxCxegedabagacad
+if command -v dircolors > /dev/null 2>&1
+then
+    eval $(dircolors $HOME/.dircolors)
+    alias ls='ls --color=auto'
+else
+    export CLICOLOR=1
+    export LSCOLORS=ExFxBxDxCxegedabagacad
+fi
 
 # Configure GPG and start the agent if it isn't already running
 if command -v gpg-connect-agent > /dev/null 2>&1
@@ -32,24 +39,24 @@ fi
 # Git command line configuration
 GIT_PS1_SHOWDIRTYSTATE=1
 GIT_PS1_SHOWUNTRACKEDFILES=1
-source ~/.config/bash/git-prompt.sh
+source $HOME/.config/bash/git-prompt.sh
 
 # Customize the prompt
 export PS1='\[\033[34m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[m\]\W\[\033[31m\]$(__git_ps1 " (%s)")\[\033[m\]\$ '
 
-if [[ -d ~/.cargo/bin ]]
+if [[ -d $HOME/.cargo/bin ]]
 then
-    export PATH=$PATH:~/.cargo/bin
+    export PATH=$PATH:$HOME/.cargo/bin
 fi
 
-if [[ -d ~/.go/bin ]]
+if [[ -d $HOME/.go/bin ]]
 then
-    export PATH=$PATH:~/.go/bin
+    export PATH=$PATH:$HOME/.go/bin
 fi
 
-if [[ -d ~/.local/bin ]]
+if [[ -d $HOME/.local/bin ]]
 then
-    export PATH=~/.local/bin:$PATH
+    export PATH=$HOME/.local/bin:$PATH
 fi
 
 # Configure Homebrew
@@ -57,7 +64,7 @@ if command -v brew > /dev/null 2>&1
 then
     export HOMEBREW_NO_ANALYTICS=1
     export HOMEBREW_NO_INSECURE_REDIRECT=1
-    export HOMEBREW_CASK_OPTS=--require-sha\ --appdir=~/Applications
+    export HOMEBREW_CASK_OPTS=--require-sha\ --appdir=$HOME/Applications
     export HOMEBREW_NO_AUTO_UPDATE=1
     export PATH=$(brew --prefix)/bin:$PATH
     if [ -f $(brew --prefix)/etc/bash_completion ]
