@@ -9,7 +9,7 @@ fi
 export EDITOR=vim
 export GOPATH=$HOME/.go
 
-# Turn on colors
+# Turn on ls colors
 if command -v dircolors > /dev/null 2>&1
 then
     eval $(dircolors $HOME/.dircolors)
@@ -17,6 +17,12 @@ then
 else
     export CLICOLOR=1
     export LSCOLORS=ExFxBxDxCxegedabagacad
+fi
+
+# Colorize pacman if its it exists
+if command -v pacman > /dev/null 2>&1
+then
+    alias pacman='pacman --color=auto'
 fi
 
 # Configure GPG and start the agent if it isn't already running
@@ -78,10 +84,14 @@ then
     source /usr/share/bash_completion/bash_completion
 fi
 
-# Make life easier
-alias tas=tmux\ attach-session\ -t
-alias tns=tmux\ new-session\ -s
-alias tls=tmux\ list-sessions
+# Handy Tmux aliases
+if command -v tmux > /dev/null 2>&1
+then
+    alias tas=tmux\ attach-session\ -t
+    alias tns=tmux\ new-session\ -s
+    alias tls=tmux\ list-sessions
+fi
+
 if [[ $OSTYPE == "darwin"* ]]
 then
     alias jackd="jackd -d coreaudio > /dev/null 2>&1 &"
