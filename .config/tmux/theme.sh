@@ -6,12 +6,6 @@ tm_color_inactive=colour242
 tm_color_feature=colour131
 tm_active_border_color=colour67
 
-# separators
-tm_separator_left_bold="◀"
-tm_separator_left_thin="❮"
-tm_separator_right_bold="▶"
-tm_separator_right_thin="❯"
-
 set -g status-left-length 32
 set -g status-right-length 150
 set -g status-interval 5
@@ -57,3 +51,15 @@ tm_session_name="#[fg=$tm_color_feature,bold]$tm_icon #S"
 
 set -g status-left $tm_session_name' '
 set -g status-right $tm_battery' '$tm_weather' '$tm_date' '$tm_host
+
+set-environment -gu tm_icon
+set-environment -gu tm_color_active
+set-environment -gu tm_color_inactive
+set-environment -gu tm_color_feature
+set-environment -gu tm_weather
+set-environment -gu tm_battery
+set-environment -gu tm_date
+set-environment -gu tm_host
+set-environment -gu tm_session_name
+set-environment -gu tm_active_border_color
+# vim: ft=tmux
