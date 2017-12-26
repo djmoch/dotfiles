@@ -79,10 +79,17 @@ then
     fi
 fi
 
-if [[ -f /usr/share/bash_completion/bash_completion ]]
+# $BASH_COMPLETION should contain the path to the bash_completion
+# script. If the variable is defined and is readable, it will be
+# sourced.
+#
+# NOTE: Might want to check that this isn't already sourced elsewhere
+# (e.g.  /etc/profile).
+if [[ -n "$BASH_COMPLETION" ]] && [[ -r $BASH_COMPLETION ]]
 then
-    source /usr/share/bash_completion/bash_completion
+    source $BASH_COMPLETION
 fi
+unset BASH_COMPLETION
 
 # Handy Tmux aliases
 if command -v tmux > /dev/null 2>&1
