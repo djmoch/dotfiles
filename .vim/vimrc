@@ -282,6 +282,7 @@ augroup myvimrc
         autocmd GuiEnter * set fullscreen
     endif
     autocmd ColorScheme * call MyItalicize()
+    autocmd BufWritePre /tmp/* setlocal noundofile
 augroup END
 " }}}
 
