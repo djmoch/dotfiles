@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+#
+# ~/.local/bin/my-open
+#
+# Every OS seems to use it's own uniquely-named binary to open
+# files using the correct handler for the file's MIME type. This is my
+# attempt to resolve the different handlers into a platform-independent
+# one.
+#
+
+# Find handler, if one is available
+if command -v cygstart > /dev/null 2>&1
+then
+    handler=cygstart
+elif command -v open > /dev/null 2>&1
+then
+    handler=open
+elif command -v exo-open > /dev/null 2>&1
+then
+    handler=exo-open
+else
+    echo "my-open: No suitable handler found" > /dev/stderr
+    exit -1
+fi
+
+exec $handler $@
