@@ -4,3 +4,16 @@
         (skip_pager)
     )
 )
+
+(if
+    (not 
+        (or
+            (is (application_name) "Xfce Terminal")
+            (is (application_name) "pinentry")
+            (is (window_name) "Whisker Menu")
+        )
+    )
+    (begin
+        (set_workspace 1)
+    )
+)
