@@ -7,7 +7,6 @@ then
 fi
 
 export EDITOR=vim
-export GOPATH=$HOME/.go
 
 # Turn on ls colors
 if command -v dircolors > /dev/null 2>&1
@@ -55,9 +54,13 @@ then
     export PATH=$PATH:$HOME/.cargo/bin
 fi
 
-if [[ -d $HOME/.go/bin ]]
+if command -v go > /dev/null 2>&1
 then
-    export PATH=$PATH:$HOME/.go/bin
+    export GOPATH=$HOME/.go
+    if [[ -d $HOME/.go/bin ]]
+    then
+        export PATH=$PATH:$HOME/.go/bin
+    fi
 fi
 
 if [[ -d $HOME/.local/bin ]]
