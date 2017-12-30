@@ -37,13 +37,19 @@ fi
 
 # Configure GPG as an SSH key provider
 export GPG_TTY=$(tty)
+gpg-connect-agent updatestartuptty /bye > /dev/null 2>&1
 unset SSH_AGENT_PID
-if [[ -S $HOME/.gnupg/S.gpg-agent.ssh ]]
+
+# Assume SSH agent is forward if we're in an SSH session
+if [[ -z "$SSH_TTY" ]]
 then
-    export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
-elif [[ -S /run/user/$UID/gnupg/S.gpg-agent.ssh ]]
-then
-    export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
+    if [[ -S $HOME/.gnupg/S.gpg-agent.ssh ]]
+    then
+        export SSH_AUTH_SOCK=$HOME/.gnupg/S.gpg-agent.ssh
+    elif [[ -S /run/user/$UID/gnupg/S.gpg-agent.ssh ]]
+    then
+        export SSH_AUTH_SOCK="/run/user/$UID/gnupg/S.gpg-agent.ssh"
+    fi
 fi
 
 # Git command line configuration
