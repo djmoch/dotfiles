@@ -7,6 +7,7 @@ then
 fi
 
 export EDITOR=vim
+export HISTCONTOL=erasedups
 
 # Turn on ls colors
 if command -v dircolors > /dev/null 2>&1
@@ -18,11 +19,15 @@ else
     export LSCOLORS=ExFxBxDxCxegedabagacad
 fi
 
-# Colorize pacman if its it exists
-if command -v pacman > /dev/null 2>&1
-then
-    alias pacman='pacman --color=auto'
-fi
+# Colorize others if they exist
+COLORIZE_CMDS="pacman grep egrep fgrep"
+for cmd in $COLORIZE_CMDS
+do
+    if command -v $cmd > /dev/null 2>&1
+    then
+        alias $cmd="$cmd --color=auto"
+    fi
+done
 
 # Configure GPG and start the agent if it isn't already running
 if command -v gpg-connect-agent > /dev/null 2>&1
