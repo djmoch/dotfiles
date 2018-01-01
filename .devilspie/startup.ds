@@ -2,6 +2,7 @@
     (begin
         (set_workspace 2)
         (skip_pager)
+        (fullscreen)
     )
 )
 
@@ -11,6 +12,7 @@
             (is (application_name) "Xfce Terminal")
             (is (application_name) "pinentry")
             (is (window_name) "Whisker Menu")
+            (is (application_name) "xfce4-panel")
         )
     )
     (begin
