@@ -9,6 +9,12 @@ fi
 export EDITOR=vim
 export HISTCONTOL=erasedups
 
+# Keep the go folder hidden
+if command -v go > /dev/null 2>&1
+then
+    export GOPATH=$HOME/.go
+fi
+
 # Turn on ls colors
 if command -v dircolors > /dev/null 2>&1
 then
@@ -40,7 +46,7 @@ export GPG_TTY=$(tty)
 gpg-connect-agent updatestartuptty /bye > /dev/null 2>&1
 unset SSH_AGENT_PID
 
-# Assume SSH agent is forward if we're in an SSH session
+# Assume SSH agent is forwarded if we're in an SSH session
 if [[ -z "$SSH_TTY" ]]
 then
     if [[ -S $HOME/.gnupg/S.gpg-agent.ssh ]]
@@ -60,24 +66,22 @@ source $HOME/.config/bash/git-prompt.sh
 # Customize the prompt
 export PS1='\[\033[34m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[m\]\W\[\033[31m\]$(__git_ps1 " (%s)")\[\033[m\]\$ '
 
-if [[ -d $HOME/.cargo/bin ]]
-then
-    export PATH=$PATH:$HOME/.cargo/bin
-fi
-
-if command -v go > /dev/null 2>&1
-then
-    export GOPATH=$HOME/.go
-    if [[ -d $HOME/.go/bin ]]
+# Append our default paths
+__appendpath () {
+    if [[ -d "$1" ]]
     then
-        export PATH=$PATH:$HOME/.go/bin
+        case ":$PATH:" in
+            *:"$1":*)
+                ;;
+            *)
+                PATH="$PATH:$1"
+        esac
     fi
-fi
+}
 
-if [[ -d $HOME/.local/bin ]]
-then
-    export PATH=$HOME/.local/bin:$PATH
-fi
+__appendpath "$HOME/.go/bin"
+__appendpath "$HOME/.cargo/bin"
+__appendpath "$HOME/.local/bin"
 
 # Configure Homebrew
 if command -v brew > /dev/null 2>&1
