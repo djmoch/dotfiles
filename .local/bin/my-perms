@@ -1,0 +1,31 @@
+#!/bin/bash
+
+#
+# ~/.local/bin/my-perms
+#
+# This file operates on $HOME, seting permissions for all dotfiles and
+# dot-directories. The $HOME folder itself also has its permissions set
+# to a secure default.
+#
+
+cd $HOME
+
+for rec in $(ls -A)
+do
+    case $rec in
+        .*)
+            if [[ -f "$rec" ]]
+            then
+                chmod 600 $rec
+            fi
+
+            if [[ -d "$rec" ]]
+            then
+                chmod 700 $rec
+            fi
+            ;;
+    esac
+done
+
+# Finally, set the permissions for $HOME itself
+chmod 700 .
