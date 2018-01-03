@@ -1,11 +1,19 @@
-#
+
 # ~/.shrc
 #
 # vim: ft=sh
 [ -r $HOME/.shrc.local ] && . $HOME/.shrc.local
-EDITOR=vim
+
+if which vim > /dev/null 2>&1
+then
+    EDITOR=vim
+else
+    EDITOR=vi
+fi
+
 VISUAL=$EDITOR
-export EDITOR VISUAL
+PS1="$LOGNAME@\h:\W\$ "
+export EDITOR VISUAL PS1
 
 # Keep the go folder hidden
 if which go > /dev/null 2>&1
@@ -77,3 +85,5 @@ then
     alias tns=tmux\ new-session\ -s
     alias tls=tmux\ list-sessions
 fi
+
+alias export="export -p"
