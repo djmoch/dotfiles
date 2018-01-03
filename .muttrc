@@ -27,7 +27,6 @@ bind index - collapse-thread
 bind index _ collapse-all
 
 mime_lookup application/octet-stream
-set mailcap_path="~/.config/mutt/mailcap"
 
 attachments   +A */.*
 attachments   -A text/x-vcard application/pgp.*

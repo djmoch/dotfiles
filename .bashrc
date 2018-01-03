@@ -18,8 +18,11 @@ fi
 # Turn on ls colors
 if command -v dircolors > /dev/null 2>&1
 then
-    eval $(dircolors $HOME/.dircolors)
-    alias ls='ls --color=auto'
+    if [ -n "$SOURCE_DIRCOLORS" ]
+    then
+        eval $(dircolors $HOME/.dir_colors)
+        alias ls='ls --color=auto'
+    fi
 else
     export CLICOLOR=1
     export LSCOLORS=ExFxBxDxCxegedabagacad
