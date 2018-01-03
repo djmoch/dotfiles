@@ -1,0 +1,79 @@
+#
+# ~/.shrc
+#
+# vim: ft=sh
+[ -r $HOME/.shrc.local ] && . $HOME/.shrc.local
+EDITOR=vim
+VISUAL=$EDITOR
+export EDITOR VISUAL
+
+# Keep the go folder hidden
+if which go > /dev/null 2>&1
+then
+    export GOPATH=$HOME/.go
+fi
+
+# Turn on ls colors
+if which dircolors > /dev/null 2>&1
+then
+    if [ -n "$SOURCE_DIRCOLORS" ]
+    then
+        eval `dircolors $HOME/.dir_colors`
+        alias ls='ls --color=auto'
+        unset SOURCE_DIRCOLORS
+    fi
+else
+    export CLICOLOR=1
+    export LSCOLORS=ExFxBxDxCxegedabagacad
+fi
+
+# Colorize others if they exist
+COLORIZE_CMDS="pacman grep egrep fgrep"
+for cmd in $COLORIZE_CMDS
+do
+    if which $cmd > /dev/null 2>&1
+    then
+        alias $cmd="$cmd --color=auto"
+    fi
+done
+
+# Configure GPG and start the agent if it isn't already running
+if which gpg-connect-agent > /dev/null 2>&1
+then
+    export GPG_TTY=`tty`
+    gpg-connect-agent updatestartuptty /bye > /dev/null 2>&1
+
+    # Configure GPG as an SSH key provider
+    # Assume SSH agent is forwarded if we're in an SSH session
+    if [ -z "$SSH_TTY" ] && which gpgconf > /dev/null 2>&1
+    then
+        unset SSH_AGENT_PID
+        export SSH_AUTH_SOCK=`gpgconf --list-dirs agent-ssh-socket`
+    fi
+fi
+
+# Append our default paths
+__appendpath ()
+{
+    if [ -d "$1" ]
+    then
+        case ":$PATH:" in
+            *:"$1":*)
+                ;;
+            *)
+                PATH="$PATH:$1"
+        esac
+    fi
+}
+
+__appendpath "$HOME/.go/bin"
+__appendpath "$HOME/.cargo/bin"
+__appendpath "$HOME/.local/bin"
+
+# Handy Tmux aliases
+if which tmux > /dev/null 2>&1
+then
+    alias tas=tmux\ attach-session\ -t
+    alias tns=tmux\ new-session\ -s
+    alias tls=tmux\ list-sessions
+fi
