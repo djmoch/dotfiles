@@ -1,2 +1,2 @@
-#!/usr/bin/env bash
+#!/bin/sh
 awk 'BEGIN{getline; getline}{print}' > ~/Downloads/$1
