@@ -13,7 +13,14 @@ fi
 
 VISUAL=$EDITOR
 PS1="$LOGNAME@\h:\W\$ "
-export EDITOR VISUAL PS1
+PAGER=less
+LESS="-FMRqX#10"
+export EDITOR VISUAL PS1 PAGER LESS
+
+if which lesskey > /dev/null 2>&1 && [ -r "$HOME/.lesskey" ]
+then
+    [ -r "$HOME/.less" ] || lesskey
+fi
 
 # Keep the go folder hidden
 if which go > /dev/null 2>&1
