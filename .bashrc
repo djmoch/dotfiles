@@ -37,7 +37,7 @@ fi
 [ -r "$BASH_COMPLETION" ] && source $BASH_COMPLETION
 unset BASH_COMPLETION
 
-if [ "$OSTYPE" == "darwin"* ]
+if [[ "$OSTYPE" == "darwin"* ]]
 then
     alias jackd="jackd -d coreaudio > /dev/null 2>&1 &"
 fi
