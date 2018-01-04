@@ -1,8 +1,8 @@
-# If not running interactively, don't do anything
-[[ $- != *i* ]] && return
-
-[ -r $HOME/.shrc ] && source $HOME/.shrc
-[ -r $HOME/.bashrc.local ] && source $HOME/.bashrc.local
+#
+# ~/.bashrc
+#
+[ -r "$HOME/.shrc" ] && source "$HOME/.shrc"
+[ -r "$HOME/.bashrc.local" ] && source "$HOME/.bashrc.local"
 
 shopt -s dotglob globstar
 
@@ -11,7 +11,7 @@ export HISTCONTOL=erasedups
 # Git command line configuration
 GIT_PS1_SHOWDIRTYSTATE=1
 GIT_PS1_SHOWUNTRACKEDFILES=1
-source $HOME/.config/bash/git-prompt.sh
+source "$HOME/.config/bash/git-prompt.sh"
 
 # Customize the prompt
 export PS1='\[\033[34m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[m\]\W\[\033[31m\]$(__git_ps1 " (%s)")\[\033[m\]\$ '
@@ -21,12 +21,12 @@ if command -v brew > /dev/null 2>&1
 then
     export HOMEBREW_NO_ANALYTICS=1
     export HOMEBREW_NO_INSECURE_REDIRECT=1
-    export HOMEBREW_CASK_OPTS=--require-sha\ --appdir=$HOME/Applications
+    export HOMEBREW_CASK_OPTS=--require-sha\ --appdir="$HOME/Applications"
     export HOMEBREW_NO_AUTO_UPDATE=1
-    export PATH=$(brew --prefix)/bin:$PATH
-    if [ -f $(brew --prefix)/etc/bash_completion ]
+    export PATH="$(brew --prefix)/bin:$PATH"
+    if [ -f "$(brew --prefix)/etc/bash_completion" ]
     then
-        source $(brew --prefix)/etc/bash_completion
+        source "$(brew --prefix)/etc/bash_completion"
     fi
 fi
 
@@ -36,7 +36,7 @@ fi
 #
 # NOTE: Might want to check that this isn't already sourced elsewhere
 # (e.g.  /etc/profile).
-[ -r "$BASH_COMPLETION" ] && source $BASH_COMPLETION
+[ -r "$BASH_COMPLETION" ] && source "$BASH_COMPLETION"
 unset BASH_COMPLETION
 
 if [[ "$OSTYPE" == "darwin"* ]]

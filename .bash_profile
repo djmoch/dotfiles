@@ -2,4 +2,5 @@
 # ~/.bash_profile
 #
 
-[[ -f ~/.bashrc ]] && . ~/.bashrc
+[ -r "$HOME/.profile" ] && source "$HOME/.profile"
+[[ $- == *i* ]] && source "$HOME/.bashrc"

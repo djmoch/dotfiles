@@ -1,46 +1,18 @@
-
+#
 # ~/.shrc
 #
 # vim: ft=sh
 [ -r $HOME/.shrc.local ] && . $HOME/.shrc.local
 
-set -o emacs
-
-if which vim > /dev/null 2>&1
+if [ -z "$BASH" ]
 then
-    EDITOR=vim
+    user=`printf '\033[34m%s\033[m' "$LOGNAME"`
+    host=`printf '\033[32m\\h\033[m'`
+    PS1="$user@$host:\W\$ "
 else
-    EDITOR=vi
+    PS1="$LOGNAME@\h:\W\$ "
 fi
-
-VISUAL=$EDITOR
-user=`printf '\033[34m%s\033[m' "$LOGNAME"`
-host=`printf '\033[32m\\h\033[m'`
-PS1="$user@$host:\W\$ "
-PAGER=less
-LESS="-FMRqX#10"
-export EDITOR VISUAL PS1 PAGER LESS
-
-if which lesskey > /dev/null 2>&1 && [ -r "$HOME/.lesskey" ]
-then
-    [ -r "$HOME/.less" ] || lesskey
-fi
-
-if which lesspipe > /dev/null 2>&1
-then
-    LESSOPEN="|`which lesspipe` %s"
-else
-    LESSOPEN="|$HOME/.lessfilter %s"
-fi
-export LESSOPEN
-unset LESSCLOSE
-
-# Keep the go folder hidden
-if which go > /dev/null 2>&1
-then
-    GOPATH=$HOME/.go
-    export GOPATH
-fi
+export PS1
 
 # Turn on ls colors
 if which dircolors > /dev/null 2>&1
@@ -67,6 +39,16 @@ do
     fi
 done
 
+# Handy Tmux aliases
+if which tmux > /dev/null 2>&1
+then
+    alias tas=tmux\ attach-session\ -t
+    alias tns=tmux\ new-session\ -s
+    alias tls=tmux\ list-sessions
+fi
+
+alias export="export -p"
+
 # Configure GPG and start the agent if it isn't already running
 if which gpg-connect-agent > /dev/null 2>&1
 then
@@ -84,33 +66,3 @@ then
         fi
     fi
 fi
-
-# Append our default paths
-__appendpath ()
-{
-    if [ -d "$1" ]
-    then
-        case ":$PATH:" in
-            *:"$1":*)
-                ;;
-            *)
-                PATH="$PATH:$1"
-        esac
-    fi
-}
-
-__appendpath "$HOME/.go/bin"
-__appendpath "$HOME/.cargo/bin"
-__appendpath "$HOME/.local/bin"
-
-export PATH
-
-# Handy Tmux aliases
-if which tmux > /dev/null 2>&1
-then
-    alias tas=tmux\ attach-session\ -t
-    alias tns=tmux\ new-session\ -s
-    alias tls=tmux\ list-sessions
-fi
-
-alias export="export -p"

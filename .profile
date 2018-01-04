@@ -1,8 +1,70 @@
 #
 # ~/.profile
 #
-if [ -r "$HOME/.shrc" ]
+[ -r "$HOME/.profile.local" ] && . "$HOME/.profile.local"
+
+set -o emacs
+
+if [ -z "$BASH" ]
 then
-    . $HOME/.shrc
-    export ENV=$HOME/.shrc
+    ENV=$HOME/.shrc; export ENV
 fi
+
+if which vim > /dev/null 2>&1
+then
+    EDITOR=vim
+else
+    EDITOR=vi
+fi
+
+VISUAL=$EDITOR
+PAGER=less
+LESS="-FMRqX#10"
+export EDITOR VISUAL PAGER LESS
+
+if which lesskey > /dev/null 2>&1 && [ -r "$HOME/.lesskey" ]
+then
+    [ -r "$HOME/.less" ] || lesskey
+fi
+
+if which lesspipe > /dev/null 2>&1
+then
+    LESSOPEN="|`which lesspipe` %s"
+else
+    LESSOPEN="|$HOME/.lessfilter %s"
+fi
+export LESSOPEN
+unset LESSCLOSE
+
+# Keep the go folder hidden
+if which go > /dev/null 2>&1
+then
+    GOPATH=$HOME/.go
+    export GOPATH
+fi
+
+# Append our default paths
+__addpath ()
+{
+    if [ -d "$1" ]
+    then
+        case ":$PATH:" in
+            *:"$1":*)
+                ;;
+            *)
+                if [ -z "$2" ]
+                then
+                    PATH="$PATH:$1"
+                else
+                    PATH="$1:$PATH"
+                fi
+        esac
+    fi
+}
+
+__addpath "$HOME/.go/bin"
+__addpath "$HOME/.cargo/bin"
+__addpath "$HOME/.local/bin" "before"
+
+unset __addpath
+export PATH
