@@ -19,6 +19,9 @@ then
 elif which exo-open > /dev/null 2>&1
 then
     handler=exo-open
+elif which xdg-open > /dev/null 2>&1
+then
+    handler=xdg-open
 else
     echo "my-open: No suitable handler found" > /dev/stderr
     exit -1

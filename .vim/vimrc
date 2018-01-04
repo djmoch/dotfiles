@@ -29,8 +29,18 @@ if has('vim_starting')
     endif
     set encoding=utf-8
     set undofile
-    if isdirectory(expand('~/Documents/src/vim_plugins'))
-        set packpath+=~/Documents/src/vim_plugins
+    if has('packages')
+        if isdirectory(expand('~/Documents/src/vim_plugins'))
+            set packpath+=~/Documents/src/vim_plugins
+        endif
+    elseif filereadable('pack/bundle/vim-pathogen/autoload/pathogen.vim')
+        runtime 'pack/bundle/vim-pathogen/autoload/pathogen.vim'
+        if isdirectory(expand('~/Documents/src/vim_plugins'))
+            execute pathogen#infect('pack/bundle/start/{}', '~Documents/src/vim_plugins/pack/bundle/start{}')
+        else
+            execute pathogen#infect()
+        endif
+        execute pathogen#helptags()
     endif
     syntax on
     filetype plugin indent on
@@ -38,11 +48,14 @@ endif
 " }}}
 
 " Globals {{{
+let readline_has_bash=1
 let g:gutentags_project_root = ['.git','.project','.svn']
 let delimitMate_expand_space = 1
 let delimitMate_expand_cr    = 1
 if exists('$TMUX')
-    packadd vim-slime
+    if has('packages')
+        packadd vim-slime
+    endif
     let g:slime_no_mappings      = 1
     let g:slime_target           = 'tmux'
     let g:slime_paste_file       = tempname()

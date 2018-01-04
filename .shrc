@@ -4,6 +4,8 @@
 # vim: ft=sh
 [ -r $HOME/.shrc.local ] && . $HOME/.shrc.local
 
+set -o emacs
+
 if which vim > /dev/null 2>&1
 then
     EDITOR=vim
@@ -12,7 +14,9 @@ else
 fi
 
 VISUAL=$EDITOR
-PS1="$LOGNAME@\h:\W\$ "
+user=`printf '\033[34m%s\033[m' "$LOGNAME"`
+host=`printf '\033[32m\\h\033[m'`
+PS1="$user@$host:\W\$ "
 PAGER=less
 LESS="-FMRqX#10"
 export EDITOR VISUAL PS1 PAGER LESS
@@ -22,10 +26,20 @@ then
     [ -r "$HOME/.less" ] || lesskey
 fi
 
+if which lesspipe > /dev/null 2>&1
+then
+    LESSOPEN="|`which lesspipe` %s"
+else
+    LESSOPEN="|$HOME/.lessfilter %s"
+fi
+export LESSOPEN
+unset LESSCLOSE
+
 # Keep the go folder hidden
 if which go > /dev/null 2>&1
 then
-    export GOPATH=$HOME/.go
+    GOPATH=$HOME/.go
+    export GOPATH
 fi
 
 # Turn on ls colors
@@ -38,8 +52,9 @@ then
         unset SOURCE_DIRCOLORS
     fi
 else
-    export CLICOLOR=1
-    export LSCOLORS=ExFxBxDxCxegedabagacad
+    CLICOLOR=1
+    LSCOLORS=ExFxBxDxCxegedabagacad
+    export CLICOLOR LSCOLORS
 fi
 
 # Colorize others if they exist
@@ -63,7 +78,10 @@ then
     if [ -z "$SSH_TTY" ] && which gpgconf > /dev/null 2>&1
     then
         unset SSH_AGENT_PID
-        export SSH_AUTH_SOCK=`gpgconf --list-dirs agent-ssh-socket`
+        if [ "`gpgconf --list-dirs agent-ssh-socket | wc -l`" -eq 1 ]
+        then
+            export SSH_AUTH_SOCK=`gpgconf --list-dirs agent-ssh-socket`
+        fi
     fi
 fi
 
@@ -84,6 +102,8 @@ __appendpath ()
 __appendpath "$HOME/.go/bin"
 __appendpath "$HOME/.cargo/bin"
 __appendpath "$HOME/.local/bin"
+
+export PATH
 
 # Handy Tmux aliases
 if which tmux > /dev/null 2>&1

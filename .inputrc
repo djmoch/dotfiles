@@ -1,6 +1,4 @@
 # Vi keymap
-set editing-mode vi
-set show-mode-in-prompt on
 set vi-cmd-mode-string "[n]"
 set vi-ins-mode-string "[i]"
 set emacs-mode-string ""
@@ -14,20 +12,16 @@ set mark-symlinked-directories on
 # My speakers are almost always muted, so use the visual bell instead
 set bell-style visible
 
-$if mode=emacs
-    # Right arrow to cycle through possible completions
-    Control-Space: menu-complete
+# Right arrow to cycle through possible completions
+Control-Space: menu-complete
 
-    # Up arrow will try to complete from my history
-    "\e[A": history-search-backward
-$endif
+# Up arrow will try to complete from my history
+"\e[A": history-search-backward
 
-$if mode=vi
-    set keymap vi-command
+set keymap vi-command
 
-    # k key in vi-command to complete from my history
-    "k": history-search-backward
+# k key in vi-command to complete from my history
+"k": history-search-backward
 
-    # l key to cycle through possible completions
-    "L": menu-complete
-$endif
+# l key to cycle through possible completions
+"L": menu-complete
