@@ -4,6 +4,8 @@
 [ -r $HOME/.shrc ] && source $HOME/.shrc
 [ -r $HOME/.bashrc.local ] && source $HOME/.bashrc.local
 
+shopt -s dotglob globstar
+
 export HISTCONTOL=erasedups
 
 # Git command line configuration
