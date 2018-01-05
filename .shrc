@@ -68,3 +68,8 @@ then
         fi
     fi
 fi
+
+if [ "$VISUAL" == "vi" ]
+then
+    alias vim=vi
+fi

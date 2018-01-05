@@ -3,7 +3,7 @@
 #
 [ -r "$HOME/.profile.local" ] && . "$HOME/.profile.local"
 
-if [ "$0" == "sh" ]
+if [ "$0" == "sh" -o "$0" == "-sh" ]
 then
     ENV="$HOME/.shrc"; export ENV
 fi
