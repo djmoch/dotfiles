@@ -1,7 +1,12 @@
 #!/bin/sh
 if [ -d "$1" ]
 then
-    ls -lA --color=force "$1"
+    if which dircolors > /dev/null 2>&1
+    then
+        ls -lA --color=force "$1"
+    else
+        ls -lA "$1"
+    fi
 elif which pygmentize > /dev/null 2>&1
 then
     case "$1" in
