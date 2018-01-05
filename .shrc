@@ -2,9 +2,11 @@
 # ~/.shrc
 #
 # vim: ft=sh
-[ -r $HOME/.shrc.local ] && . $HOME/.shrc.local
+[ -r "$HOME/.shrc.local" ] && . "$HOME/.shrc.local"
 
-if [ -z "$BASH" ]
+set -o emacs
+
+if [ -n "$BASH" ]
 then
     user=`printf '\033[34m%s\033[m' "$LOGNAME"`
     host=`printf '\033[32m\\h\033[m'`
@@ -19,8 +21,7 @@ if which dircolors > /dev/null 2>&1
 then
     if [ -n "$SOURCE_DIRCOLORS" ]
     then
-        eval `dircolors $HOME/.dir_colors`
-        alias ls='ls --color=auto'
+        eval `dircolors "$HOME/.dir_colors"`
         unset SOURCE_DIRCOLORS
     fi
 else
@@ -30,7 +31,7 @@ else
 fi
 
 # Colorize others if they exist
-COLORIZE_CMDS="pacman grep egrep fgrep"
+COLORIZE_CMDS="ls pacman grep egrep fgrep"
 for cmd in $COLORIZE_CMDS
 do
     if which $cmd > /dev/null 2>&1

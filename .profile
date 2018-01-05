@@ -3,11 +3,9 @@
 #
 [ -r "$HOME/.profile.local" ] && . "$HOME/.profile.local"
 
-set -o emacs
-
-if [ -z "$BASH" ]
+if [ "$0" == "sh" ]
 then
-    ENV=$HOME/.shrc; export ENV
+    ENV="$HOME/.shrc"; export ENV
 fi
 
 if which vim > /dev/null 2>&1
@@ -29,17 +27,16 @@ fi
 
 if which lesspipe > /dev/null 2>&1
 then
-    LESSOPEN="|`which lesspipe` %s"
+    eval `lesspipe`
 else
     LESSOPEN="|$HOME/.lessfilter %s"
+    export LESSOPEN
 fi
-export LESSOPEN
-unset LESSCLOSE
 
 # Keep the go folder hidden
 if which go > /dev/null 2>&1
 then
-    GOPATH=$HOME/.go
+    GOPATH="$HOME/.go"
     export GOPATH
 fi
 

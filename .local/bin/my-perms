@@ -14,12 +14,17 @@ for rec in `ls -A`
 do
     case $rec in
         .*)
-            if [ -f "$rec" ]
+            if [ -f $rec ]
             then
-                chmod 600 $rec
+                if [ -x $rec ]
+                then
+                    chmod 700 $rec
+                else
+                    chmod 600 $rec
+                fi
             fi
 
-            if [ -d "$rec" ]
+            if [ -d $rec ]
             then
                 chmod 700 $rec
             fi

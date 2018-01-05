@@ -13,6 +13,9 @@ then
         *shrc*|*profile*)
             pygmentize -O style=friendly -f 256 -l sh "$1"
             ;;
+        *tar*)
+            tar -tf "$1"
+            ;;
         *)
             grep "#\!/bin/bash" "$1" > /dev/null
             if [ "$?" -eq "0" ]; then

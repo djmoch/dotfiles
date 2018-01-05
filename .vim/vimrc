@@ -33,8 +33,8 @@ if has('vim_starting')
         if isdirectory(expand('~/Documents/src/vim_plugins'))
             set packpath+=~/Documents/src/vim_plugins
         endif
-    elseif filereadable('pack/bundle/vim-pathogen/autoload/pathogen.vim')
-        runtime 'pack/bundle/vim-pathogen/autoload/pathogen.vim'
+    elseif filereadable(expand('~/.vim/pack/bundle/start/vim-pathogen/autoload/pathogen.vim'))
+        runtime pack/bundle/start/vim-pathogen/autoload/pathogen.vim
         if isdirectory(expand('~/Documents/src/vim_plugins'))
             execute pathogen#infect('pack/bundle/start/{}', '~Documents/src/vim_plugins/pack/bundle/start{}')
         else
