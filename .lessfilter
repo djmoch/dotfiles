@@ -1,4 +1,19 @@
 #!/bin/sh
+__pygmentize ()
+{
+    if which pygmentize > /dev/null 2>&1
+    then
+        if [ -n "$2" ]
+        then
+            pygmentize -O style=friendly -f 256 -l "$2" "$1"
+        else
+            pygmentize -O style=friendly -f 256 "$1"
+        fi
+    else
+        fail=1
+    fi
+}
+
 if [ -d "$1" ]
 then
     if which dircolors > /dev/null 2>&1
@@ -7,16 +22,16 @@ then
     else
         ls -lA "$1"
     fi
-elif which pygmentize > /dev/null 2>&1
-then
+else
     case "$1" in
         *.awk|*.groff|*.java|*.js|*.m4|*.php|*.pl|*.pm|*.pod|*.sh|\
         *.ad[asb]|*.asm|*.inc|*.[ch]|*.[ch]pp|*.[ch]xx|*.cc|*.hh|\
         *.lsp|*.l|*.pas|*.p|*.xml|*.xps|*.xsl|*.axp|*.ppd|*.pov|\
         *.diff|*.patch|*.py|*.rb|*.sql|*.ebuild|*.eclass)
-            pygmentize -O style=friendly -f 256 "$1";;
+            __pygmentize "$1"
+            ;;
         *shrc*|*profile*)
-            pygmentize -O style=friendly -f 256 -l sh "$1"
+            __pygmentize "$1" "sh"
             ;;
         *tar*)
             tar -tf "$1"
@@ -24,11 +39,17 @@ then
         *)
             grep "#\!/bin/bash" "$1" > /dev/null
             if [ "$?" -eq "0" ]; then
-                pygmentize -O style=friendly -f 256 -l sh "$1"
+                __pygmentize "$1" "sh"
             else
                 exit 1
             fi
     esac
 fi
 
-exit 0
+unset __pygmentize
+if [ -n "$fail" ]
+then
+    exit $fail
+else
+    exit 0
+fi
