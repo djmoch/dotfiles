@@ -24,6 +24,7 @@ then
         eval `dircolors "$HOME/.dir_colors"`
         unset SOURCE_DIRCOLORS
     fi
+    alias ls="ls --color=auto"
 else
     CLICOLOR=1
     LSCOLORS=ExFxBxDxCxegedabagacad
@@ -31,7 +32,7 @@ else
 fi
 
 # Colorize others if they exist
-COLORIZE_CMDS="ls pacman grep egrep fgrep"
+COLORIZE_CMDS="pacman grep egrep fgrep"
 for cmd in $COLORIZE_CMDS
 do
     if which $cmd > /dev/null 2>&1
