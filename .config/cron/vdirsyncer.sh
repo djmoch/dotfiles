@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
-echo "Beginning sync on $(date)"
+#!/bin/sh
+echo "Beginning sync on `date`"
 vdirsyncer sync
-echo "Completed sync on $(date)"
+echo "Completed sync on `date`"

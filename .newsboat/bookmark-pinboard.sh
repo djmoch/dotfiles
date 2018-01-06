@@ -4,7 +4,7 @@
 # documentation: https://pinboard.in/api
 
 username="djmoch"
-password="$(secret-tool lookup account djmoch service in.pinboard)"
+password="`secret-tool lookup account djmoch service in.pinboard`"
 
 # You can enter up to 100 tags here, space delimited, or leave blank for no tag
 tags="via:newsbeuter"

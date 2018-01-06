@@ -1,6 +1,6 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
-echo "Beginning photo sync at $(date)"
+echo "Beginning photo sync at `date`"
 
 # Only do the following if nextcloud.danielmoch.com is reachable
 if ping -c 1 nextcloud.danielmoch.com > /dev/null 2>&1
@@ -30,4 +30,4 @@ else
     exit -2
 fi
 
-echo "Completed photo sync at $(date)"
+echo "Completed photo sync at `date`"

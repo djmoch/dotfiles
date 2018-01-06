@@ -8,7 +8,7 @@ then
     ENV="$HOME/.shrc"; export ENV
 fi
 
-if which vim > /dev/null 2>&1
+if type -p vim > /dev/null 2>&1
 then
     EDITOR=vim
 else
@@ -20,12 +20,12 @@ PAGER=less
 LESS="-FMRqX#10"
 export EDITOR VISUAL PAGER LESS
 
-if which lesskey > /dev/null 2>&1 && [ -r "$HOME/.lesskey" ]
+if type -p lesskey > /dev/null 2>&1 && [ -r "$HOME/.lesskey" ]
 then
     [ -r "$HOME/.less" ] || lesskey
 fi
 
-if which lesspipe > /dev/null 2>&1
+if type -p lesspipe > /dev/null 2>&1
 then
     eval `lesspipe`
 else
@@ -34,7 +34,7 @@ else
 fi
 
 # Keep the go folder hidden
-if which go > /dev/null 2>&1
+if type -p go > /dev/null 2>&1
 then
     GOPATH="$HOME/.go"
     export GOPATH

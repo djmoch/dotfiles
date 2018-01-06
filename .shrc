@@ -17,7 +17,7 @@ fi
 export PS1
 
 # Turn on ls colors
-if which dircolors > /dev/null 2>&1
+if type -p dircolors > /dev/null 2>&1
 then
     if [ -n "$SOURCE_DIRCOLORS" ]
     then
@@ -35,14 +35,14 @@ fi
 COLORIZE_CMDS="pacman grep egrep fgrep"
 for cmd in $COLORIZE_CMDS
 do
-    if which $cmd > /dev/null 2>&1
+    if type -p $cmd > /dev/null 2>&1
     then
         alias $cmd="$cmd --color=auto"
     fi
 done
 
 # Handy Tmux aliases
-if which tmux > /dev/null 2>&1
+if type -p tmux > /dev/null 2>&1
 then
     alias tas=tmux\ attach-session\ -t
     alias tns=tmux\ new-session\ -s
@@ -52,14 +52,14 @@ fi
 alias export="export -p"
 
 # Configure GPG and start the agent if it isn't already running
-if which gpg-connect-agent > /dev/null 2>&1
+if type -p gpg-connect-agent > /dev/null 2>&1
 then
     export GPG_TTY=`tty`
     gpg-connect-agent updatestartuptty /bye > /dev/null 2>&1
 
     # Configure GPG as an SSH key provider
     # Assume SSH agent is forwarded if we're in an SSH session
-    if [ -z "$SSH_TTY" ] && which gpgconf > /dev/null 2>&1
+    if [ -z "$SSH_TTY" ] && type -p gpgconf > /dev/null 2>&1
     then
         unset SSH_AGENT_PID
         if [ "`gpgconf --list-dirs agent-ssh-socket | wc -l`" -eq 1 ]
@@ -72,4 +72,9 @@ fi
 if [ "$VISUAL" == "vi" ]
 then
     alias vim=vi
+fi
+
+if type -p fortune > /dev/null 2>&1 && [ "$SHLVL" -le 1 -o \( -n "$DISPLAY" -a "$SHLVL" -le 2 \) ]
+then
+    fortune
 fi

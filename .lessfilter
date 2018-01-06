@@ -41,7 +41,7 @@ else
             if [ "$?" -eq "0" ]; then
                 __pygmentize "$1" "sh"
             else
-                exit 1
+                fail=1
             fi
     esac
 fi

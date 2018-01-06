@@ -43,8 +43,3 @@ if [[ "$OSTYPE" == "darwin"* ]]
 then
     alias jackd="jackd -d coreaudio > /dev/null 2>&1 &"
 fi
-
-if command -v archey3 > /dev/null 2>&1 && [ -z "$TMUX"  ]
-then
-    archey3
-fi
