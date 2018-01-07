@@ -76,5 +76,6 @@ fi
 
 if type -p fortune > /dev/null 2>&1 && [ "$SHLVL" -le 1 -o \( -n "$DISPLAY" -a "$SHLVL" -le 2 \) ]
 then
+    [ -n $NEWLINE ] && echo; unset NEWLINE
     fortune
 fi
