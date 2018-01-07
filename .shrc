@@ -74,7 +74,7 @@ then
     alias vim=vi
 fi
 
-if type -p fortune > /dev/null 2>&1 && [ -n "$SSH_TTY" -a "$SHLVL" -le 1 -o \( -n "$DISPLAY" -a -z "$SSH_TTY" -a "$SHLVL" -le 2 \) ]
+if type -p fortune > /dev/null 2>&1 && [ -z "$SSH_TTY" -a "$SHLVL" -le 1 -o \( -n "$DISPLAY" -a -z "$SSH_TTY" -a "$SHLVL" -le 2 \) ]
 then
     [ -n $NEWLINE ] && echo; unset NEWLINE
     fortune
