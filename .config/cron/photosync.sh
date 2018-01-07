@@ -11,6 +11,13 @@ else
     exit -1
 fi
 
+if type -p xdg-user-dir > /dev/null 2>&1
+then
+    LOCAL_FOLDER=`xdg-user-dir PICTURES`
+else
+    LOCAL_FOLDER="$HOME/Pictures"
+fi
+
 # Mount the WebDAV folder and set so only we can read it
 if mount /mnt/nextcloud > /dev/null 2>&1
 then
@@ -19,8 +26,8 @@ then
 
     # Rsync from WebDAV to ~/Photos (unidirectionally for now, in order to
     # preserve server space)
-    echo "Syncing Photos from WebDAV to ~/Photos"
-    rsync -aq /mnt/nextcloud/Photos /home/djmoch/
+    echo "Syncing Photos from WebDAV to $LOCAL_FOLDER"
+    rsync -aq /mnt/nextcloud/Photos/* $LOCAL_FOLDER
 
     # Finish by unmounting the WebDAV folder
     echo "Unmounting nextcloud.danielmoch.com"
