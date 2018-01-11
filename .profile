@@ -22,7 +22,7 @@ export EDITOR VISUAL PAGER LESS
 
 if type -p lesskey > /dev/null 2>&1 && [ -r "$HOME/.lesskey" ]
 then
-    [ -r "$HOME/.less" ] || lesskey
+    lesskey
 fi
 
 if type -p lesspipe > /dev/null 2>&1
