@@ -1,4 +1,6 @@
 text/html; w3m -I %{charset} -T text/html; copiousoutput;
-application/pdf; zathura '%s'; test=test -n "$DISPLAY";
-application/pdf; pdftotext '%s' -; copiousoutput;
-*/*; my-open '%s'; test=test -n "$DISPLAY";
+application/pdf; pdftotext '%s' -; copiousoutput; test=test -z "$DISPLAY"
+application/*; my-open '%s'; needsterminal; test=test -n "$DISPLAY"
+image/*; my-open '%s'; needsterminal; test=test -n "$DISPLAY"
+audio/*; my-open '%s'; needsterminal; test=test -n "$DISPLAY"
+video/*; my-open '%s'; needsterminal; test=test -n "$DISPLAY"

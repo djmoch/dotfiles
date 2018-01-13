@@ -10,21 +10,23 @@
 #
 
 # Find handler, if one is available
-if which cygstart > /dev/null 2>&1
+if type -p cygstart > /dev/null 2>&1
 then
     handler=cygstart
-elif which open > /dev/null 2>&1
-then
-    handler=open
-elif which exo-open > /dev/null 2>&1
+elif type -p exo-open > /dev/null 2>&1
 then
     handler=exo-open
-elif which xdg-open > /dev/null 2>&1
+elif type -p xdg-open > /dev/null 2>&1
 then
     handler=xdg-open
+# Because of its ambiguity, open (the macOS handler) should always be
+# tested last
+elif type -p open > /dev/null 2>&1
+then
+    handler=open
 else
     echo "my-open: No suitable handler found" > /dev/stderr
     exit -1
 fi
 
-exec $handler $@
+$handler $@

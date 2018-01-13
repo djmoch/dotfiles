@@ -1,0 +1,43 @@
+!
+! ~/.Xresources
+!
+
+#define NOTO -monotype-noto sans-medium-r-normal--11-*-*-*-*-*-*-*
+#define MESLO -bitstream-meslo lg m dz-medium-r-normal--11-*-*-*-*-*-*-*
+
+! Global defaults
+*background: #262626
+*foreground: #BCBCBC
+*font: -monotype-noto sans-medium-r-normal--11-*-*-*-*-*-*-*
+*color0:     #1C1C1C
+*color8:     #444444
+*color1:     #AF5F5F
+*color9:     #FF8700
+*color2:     #5F875F
+*color10:    #87AF87
+*color3:     #87875F
+*color11:    #FFFFAF
+*color4:     #5F87AF
+*color12:    #8FAFD7
+*color5:     #5F5F87
+*color13:    #8787AF
+*color6:     #5F8787
+*color14:    #5FAFAF
+*color7:     #6C6C6C
+*color15:    #FFFFFF
+
+! Xterm
+xterm.termName: xterm-256color
+xterm*font: -bitstream-meslo lg m dz-medium-r-normal--11-*-*-*-*-*-*-*
+xterm*renderFont: true
+xterm*faceName: -bitstream-meslo lg m dz-medium-r-normal--11-*-*-*-*-*-*-*
+xterm*faceSize: 10.0
+
+! Xdvi
+xdvi.background: #BCBCBC
+xdvi.foreground: #262626
+xdvi.editor: gvim --servername xdvi --remote +%l %f
+xdvi.wwwBrowser: my-open
+xdvi.expertMode: 31
+xdvi.shrinkFactor: 7
+xdvi.altFont: -monotype-noto sans-medium-r-normal--11-*-*-*-*-*-*-*

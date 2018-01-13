@@ -11,7 +11,7 @@ macro index,pager,attach,compose \cb "\
 <enter-command> set pipe_decode=\$my_pipe_decode; unset my_pipe_decode<Enter>" \
 "call urlview to extract URLs out of a message"
 
-macro generic,pager <F1> "<shell-escape> less /usr/local/Cellar/mutt/1.6.2/share/doc/mutt/manual.txt<Enter>" "show Mutt documentation"
+macro generic,pager <F1> "<shell-escape> less /usr/share/doc/mutt/manual.txt<Enter>" "show Mutt documentation"
 
 macro index,pager y "<change-folder>?<toggle-mailboxes>" "show incoming mailboxes list"
 
@@ -25,6 +25,12 @@ unset collapse_unread
 bind browser y exit
 bind index - collapse-thread
 bind index _ collapse-all
+bind pager j next-line
+bind pager <Down> next-line
+bind pager k previous-line
+bind pager <Up> previous-line
+bind pager \Cu half-up
+bind pager \Cd half-down
 
 mime_lookup application/octet-stream
 
