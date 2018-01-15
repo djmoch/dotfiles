@@ -26,22 +26,22 @@
 *color7:     #6C6C6C
 *color15:    #FFFFFF
 
-! Xterm
+! XTerm
 XTerm.termName: xterm-256color
 XTerm*font: -bitstream-meslo lg m dz-medium-r-normal--11-*-*-*-*-*-*-*
 XTerm*renderFont: true
 XTerm*faceName: -bitstream-meslo lg m dz-medium-r-normal--11-*-*-*-*-*-*-*
 XTerm*faceSize: 10.0
 XTerm*visualBell: true
+XTerm*bellIsUrgent: true
 XTerm*highlightColorMode: true
 XTerm*highlightReverse: false
 XTerm*highlightColor: #8FAFD7
-XTerm*bellIsUrgent: true
 
-! Xdvi
+! XDvi
 XDvi.background: #BCBCBC
 XDvi.foreground: #262626
-XDvi.editor: gvim --servername XDvi --remote +%l %f
+XDvi.editor: gvim --servername xdvi --remote +%l %f
 XDvi.wwwBrowser: my-open
 XDvi.expertMode: 31
 XDvi.shrinkFactor: 7
