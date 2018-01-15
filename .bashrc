@@ -14,7 +14,14 @@ GIT_PS1_SHOWUNTRACKEDFILES=1
 source "$HOME/.config/bash/git-prompt.sh"
 
 # Customize the prompt
-export PS1='\[\033[34m\]\u\[\033[m\]@\[\033[32m\]\h:\[\033[m\]\W\[\033[31m\]$(__git_ps1 " (%s)")\[\033[m\]\$ '
+if [ x$TERM == xlinux ]
+then
+    usercolor='\[\033[01;34m\]'
+else
+    usercolor='\[\033[34m\]'
+fi
+
+export PS1=$usercolor'\u\[\033[m\]@\[\033[32m\]\h:\[\033[m\]\W\[\033[31m\]$(__git_ps1 " (%s)")\[\033[m\]\$ '
 
 # Configure Homebrew
 if command -v brew > /dev/null 2>&1

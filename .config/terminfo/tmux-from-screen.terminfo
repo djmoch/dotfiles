@@ -4,4 +4,4 @@ xterm-256color|xterm with italics support,
 
 tmux-256color|tmux with 256 colors,
     ritm=\E[23m, rmso=\E[27m, sitm=\E[3m, smso=\E[7m, flash=^G,
-    use=tmux-256color,
+    use=screen-256color,

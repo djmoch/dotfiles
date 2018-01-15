@@ -1,0 +1,15 @@
+#!/bin/sh
+#
+# ~/.local/bin/my-init
+#
+# A place to dump run-once type initializations
+
+if [ ! -d "$HOME/.terminfo" ]
+then
+    if infocmp tmux-256color > /dev/null 2>&1
+    then
+        tic "$HOME/.config/terminfo/tmux.terminfo"
+    else
+        tic "$HOME/.config/terminfo/tmux-from-screen.terminfo"
+    fi
+fi
