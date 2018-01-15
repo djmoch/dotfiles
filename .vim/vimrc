@@ -64,6 +64,16 @@ endif
 " }}}
 
 " Helper functions {{{
+function! MyTmuxStatusLine(action)
+    if exists('$TMUX')
+        if a:action == 'off'
+            execute 'silent !tmux set -s status off' | redraw!
+        else
+            execute 'silent !tmux set -s status on' | redraw!
+        endif
+    endif
+endfunction
+
 function! MyFileEncoding()
     if &fileencoding != ''
         return '['.&fileencoding.']'
@@ -279,8 +289,8 @@ augroup myvimrc
         autocmd BufWritePost *imrc so % | call MyItalicize()
     endif
     autocmd VimResized * wincmd = | call MyDiffOpt()
-    autocmd User GoyoEnter Limelight
-    autocmd User GoyoLeave Limelight!
+    autocmd User GoyoEnter Limelight | execute MyTmuxStatusLine('off')
+    autocmd User GoyoLeave Limelight! | execute MyTmuxStatusLine('')
     autocmd QuickFixCmdPost [^l]* nested cwindow
     autocmd QuickFixCmdPost    l* nested lwindow
     autocmd QuickFixCmdPre [^l]* nested silent! cclose
@@ -320,7 +330,7 @@ endif
 if has('win32') || has('win64')
     nnoremap <Leader>o :execute 'silent ! start '.expand('<cWORD>')<CR>
 else
-    nnoremap <Leader>o :execute 'silent !my-start '
+    nnoremap <Leader>o :execute 'silent !my-open '
                 \ .expand(shellescape('<cWORD>')) \| redraw!<CR>
 endif
 nnoremap <Leader>c :silent! execute 'cclose' \|
