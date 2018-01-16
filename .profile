@@ -20,11 +20,6 @@ PAGER=less
 LESS="-FMRqX#10"
 export EDITOR VISUAL PAGER LESS
 
-if type -p lesskey > /dev/null 2>&1 && [ -r "$HOME/.lesskey" ]
-then
-    lesskey
-fi
-
 if type -p lesspipe > /dev/null 2>&1
 then
     eval `lesspipe`
@@ -40,7 +35,7 @@ then
     export GOPATH
 fi
 
-# Append our default paths
+# Add our default paths
 __addpath ()
 {
     if [ -d "$1" ]
@@ -65,3 +60,8 @@ __addpath "$HOME/.local/bin" "before"
 
 unset __addpath
 export PATH
+
+if type -p my-init > /dev/null 2>&1 && [ ! -f "$HOME/._.djmoch" ]
+then
+    my-init
+fi
