@@ -4,8 +4,38 @@
 #
 # A place to dump run-once type initializations
 
-if [ ! -d "$HOME/.terminfo" ]
+vim_bundle_path="$HOME/.vim/pack/bundle"
+
+__has()
+{
+    for token in $@
+    do
+        type -p $token > /dev/null 2>&1
+        [ $? -ne 0 ] && return 1
+    done
+    return 0
+}
+
+__clone()
+{
+    git clone https://github.com/$1.git > /dev/null 2>&1
+}
+
+echo "Performing run-once initializations"
+
+if [ -n "$1" -a "$1" == "-f" ]
 then
+    echo " Re-initialization requested"
+    rm -f "$HOME/._.djmoch"
+    rm -rf "$HOME/.terminfo"
+    rm -rf "$vim_bundle_path"
+    rm "$HOME/.less"
+fi
+
+# Terminfo
+if  __has "infocmp" "tic" && [ ! -d "$HOME/.terminfo" ]
+then
+    echo " Initializing Termcaps"
     if infocmp tmux-256color > /dev/null 2>&1
     then
         tic "$HOME/.config/terminfo/tmux.terminfo"
@@ -13,3 +43,52 @@ then
         tic "$HOME/.config/terminfo/tmux-from-screen.terminfo"
     fi
 fi
+
+# Lesskey
+if __has "lesskey" && [ ! -f "$HOME/.less" ]
+then
+    echo " Initializing .less"
+    lesskey
+fi
+
+# Vim plugins
+if __has "git" && [ ! -d "$vim_bundle_path" ]
+then
+    echo " Downloading Vim plugins"
+    # Plugins that should always be enabled
+    mkdir -p bundle/start
+    cd bundle/start
+    __clone romainl/Apprentice
+    __clone tpope/vim-commentary
+    __clone tpope/vim-eunuch
+    __clone tpope/vim-fugitive
+    __clone tpope/vim-obsession
+    __clone tpope/vim-scriptease
+    __clone tpope/vim-surround
+    __clone tpope/vim-unimpaired
+    __clone tpope/vim-vinegar
+    __clone Raimondi/delimitMate
+    __clone junegunn/goyo.vim
+    __clone junegunn/limelight.vim
+    __clone ajh17/VimCompletesMe
+    __clone skammer/vim-css-color
+    __clone ludovicchabant/vim-gutentags
+    __clone beloglazov/vim-online-thesaurus
+    __clone jszakmeister/vim-togglecursor
+    __clone chr4/sslsecure.vim
+    cd - > /dev/null 2>&1
+
+    # Plugins used optionally
+    mkdir -p bundle/opt
+    cd bundle/opt
+    __clone jpalardy/vim-slime
+    cd - > /dev/null 2>&1
+fi
+
+if [ ! -f "$HOME/._.djmoch" ]
+then
+    touch "$HOME/._.djmoch"
+    chmod 000 "$HOME/._.djmoch"
+fi
+
+unset __clone __has
