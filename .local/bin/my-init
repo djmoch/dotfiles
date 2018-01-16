@@ -10,20 +10,23 @@ __has()
 {
     for token in $@
     do
-        type -p $token > /dev/null 2>&1
-        [ $? -ne 0 ] && return 1
+        type $token > /dev/null 2>&1
+        [ $? -ne 0 ] && echo "$token doesn't exist" && return 1
     done
     return 0
 }
 
 __clone()
 {
+    echo -n "  Cloning $1 ... "
     git clone https://github.com/$1.git > /dev/null 2>&1
+    [ $? -ne 0 ] && echo "FAILED!" && return 1
+    echo "Succeeded"
 }
 
 echo "Performing run-once initializations"
 
-if [ -n "$1" -a "$1" == "-f" ]
+if [ -n "$1" -a "$1" = "-f" ]
 then
     echo " Re-initialization requested"
     rm -f "$HOME/._.djmoch"
@@ -33,7 +36,7 @@ then
 fi
 
 # Terminfo
-if  __has "infocmp" "tic" && [ ! -d "$HOME/.terminfo" ]
+if __has "infocmp" "tic" && [ ! -d "$HOME/.terminfo" ]
 then
     echo " Initializing Termcaps"
     if infocmp tmux-256color > /dev/null 2>&1
@@ -56,8 +59,8 @@ if __has "git" && [ ! -d "$vim_bundle_path" ]
 then
     echo " Downloading Vim plugins"
     # Plugins that should always be enabled
-    mkdir -p bundle/start
-    cd bundle/start
+    mkdir -p $vim_bundle_path/start
+    cd $vim_bundle_path/start
     __clone romainl/Apprentice
     __clone tpope/vim-commentary
     __clone tpope/vim-eunuch
@@ -79,8 +82,8 @@ then
     cd - > /dev/null 2>&1
 
     # Plugins used optionally
-    mkdir -p bundle/opt
-    cd bundle/opt
+    mkdir -p $vim_bundle_path/opt
+    cd $vim_bundle_path/opt
     __clone jpalardy/vim-slime
     cd - > /dev/null 2>&1
 fi

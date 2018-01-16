@@ -3,12 +3,12 @@
 #
 [ -r "$HOME/.profile.local" ] && . "$HOME/.profile.local"
 
-if [ "$0" == "sh" -o "$0" == "-sh" ]
+if [ "$0" = "sh" -o "$0" = "-sh" ]
 then
     ENV="$HOME/.shrc"; export ENV
 fi
 
-if type -p vim > /dev/null 2>&1
+if type vim > /dev/null 2>&1
 then
     EDITOR=vim
 else
@@ -20,7 +20,7 @@ PAGER=less
 LESS="-FMRqX#10"
 export EDITOR VISUAL PAGER LESS
 
-if type -p lesspipe > /dev/null 2>&1
+if type lesspipe > /dev/null 2>&1
 then
     eval `lesspipe`
 else
@@ -29,7 +29,7 @@ else
 fi
 
 # Keep the go folder hidden
-if type -p go > /dev/null 2>&1
+if type go > /dev/null 2>&1
 then
     GOPATH="$HOME/.go"
     export GOPATH
@@ -61,7 +61,7 @@ __addpath "$HOME/.local/bin" "before"
 unset __addpath
 export PATH
 
-if type -p my-init > /dev/null 2>&1 && [ ! -f "$HOME/._.djmoch" ]
+if type my-init > /dev/null 2>&1 && [ ! -f "$HOME/._.djmoch" ]
 then
     my-init
 fi

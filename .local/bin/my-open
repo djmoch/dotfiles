@@ -10,18 +10,18 @@
 #
 
 # Find handler, if one is available
-if type -p cygstart > /dev/null 2>&1
+if type cygstart > /dev/null 2>&1
 then
     handler=cygstart
-elif type -p exo-open > /dev/null 2>&1
+elif type exo-open > /dev/null 2>&1
 then
     handler=exo-open
-elif type -p xdg-open > /dev/null 2>&1
+elif type xdg-open > /dev/null 2>&1
 then
     handler=xdg-open
 # Because of its ambiguity, open (the macOS handler) should always be
 # tested last
-elif type -p open > /dev/null 2>&1
+elif type open > /dev/null 2>&1
 then
     handler=open
 else
