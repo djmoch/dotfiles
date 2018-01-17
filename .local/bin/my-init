@@ -33,6 +33,7 @@ then
     rm -rf "$HOME/.terminfo"
     rm -rf "$vim_bundle_path"
     rm "$HOME/.less"
+    type crontab > /dev/null 2>&1 && crontab -r
 fi
 
 # Terminfo
@@ -92,6 +93,11 @@ if [ ! -f "$HOME/._.djmoch" ]
 then
     touch "$HOME/._.djmoch"
     chmod 000 "$HOME/._.djmoch"
+fi
+
+if __has "crontab"
+then
+    cat "$HOME/.config/cron/crontab" | crontab -
 fi
 
 unset __clone __has

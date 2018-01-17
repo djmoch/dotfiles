@@ -20,9 +20,7 @@
 # For more information see the manual pages of crontab(5) and cron(8)
 # 
 # m h  dom mon dow   command
-LANG=en_US.utf8
-DISPLAY=:0.0
-*/5 * * * * cd /home/djmoch/.config/forecastio && ./weather.py
-*/15 * * * * ~/.config/cron/vdirsyncer.sh > ~/.local/var/log/vdirsyncer 2>&1
-*/15 * * * * ~/.config/cron/photosync.sh > ~/.local/var/log/photosync 2>&1
+*/5 * * * * $HOME/.config/cron/weather.sh > $HOME/.local/var/log/weather 2>&1
+*/15 * * * * $HOME/.config/cron/vdirsyncer.sh > $HOME/.local/var/log/vdirsyncer 2>&1
+*/15 * * * * $HOME/.config/cron/photosync.sh > $HOME/.local/var/log/photosync 2>&1
 

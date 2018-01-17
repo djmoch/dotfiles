@@ -33,20 +33,12 @@ def generate_forecast():
             outfile.write(temp + ", " + str(current_temp.summary) + ", " + high +"/"+low + " F")
     except requests.packages.urllib3.exceptions.NewConnectionError:
         error = True
-        if DEBUG:
-            sys.stdout.writelines(datetime.now().strftime("%m/%d/%Y %I:%M:%S:") + " Could not connect. Will try again \
-                    in 5 minutes.\n")
+        sys.stdout.writelines(datetime.now().strftime("%m/%d/%Y %I:%M:%S:") + " Could not connect. Will try again \
+                in 5 minutes.\n")
 
-    if DEBUG and not error:
+    if not error:
         sys.stdout.writelines(datetime.now().strftime("%m/%d/%Y %I:%M:%S:") + " Successfully updated weather\n")
 
 if __name__ == '__main__':
-    try:
-        if environ['DEBUG']:
-            DEBUG = True
-    except KeyError:
-        DEBUG = False
-
-    if DEBUG:
-        sys.stdout.writelines(datetime.now().strftime("%m/%d/%Y %I:%M:%S:") + " Updating weather\n")
+    sys.stdout.writelines(datetime.now().strftime("%m/%d/%Y %I:%M:%S:") + " Updating weather\n")
     generate_forecast()
