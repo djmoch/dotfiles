@@ -1,0 +1,16 @@
+[Desktop Entry]
+Version=1.0
+Name=Redshift
+GenericName=Color temperature adjustment
+Comment=Color temperature adjustment tool
+TryExec=redshift
+Exec=redshift-gtk -l geoclue2
+Icon=redshift
+Terminal=false
+Type=Application
+Categories=Utility;
+StartupNotify=true
+Hidden=false
+X-GNOME-Autostart-enabled=true
+
+X-Desktop-File-Install-Version=0.23
