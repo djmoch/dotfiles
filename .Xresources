@@ -6,6 +6,7 @@
 #define MESLO -bitstream-meslo lg m dz-medium-r-normal--11-*-*-*-*-*-*-*
 
 ! Global defaults
+Xft.dpi: 96
 *background: #262626
 *foreground: #BCBCBC
 *font: -monotype-noto sans-medium-r-normal--11-*-*-*-*-*-*-*
