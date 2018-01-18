@@ -1,6 +1,5 @@
 #### COLOUR
 
-tm_icon="👍"
 tm_color_active=colour67
 tm_color_inactive=colour242
 tm_color_feature=colour131
@@ -47,12 +46,11 @@ tm_battery="#(~/.config/tmux/bin/battery_indicator.sh)"
 
 tm_date="#[fg=$tm_color_inactive] %R %d %b"
 tm_host="#[fg=$tm_color_feature,bold]#h"
-tm_session_name="#[fg=$tm_color_feature,bold]$tm_icon #S"
+tm_session_name="#[fg=$tm_color_feature,bold]\[#S\]"
 
 set -g status-left $tm_session_name' '
 set -g status-right $tm_battery' '$tm_weather' '$tm_date' '$tm_host
 
-set-environment -gu tm_icon
 set-environment -gu tm_color_active
 set-environment -gu tm_color_inactive
 set-environment -gu tm_color_feature
