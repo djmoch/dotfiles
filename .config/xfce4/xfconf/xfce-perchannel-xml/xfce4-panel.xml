@@ -38,10 +38,11 @@
         <value type="string" value="networkmanager applet"/>
         <value type="string" value="task manager"/>
         <value type="string" value="orage"/>
+        <value type="string" value="bluetooth"/>
         <value type="string" value="xfce4-power-manager"/>
         <value type="string" value="nextcloud"/>
-        <value type="string" value="screen actions daemon"/>
         <value type="string" value="parole"/>
+        <value type="string" value="screen actions daemon"/>
         <value type="string" value="blueberry-tray.py"/>
         <value type="string" value="veracrypt"/>
       </property>
