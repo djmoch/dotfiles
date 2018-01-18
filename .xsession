@@ -7,6 +7,9 @@
 
 xset dpms 0 0 300
 
+# Terminals spawned within X should start at SHLVL=1
+SHLVL=0; export SHLVL
+
 if [ -d /usr/share/fonts/noto/ ]
 then
     xset fp+ /usr/share/fonts/noto/
