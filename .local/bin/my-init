@@ -55,8 +55,14 @@ then
     lesskey
 fi
 
+if __has "crontab"
+then
+    echo " Installing crontab"
+    cat "$HOME/.config/cron/crontab" | crontab -
+fi
+
 # Vim plugins
-if __has "git" && [ ! -d "$vim_bundle_path" ]
+if __has "vim" "git" && [ ! -d "$vim_bundle_path" ]
 then
     echo " Downloading Vim plugins"
     # Plugins that should always be enabled
@@ -93,11 +99,6 @@ if [ ! -f "$HOME/._.djmoch" ]
 then
     touch "$HOME/._.djmoch"
     chmod 000 "$HOME/._.djmoch"
-fi
-
-if __has "crontab"
-then
-    cat "$HOME/.config/cron/crontab" | crontab -
 fi
 
 unset __clone __has
