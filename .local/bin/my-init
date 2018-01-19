@@ -24,6 +24,19 @@ __clone()
     echo "Succeeded"
 }
 
+__optclone_pathogen()
+{
+    vim --cmd "redir! > /tmp/djmoch-vimpackages | silent echo has('packages') | q"
+    case `cat /tmp/djmoch-vimpackages` in
+        *0*)
+            echo -n "  Cloning tpope/vim-pathogen ... "
+            git clone https://github.com/tpope/vim-pathogen.git
+            [ $? -ne 0 ] && echo "FAILED!" && return 1
+            echo "Succeeded"
+            ;;
+    esac
+}
+
 echo "Performing run-once initializations"
 
 if [ -n "$1" -a "$1" = "-f" ]
@@ -86,6 +99,7 @@ then
     __clone beloglazov/vim-online-thesaurus
     __clone jszakmeister/vim-togglecursor
     __clone chr4/sslsecure.vim
+    __optclone_pathogen
     cd - > /dev/null 2>&1
 
     # Plugins used optionally
@@ -101,4 +115,4 @@ then
     chmod 000 "$HOME/._.djmoch"
 fi
 
-unset __clone __has
+unset __clone __has __optclone_pathogen
