@@ -13,12 +13,14 @@
 if type cygstart > /dev/null 2>&1
 then
     handler=cygstart
-elif type exo-open > /dev/null 2>&1
-then
-    handler=exo-open
 elif type xdg-open > /dev/null 2>&1
 then
     handler=xdg-open
+# Most of the following handlers are used within xdg-open, but we should
+# check for them anyway since xdg-open doesn't exist
+elif type exo-open > /dev/null 2>&1
+then
+    handler=exo-open
 # Because of its ambiguity, open (the macOS handler) should always be
 # tested last
 elif type open > /dev/null 2>&1
