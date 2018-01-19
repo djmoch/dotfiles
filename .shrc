@@ -74,7 +74,7 @@ then
     alias vim=vi
 fi
 
-if [ -r /etc/motd ] && [ -z "$SSH_TTY" -a "$SHLVL" -le 1 ]
+if [ -r /etc/motd ] && [ -z "$SSH_TTY" ]
 then
-    cat /etc/motd
+    [ $SHLVL -le 1 ] && cat /etc/motd
 fi
