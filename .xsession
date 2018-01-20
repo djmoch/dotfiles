@@ -22,7 +22,7 @@ fi
 
 if [ $# -eq 0 ]
 then
-    for wm in awesome i3 twm
+    for wm in awesome i3 startxfce4 cinnamon-session twm
     do
         if type $wm > /dev/null 2>&1
         then
@@ -49,6 +49,12 @@ then
             $AUTOSTART_CMD
             ;;
     esac
+    
+    if [ "$XDG_CURRENT_DESKTOP" = "twm" ]
+    then
+        set -- xterm
+        twm &
+    fi
 fi
 
 [ -n $EXEC ] && exec $@
