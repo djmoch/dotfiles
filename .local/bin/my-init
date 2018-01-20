@@ -30,7 +30,7 @@ __optclone_pathogen()
     case `cat /tmp/djmoch-vimpackages` in
         *0*)
             echo -n "  Cloning tpope/vim-pathogen ... "
-            git clone https://github.com/tpope/vim-pathogen.git
+            git clone https://github.com/tpope/vim-pathogen.git > /dev/null 2>&1
             [ $? -ne 0 ] && echo "FAILED!" && return 1
             echo "Succeeded"
             ;;
