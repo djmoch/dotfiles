@@ -38,6 +38,8 @@ XTerm*bellIsUrgent: true
 XTerm*highlightColorMode: true
 XTerm*highlightReverse: false
 XTerm*highlightColor: #8FAFD7
+XTerm*metaSendsEscape: true
+XTerm*pointerMode: 2
 
 ! XDvi
 XDvi.background: #BCBCBC
