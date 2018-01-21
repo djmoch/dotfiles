@@ -1,0 +1,134 @@
+#!/bin/sh
+#
+# ~/.local/bin/my
+#
+
+# Command and handlers for them are added as-needed. Some commands only
+# have one handler, but exist to avoid re-writes across my dotfiles
+# later on.
+
+[ $# -eq 0 ] && exit 1
+
+log="$HOME/.local/var/log/my"
+command=$1
+shift
+
+__mylog()
+{
+    echo "$1 (`date +'%m/%d/%Y %H:%M:%S'`): $2" >> $log
+}
+
+case $command in
+    term)
+        : ${XDG_CURRENT_DESKTOP:=${XDG_SESSION_DESKTOP:-X-Generic}}
+        case $XDG_CURRENT_DESKTOP in
+            XFCE)
+                if type xfce4-terminal > /dev/null 2>&1
+                then
+                    term=xfce4-terminal
+                fi
+                ;;
+            X-Cinnamon)
+                if type gnome-terminal > /dev/null 2>&1
+                then
+                    term=gnome-terminal
+                fi
+                ;;
+        esac
+        # If we get here, then handle generically
+        if type xterm > /dev/null 2>&1
+        then
+            term=xterm
+        elif type x-terminal-emulator > /dev/null 2>&1
+        then
+            term=x-terminal-emulator
+        fi
+
+        if [ -n "$term" ]
+        then
+            exec $term $@
+        else
+            __mylog "my term" "No terminal emulator found"
+        fi
+        ;;
+    lock)
+        sleep 1
+
+        for locker in light-locker cinnamon-screensaver gnome-screensaver xscreensaver
+        do
+            if type $locker-command && ps -U $LOGNAME | grep $locker > /dev/null 2>&1
+            then
+                locker_running=1
+                break
+            fi
+        done
+
+        if [ -z "$locker_running" ]
+        then
+            __mylog "my lock" "No screen locker running"
+            exit 1
+        else
+            xset dpms force off
+        fi
+        ;;
+    wallpaper)
+        xsetroot -solid "#444444"
+        [ -x "$HOME/.fehbg" ] && "$HOME/.fehbg" >> $log 2>&1
+        ;;
+    standby)
+        if type systemctl > /dev/null 2>&1
+        then
+            systemctl hybrid-sleep
+        else
+            __mylog "my standby" "No handler found"
+        fi
+        ;;
+    perms)
+        exec my-perms
+        ;;
+    init)
+        exec my-init
+        ;;
+    open)
+        exec my-open
+        ;;
+    sound)
+        if type pactl > /dev/null 2>&1
+        then
+            exec pactl $@
+        else
+            __mylog "my sound" "No handler found"
+        fi
+        ;;
+    kbopts)
+        setxkbmap -option -option ctrl:nocaps -option terminate:ctrl_alt_bksp
+        ;;
+    screen)
+        xrandr_options=`xrandr -q | grep ^[[:alpha:]] | awk 'BEGIN{getline}{print $1}'`
+        numoptions=`echo $xrandr_options | wc -w`
+        if [ $numoptions -eq 1 ]
+        then
+            xrandr --output $xrandr_options --auto
+        else
+            # Prefer external monitors
+            # If more than one display is connected, then enable the
+            # first non-primary display, and turn off all the others.
+            primary=`xrandr -q | grep primary | awk '{print $1}'`
+
+            for option in $xrandr_options
+            do
+                [ $option = $primary ] && primary_found=1 && continue
+                [ -n "$primary_found" ] && selection=$option && break
+            done
+
+            __mylog "my screen" "Executing xrandr --output $selection --auto"
+            xrandr --output $selection --auto
+
+            for option in $xrandr_options
+            do
+                [ $option != $selection ] && __mylog "my screen" "Executing xrandr --output $option --off" && xrandr --output $option --off
+            done
+        fi
+        exec my wallpaper
+        ;;
+esac

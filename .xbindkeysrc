@@ -1,0 +1,36 @@
+#
+# ~/.xbindkeysrc
+#
+# vim: sts=2 sw=2
+"xbindkeys_show" 
+  control+shift + q
+
+"my term"
+  Mod4 + Return
+
+"my wallpaper"
+  Mod1 + Mod4 + w
+
+"my kbopts"
+  Mod1 + Mod4 + k
+
+"my standby"
+  Mod1 + Mod4 + s
+
+"my lock"
+  Mod4 + l
+
+"eject"
+  XF86Eject
+
+"my sound set-sink-volume 0 +10%"
+  XF86AudioRaiseVolume
+
+"my sound set-sink-volume 0 -10%"
+  XF86AudioLowerVolume
+
+"my sound set-sink-mute 0 toggle"
+  XF86AudioMute
+
+"my screen"
+  Mod1 + Mod4 + Return
