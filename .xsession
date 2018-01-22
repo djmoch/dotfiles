@@ -67,7 +67,7 @@ then
     twm &
 fi
 
-__autostart $@ &
+__autostart "$@" &
 
 unset __autostart
-[ -n $EXEC ] && exec $@
+[ -n $EXEC ] && exec "$@"
