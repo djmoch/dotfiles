@@ -137,6 +137,13 @@ case $command in
         setxkbmap -option -option ctrl:nocaps -option terminate:ctrl_alt_bksp
         ;;
     screen)
+        xrandr_options=`xrandr -q | grep ' disconnected' | awk '{print $1}'`
+        for option in $xrandr_options
+        do
+            __mylog "my screen" "Executing xrandr --output $option --off"
+            xrandr --output $option --off
+        done
+
         xrandr_options=`xrandr -q | grep ' connected' | awk '{print $1}'`
         numoptions=`echo $xrandr_options | wc -w`
         if [ $numoptions -eq 1 ]
