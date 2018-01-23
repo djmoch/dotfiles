@@ -34,3 +34,6 @@
 
 "my screen"
   Mod1 + Mod4 + Return
+
+"my shutdown"
+  control+shift+Mod1 + BackSpace

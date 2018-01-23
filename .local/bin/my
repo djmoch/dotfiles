@@ -21,43 +21,45 @@ __mylog()
 case $command in
     term)
         : ${XDG_CURRENT_DESKTOP:=${XDG_SESSION_DESKTOP:-X-Generic}}
+        SHLVL=0; export SHLVL
         case $XDG_CURRENT_DESKTOP in
             XFCE)
                 if type xfce4-terminal > /dev/null 2>&1
                 then
-                    term=xfce4-terminal
+                    exec xfce4-terminal "$@"
                 fi
                 ;;
             X-Cinnamon)
                 if type gnome-terminal > /dev/null 2>&1
                 then
-                    term=gnome-terminal
+                    exec gnome-terminal "$@"
                 fi
                 ;;
         esac
         # If we get here, then handle generically
         if type xterm > /dev/null 2>&1
         then
-            term=xterm
+            exec xterm "$@"
         elif type x-terminal-emulator > /dev/null 2>&1
         then
-            term=x-terminal-emulator
+            exec x-terminal-emulator "$@"
         fi
 
-        if [ -n "$term" ]
-        then
-            exec $term "$@"
-        else
-            __mylog "my term" "No terminal emulator found"
-        fi
+        __mylog "my term" "No terminal emulator found"
         ;;
     lock)
         sleep 1
 
         for locker in light-locker cinnamon-screensaver gnome-screensaver xscreensaver
         do
-            if type $locker-command && ps -U $LOGNAME | grep $locker > /dev/null 2>&1
+            if type $locker-command > /dev/null 2>&1 && ps -U $LOGNAME -o cmd= | grep $locker > /dev/null 2>&1
             then
+                if [ "$locker" = "light-locker" ]
+                then
+                    locker="xset dpms force off"
+                else
+                    locker="$locker-command -l"
+                fi
                 locker_running=1
                 break
             fi
@@ -68,7 +70,7 @@ case $command in
             __mylog "my lock" "No screen locker running"
             exit 1
         else
-            xset dpms force off
+            exec $locker
         fi
         ;;
     wallpaper)
@@ -78,9 +80,20 @@ case $command in
     standby)
         if type systemctl > /dev/null 2>&1
         then
-            systemctl hybrid-sleep
+            exec systemctl hybrid-sleep
         else
             __mylog "my standby" "No handler found"
+        fi
+        ;;
+    shutdown)
+        if type systemctl > /dev/null 2>&1
+        then
+            exec systemctl poweroff
+        elif type poweroff > /dev/null 2>&1
+        then
+            exec my term -e sudo poweroff
+        else
+            __mylog "my shutdown" "No handler found"
         fi
         ;;
     perms)
@@ -124,10 +137,11 @@ case $command in
         setxkbmap -option -option ctrl:nocaps -option terminate:ctrl_alt_bksp
         ;;
     screen)
-        xrandr_options=`xrandr -q | grep ^[[:alpha:]] | awk 'BEGIN{getline}{print $1}'`
+        xrandr_options=`xrandr -q | grep ' connected' | awk '{print $1}'`
         numoptions=`echo $xrandr_options | wc -w`
         if [ $numoptions -eq 1 ]
         then
+            __mylog "my screen" "Executing xrandr --output $xrandr_options --auto"
             xrandr --output $xrandr_options --auto
         else
             # Prefer external monitors
