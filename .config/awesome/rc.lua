@@ -195,16 +195,13 @@ awful.screen.connect_for_each_screen(function(s)
     -- set_wallpaper(s) rely on feh
 
     -- Each screen has its own tag table.
-    awful.tag.add("www", {
-        layout = awful.layout.suit.tile,
-        screen = s,
-        selected = true,
-    })
+    awful.tag(
+        {"1", "2", "3", "4", "5", "6", "7", "8", "9"},
+        s,
+        awful.layout.suit.tile
+    )
 
-    awful.tag.add("term", {
-        layout = awful.layout.suit.max.fullscreen,
-        screen = s,
-    })
+    awful.tag.find_by_name(s, "2").layout = awful.layout.suit.max.fullscreen
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
