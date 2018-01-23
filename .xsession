@@ -22,7 +22,7 @@ __autostart()
     done
 
     case $XDG_CURRENT_DESKTOP in
-        awesome|i3|twm)
+        awesome|twm)
             if [ -n "$AUTOSTART_CMD" ]
             then
                 $AUTOSTART_CMD
@@ -49,7 +49,7 @@ fi
 
 if [ $# -eq 0 ]
 then
-    for wm in awesome startxfce4 i3 twm cinnamon-session
+    for wm in awesome startxfce4 cinnamon-session twm
     do
         >&2 echo "No params provided. Setting window manager."
         if type $wm > /dev/null 2>&1
@@ -61,13 +61,7 @@ then
     done
 fi
 
-if [ "$1" = "twm" ]
-then
-    set -- xterm
-    twm &
-fi
-
 __autostart "$@" &
 
 unset __autostart
-[ -n $EXEC ] && exec "$@"
+[ -n "$EXEC" ] && exec "$@"
