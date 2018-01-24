@@ -201,7 +201,7 @@ awful.screen.connect_for_each_screen(function(s)
         awful.layout.suit.tile
     )
 
-    awful.tag.find_by_name(s, "2").layout = awful.layout.suit.max.fullscreen
+    awful.tag.find_by_name(s, "9").layout = awful.layout.suit.max.fullscreen
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
