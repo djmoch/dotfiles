@@ -177,4 +177,29 @@ case $command in
         fi
         exec my wallpaper
         ;;
+    brightness)
+        if type xbacklight > /dev/null 2>&1
+        then
+            if [ "$1" = "monitor" ]
+            then
+                # Future-proofing ... gmux is specific, imagine other
+                # systems will be different
+                for opt in gmux
+                do
+                    selection=`xbacklight -list | grep $opt`
+                    num=`echo $selection | wc -w`
+                    [ $num -gt 0 ] && break
+                done
+            else
+                selection=`xbacklight -list | grep $1`
+                num=`echo $selection | wc -w`
+            fi
+            [ $num -gt 1 ] && __mylog "my brightness" "More than one $1" && exit 1
+            [ $num -lt 1 ] && __mylog "my brightness" "No $1 to adjust" && exit 1
+            shift
+            exec xbacklight -ctrl $selection "$@"
+        else
+            __mylog "my brightness" "No handler found"
+        fi
+        ;;
 esac

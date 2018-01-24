@@ -37,3 +37,15 @@
 
 "my shutdown"
   control+shift+Mod1 + BackSpace
+
+"my brightness kbd -inc 10"
+  XF86KbdBrightnessUp
+
+"my brightness kbd -dec 10"
+  XF86KbdBrightnessDown
+
+"my brightness monitor -inc 10"
+  XF86MonBrightnessUp
+
+"my brightness monitor -dec 10"
+  XF86MonBrightnessDown
