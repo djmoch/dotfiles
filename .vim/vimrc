@@ -353,7 +353,7 @@ set statusline+=%{MyFileEncoding()}%y%{OptStatus('ObsessionStatus')}
 set statusline+=[%p%%][Ln:%l/%L,Col:%v]
 colorscheme apprentice
 set ttyfast
-if $TERM_PROGRAM=="iTerm.app" || $PATH =~ 'cygdrive' || $COLORTERM =="truecolor" || exists('$XTERM_SHELL')
+if $TERM_PROGRAM=="iTerm.app" || $PATH =~ 'cygdrive' || $COLORTERM =="truecolor"
     set termguicolors
     if $TERM=='tmux-256color'
         set t_8f=[38;2;%lu;%lu;%lum
