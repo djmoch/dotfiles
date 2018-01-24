@@ -39,7 +39,10 @@ case $command in
                 ;;
         esac
         # If we get here, then handle generically
-        if type xterm > /dev/null 2>&1
+        if type urxvt > /dev/null 2>&1
+        then
+            exec urxvt "$@"
+        elif type xterm > /dev/null 2>&1
         then
             exec xterm "$@"
         elif type x-terminal-emulator > /dev/null 2>&1

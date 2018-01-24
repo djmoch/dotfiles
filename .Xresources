@@ -41,6 +41,27 @@ XTerm*highlightColor: #8FAFD7
 XTerm*metaSendsEscape: true
 XTerm*pointerMode: 2
 
+! URvxt
+URxvt.font: xft:meslo lg m dz:size=10
+URxvt.perl-ext: default,url-select
+URxvt.letterSpace: -1
+URxvt.lineSpace: -1
+URxvt.keysym.M-u: perl:url-select:select_next
+URxvt.url-select.launcher: my-open
+URxvt.url-select.underline: true
+URxvt.scrollBar: false
+URxvt.secondaryScreen: 1
+URxvt.secondaryScroll: 0
+URxvt.secondaryWheel: 1
+URxvt.highlightColor: #8FAFD7
+URxvt.highlightTextColor: #262626
+URxvt.meta8: false
+URxvt.visualBell: true
+URxvt.urgentOnBell: true
+URxvt.termName: rxvt-unicode-256color
+URxvt.pointerBlank: true
+URxvt.pointerBlankDelay: 4
+
 ! XDvi
 XDvi.background: #BCBCBC
 XDvi.foreground: #262626
