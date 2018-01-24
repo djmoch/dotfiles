@@ -26,12 +26,14 @@ case $command in
             XFCE)
                 if type xfce4-terminal > /dev/null 2>&1
                 then
+                    [ "$1" = "-e" ] && shift && set -- "-x" $@
                     exec xfce4-terminal "$@"
                 fi
                 ;;
             X-Cinnamon)
                 if type gnome-terminal > /dev/null 2>&1
                 then
+                    [ "$1" = "-e" ] && shift && set -- "-x" $@
                     exec gnome-terminal "$@"
                 fi
                 ;;
@@ -97,13 +99,13 @@ case $command in
         fi
         ;;
     perms)
-        exec my-perms
+        exec my-perms "$@"
         ;;
     init)
-        exec my-init
+        exec my-init "$@"
         ;;
     open)
-        exec my-open
+        exec my-open "$@"
         ;;
     sound)
         if type pactl > /dev/null 2>&1
