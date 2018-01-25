@@ -2,14 +2,14 @@
 ! ~/.Xresources
 !
 
-#define NOTO -monotype-noto sans-medium-r-normal--11-*-*-*-*-*-*-*
-#define MESLO -bitstream-meslo lg m dz-medium-r-normal--11-*-*-*-*-*-*-*
+#define FIXED -misc-fixed-medium-r-normal--13-*-*-*-*-*-iso8859-*
+#define UTF8 -misc-fixed-medium-r-normal--13-*-*-*-*-*-iso10646-*
 
 ! Global defaults
 Xft.dpi: 96
 *background: #262626
 *foreground: #BCBCBC
-*font: -monotype-noto sans-medium-r-normal--11-*-*-*-*-*-*-*
+*font: FIXED
 *color0:     #1C1C1C
 *color8:     #444444
 *color1:     #AF5F5F
@@ -29,9 +29,11 @@ Xft.dpi: 96
 
 ! XTerm
 XTerm.termName: xterm-256color
-XTerm*font: -bitstream-meslo lg m dz-medium-r-normal--11-*-*-*-*-*-*-*
+XTerm*locale: true
+XTerm*utf8Fonts.font: UTF8
+XTerm*font: FIXED
 XTerm*renderFont: true
-XTerm*faceName: -bitstream-meslo lg m dz-medium-r-normal--11-*-*-*-*-*-*-*
+XTerm*faceName: monospace
 XTerm*faceSize: 10.0
 XTerm*visualBell: true
 XTerm*bellIsUrgent: true
@@ -42,7 +44,7 @@ XTerm*metaSendsEscape: true
 XTerm*pointerMode: 2
 
 ! URvxt
-URxvt.font: xft:meslo lg m dz:size=10
+URxvt.font: xft:monospace:size=10
 URxvt.perl-ext: default,url-select
 URxvt.letterSpace: -1
 URxvt.lineSpace: -1
@@ -69,4 +71,4 @@ XDvi.editor: gvim --servername xdvi --remote +%l %f
 XDvi.wwwBrowser: my-open
 XDvi.expertMode: 31
 XDvi.shrinkFactor: 7
-XDvi.altFont: -monotype-noto sans-medium-r-normal--11-*-*-*-*-*-*-*
+XDvi.altFont: UTF8
