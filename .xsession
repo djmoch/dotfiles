@@ -42,12 +42,6 @@ SHLVL=0; export SHLVL
 my kbopts
 my screen
 
-if [ -d /usr/share/fonts/noto/ ]
-then
-    xset fp+ /usr/share/fonts/noto/
-    xset fp rehash
-fi
-
 if [ $# -eq 0 ]
 then
     for wm in awesome startxfce4 cinnamon-session twm
