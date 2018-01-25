@@ -6,7 +6,6 @@
 #define UTF8 -misc-fixed-medium-r-normal--13-*-*-*-*-*-iso10646-*
 
 ! Global defaults
-Xft.dpi: 96
 *background: #262626
 *foreground: #BCBCBC
 *font: FIXED
