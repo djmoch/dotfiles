@@ -7,17 +7,12 @@
 # If the above line is not correctly displayed, fix your editor first!
 
 general {
-        colors = true
-        interval = 5
+    colors = true
+    interval = 5
 }
 
-order += "battery all"
 order += "tztime local"
 
-battery all {
-        format = "%status %percentage %remaining"
-}
-
 tztime local {
-        format = "%Y-%m-%d %H:%M"
+    format = "%l:%M %p"
 }

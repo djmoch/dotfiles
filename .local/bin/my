@@ -153,7 +153,7 @@ case $command in
         numoptions=`echo $xrandr_options | wc -w`
         if [ $numoptions -eq 1 ]
         then
-            __mylog "my screen" "Executing xrandr --output $xrandr_options --auto"
+            __mylog "my screen" "Executing xrandr --output $xrandr_options --auto --primary"
             xrandr --output $xrandr_options --auto --primary
         else
             # Prefer external monitors
@@ -167,8 +167,8 @@ case $command in
                 [ -n "$primary_found" ] && selection=$option && break
             done
 
-            __mylog "my screen" "Executing xrandr --output $selection --auto"
-            xrandr --output $selection --auto
+            __mylog "my screen" "Executing xrandr --output $selection --auto --primary"
+            xrandr --output $selection --auto --primary
 
             for option in $xrandr_options
             do
@@ -200,6 +200,74 @@ case $command in
             exec xbacklight -ctrl $selection "$@"
         else
             __mylog "my brightness" "No handler found"
+        fi
+        ;;
+    battery)
+        uname=`uname -s`
+
+        case $1 in
+            remaining)
+                case $uname in 
+                    *Linux*)
+                        if [ `acpi | wc -l` -eq 2 ]
+                        then
+                            acpi | awk 'getline' | awk '{print $4}' | sed 's~%~~' | sed 's~,~~'
+                        else
+                            acpi | awk '{print $4}' | sed 's~%~~' | sed 's~,~~'
+                        fi
+                        ;;
+                    *Darwin*)
+                        battery_info=`ioreg -rc AppleSmartBattery`
+                        echo $battery_info | grep -o '"CurrentCapacity" = [0-9]\+' | awk '{print $3}'
+                        ;;
+                    *CYGWIN*)
+                        wmic path Win32_Battery Get EstimatedChargeRemaining /format:list 2>/dev/null | grep '[^[:blank:]]' | cut -d= -f2
+                        ;;
+                    *)
+                        echo "no battery status"
+                        exit 1
+                esac
+                exit 0
+                ;;
+            total)
+                case $uname in 
+                    *Linux*|*CYGWIN*)
+                        echo 100
+                        ;;
+                    *Darwin*)
+                        battery_info=`ioreg -rc AppleSmartBattery`
+                        echo $battery_info | grep -o '"MaxCapacity" = [0-9]\+' | awk '{print $3}'
+                        ;;
+                    *)
+                        echo "no battery status"
+                        exit 1
+                esac
+                exit 0
+                ;;
+            percent)
+                echo "`my battery remaining`/`my battery total` * 100" | bc -l | cut -d '.' -f 1
+                exit 0
+                ;;
+        esac
+        ;;
+    status)
+        echo -n "Batt: `my battery percent`% | "
+        cat $HOME/.config/forecastio/current_forecast.txt
+        echo -n " | "
+        [ -z "$1" ] && date +'%l:%M %p'
+        exit 0
+        ;;
+    i3status)
+        if type i3status > /dev/null 2>&1
+        then
+            i3status | while :
+            do
+                read line
+                echo "`my status noclock` $line" || exit 1
+            done
+        else
+            __mylog "my i3status" "i3status not found"
+            exit 1
         fi
         ;;
 esac
