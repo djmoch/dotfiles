@@ -23,9 +23,9 @@
 # can have more parameters of course). Templates can have subtemplates.
 # Here's a small example:
 #   /FORMAT format hello {colorify {underline world}}
-#   abstracts = { colorify = "%X3B$0-%X7S"; underline = "%U$0-%U"; }
+#   abstracts = { colorify = "%X3K$0-%X7S"; underline = "%U$0-%U"; }
 # When irssi expands the templates in "format", the final string would be:
-#   hello %X3B%Uworld%U%X7S
+#   hello %X3K%Uworld%U%X7S
 # ie. underlined bright green "world" text.
 # and why "$0-", why not "$0"? $0 would only mean the first parameter,
 # $0- means all the parameters. With {underline hello world} you'd really
@@ -39,9 +39,9 @@
 # There's one difference here though. %X7S format. Normally it means the
 # default color of the terminal (white mostly), but here it means the
 # "reset color back to the one it was in higher template". For example
-# if there was /FORMAT test %X3B{foo}bar, and foo = "%Y$0%X7S", irssi would
+# if there was /FORMAT test %X3K{foo}bar, and foo = "%Y$0%X7S", irssi would
 # print yellow "foo" (as set with %Y) but "bar" would be green, which was
-# set at the beginning before the {foo} template. If there wasn't the %X3B
+# set at the beginning before the {foo} template. If there wasn't the %X3K
 # at start, the normal behaviour of %X7S would occur. If you _really_ want
 # to use the terminal's default color, use %X7S.
 
@@ -100,8 +100,8 @@ abstracts = {
   ##
 
   # highlighted nick/host is printed (joins)
-  channick_hilight = "%X3B$*%X7S";
-  chanhost_hilight = "{nickhost %X3B$*%X7S}";
+  channick_hilight = "%X3K$*%X7S";
+  chanhost_hilight = "{nickhost %X3K$*%X7S}";
 
   # nick/host is printed (parts, quits, etc.)
   channick = "%X3F$*%X7S";
@@ -111,30 +111,30 @@ abstracts = {
   channelhilight = "%X3F$*%X7S";
 
   # ban/ban exception/invite list mask is printed
-  ban = "%X3B$*%X7S";
+  ban = "%X3K$*%X7S";
 
   ##
   ## messages
   ##
 
   # the basic styling of how to print message, $0 = nick mode, $1 = nick
-  msgnick = "%X3B<%X7S$0$1-%X3B>%X7S %|";
+  msgnick = "%X3K<%X7S$0$1-%X3K>%X7S %|";
 
   # message from you is printed. "ownnick" specifies the styling of the
   # nick ($0 part in msgnick) and "ownmsgnick" specifies the styling of the
   # whole line.
 
   # Example1: You want the message text to be green:
-  #  ownmsgnick = "{msgnick $0 $1-}%X3B";
+  #  ownmsgnick = "{msgnick $0 $1-}%X3K";
   # Example2.1: You want < and > chars to be yellow:
   #  ownmsgnick = "%Y{msgnick $0 $1-%Y}%X7S";
   #  (you'll also have to remove <> from replaces list above)
   # Example2.2: But you still want to keep <> grey for other messages:
-  #  pubmsgnick = "%X3B{msgnick $0 $1-%X3B}%X7S";
-  #  pubmsgmenick = "%X3B{msgnick $0 $1-%X3B}%X7S";
-  #  pubmsghinick = "%X3B{msgnick $1 $0$2-%X7S%X3B}%X7S";
-  #  ownprivmsgnick = "%X3B{msgnick  $*%X3B}%X7S";
-  #  privmsgnick = "%X3B{msgnick  %X6C$*%X3B}%X7S";
+  #  pubmsgnick = "%X3K{msgnick $0 $1-%X3K}%X7S";
+  #  pubmsgmenick = "%X3K{msgnick $0 $1-%X3K}%X7S";
+  #  pubmsghinick = "%X3K{msgnick $1 $0$2-%X7S%X3K}%X7S";
+  #  ownprivmsgnick = "%X3K{msgnick  $*%X3K}%X7S";
+  #  privmsgnick = "%X3K{msgnick  %X6C$*%X3K}%X7S";
 
   # $0 = nick mode, $1 = nick
   ownmsgnick = "{msgnick $0 $1-}";
@@ -153,13 +153,13 @@ abstracts = {
   pubmsghinick = "{msgnick $1 $0$2-%X7S}";
 
   # channel name is printed with message
-  msgchannel = "%X3B:%X28$*%X7S";
+  msgchannel = "%X3K:%X28$*%X7S";
 
   # private message, $0 = nick, $1 = host
-  privmsg = "[%X6C$0%X3B(%X47$1-%X3B)%X7S] ";
+  privmsg = "[%X6C$0%X3K(%X47$1-%X3K)%X7S] ";
 
   # private message from you, $0 = "msg", $1 = target nick
-  ownprivmsg = "[%X47$0%X3B(%X6C$1-%X3B)%X7S] ";
+  ownprivmsg = "[%X47$0%X3K(%X6C$1-%X3K)%X7S] ";
 
   # own private message in query
   ownprivmsgnick = "{msgnick  $*}";
@@ -182,7 +182,7 @@ abstracts = {
   ownaction = "{action $*}";
 
   # own action with target, both private/public
-  ownaction_target = "{action_core $0}%X3B:%X28$1%X7S ";
+  ownaction_target = "{action_core $0}%X3K:%X28$1%X7S ";
 
   # private action sent by others
   pvtaction = "%X6Z (*) $*%X7S ";
@@ -200,15 +200,15 @@ abstracts = {
   whois = "%# $[8]0 : $1-";
 
   # notices
-  ownnotice = "[%X47$0%X3B(%X6C$1-%X3B)]%X7S ";
-  notice = "%X3B-%X2L$*%X3B-%X7S ";
-  pubnotice_channel = "%X3B:%X2L$*";
-  pvtnotice_host = "%X3B(%X2L$*%X3B)";
-  servernotice = "%X3B!$*%X7S ";
+  ownnotice = "[%X47$0%X3K(%X6C$1-%X3K)]%X7S ";
+  notice = "%X3K-%X2L$*%X3K-%X7S ";
+  pubnotice_channel = "%X3K:%X2L$*";
+  pvtnotice_host = "%X3K(%X2L$*%X3K)";
+  servernotice = "%X3K!$*%X7S ";
 
   # CTCPs
-  ownctcp = "[%X47$0%X3B(%X6C$1-%X3B)] ";
-  ctcp = "%X3B$*%X7S";
+  ownctcp = "[%X47$0%X3K(%X6C$1-%X3K)] ";
+  ctcp = "%X3K$*%X7S";
 
   # wallops
   wallop = "%X6Z$*%X7S: ";
@@ -225,23 +225,23 @@ abstracts = {
   names_nick_op = "{names_nick $*}";
   names_nick_halfop = "{names_nick $*}";
   names_nick_voice = "{names_nick $*}";
-  names_users = "[%X3B$*%X7S]";
-  names_channel = "%X3B$*%X7S";
+  names_users = "[%X3K$*%X7S]";
+  names_channel = "%X3K$*%X7S";
 
   # DCC
   dcc = "%$*%X7S";
   dccfile = "%X6Z$*%X7S";
 
   # DCC chat, own msg/action
-  dccownmsg = "[%X47$0%X3B($1-%X3B)%X7S] ";
+  dccownmsg = "[%X47$0%X3K($1-%X3K)%X7S] ";
   dccownnick = "%X6C$*%X7S";
   dccownquerynick = "%X6Z$*%X7S";
   dccownaction = "{action $*}";
-  dccownaction_target = "{action_core $0}%X3B:%X28$1%X7S ";
+  dccownaction_target = "{action_core $0}%X3K:%X28$1%X7S ";
 
   # DCC chat, others
-  dccmsg = "[%X3B$1-%X3B(%X3B$0%X3B)%X7S] ";
-  dccquerynick = "%X3B$*%X7S";
+  dccmsg = "[%X3K$1-%X3K(%X3K$0%X3K)%X7S] ";
+  dccquerynick = "%X3K$*%X7S";
   dccaction = "%X6Z (*dcc*) $*%X7S %|";
 
   ##
