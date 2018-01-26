@@ -8,10 +8,9 @@
 
 __autostart()
 {
-    : ${XDG_CURRENT_DESKTOP:=${XDG_SESSION_DESKTOP:-$1}}
     if type dex > /dev/null 2>&1
     then
-        AUTOSTART_CMD="dex -ae $XDG_CURRENT_DESKTOP"
+        AUTOSTART_CMD="dex -ae $1"
     elif type fbautostart > /dev/null 2>&1
     then
         AUTOSTART_CMD="fbautostart"
@@ -22,16 +21,12 @@ __autostart()
         sleep 1
     done
 
-    case $XDG_CURRENT_DESKTOP in
-        awesome|twm)
-            if [ -n "$AUTOSTART_CMD" ]
-            then
-                $AUTOSTART_CMD
-            else
-                xbindkeys
-            fi
-            ;;
-    esac
+    if [ -n "$AUTOSTART_CMD" ]
+    then
+        $AUTOSTART_CMD
+    else
+        xbindkeys
+    fi
 }
 
 xset dpms 0 0 300
@@ -44,7 +39,7 @@ my screen
 
 if [ $# -eq 0 ]
 then
-    for wm in awesome startxfce4 cinnamon-session twm
+    for wm in awesome i3 startxfce4 cinnamon-session twm
     do
         >&2 echo "No params provided. Setting window manager."
         if type $wm > /dev/null 2>&1
@@ -56,7 +51,11 @@ then
     done
 fi
 
-__autostart "$@" &
+case $1 in
+    awesome|i3|twm)
+        __autostart "$@" &
+        ;;
+esac
 
 unset __autostart
-[ -n "$EXEC" ] && exec "$@"
+exec "$@"

@@ -154,7 +154,7 @@ case $command in
         if [ $numoptions -eq 1 ]
         then
             __mylog "my screen" "Executing xrandr --output $xrandr_options --auto"
-            xrandr --output $xrandr_options --auto
+            xrandr --output $xrandr_options --auto --primary
         else
             # Prefer external monitors
             # If more than one display is connected, then enable the
