@@ -32,6 +32,9 @@
 "my sound set-sink-mute 0 toggle"
   XF86AudioMute
 
+"notify-send "`my sound status`""
+  Mod4 + v
+
 "my screen"
   Mod1 + Mod4 + Return
 

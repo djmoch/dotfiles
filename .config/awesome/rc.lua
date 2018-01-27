@@ -93,14 +93,6 @@ local function client_menu_toggle_fn()
         end
     end
 end
-
-local function sound_status()
-    awful.spawn.easy_async('my sound status',
-        function (stdout, stderr, reason, exit_code)
-            -- Use string.sub to trim the trailing carriage return
-            naughty.notify { text = string.sub(stdout, 1, -2) }
-        end)
-end
 -- }}}
 
 -- {{{ Menu
@@ -257,7 +249,6 @@ globalkeys = gears.table.join(
               {description = "view next", group = "tag"}),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
-    awful.key({ modkey,           }, "v", sound_status),
     awful.key({ modkey,           }, "j",
         function ()
             awful.client.focus.byidx( 1)
