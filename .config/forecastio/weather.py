@@ -25,12 +25,12 @@ def generate_forecast():
         current_temp = forecast.currently()
         day = forecast.daily()
 
-        temp = str(current_temp.temperature) + " F"
+        temp = str(current_temp.temperature) + "\u00b0 F"
         high = str(int(math.ceil(day.data[0].temperatureMax)))
         low = str(int(math.ceil(day.data[0].temperatureMin)))
 
         with open('current_forecast.txt', 'w') as outfile:
-            outfile.write(temp + ", " + str(current_temp.summary) + ", " + high +"/"+low + " F")
+            outfile.write(temp + ", " + str(current_temp.summary) + ", " + high +"\u00b0/"+low + "\u00b0 F")
     except requests.packages.urllib3.exceptions.NewConnectionError:
         error = True
         sys.stdout.writelines(datetime.now().strftime("%m/%d/%Y %I:%M:%S:") + " Could not connect. Will try again \
