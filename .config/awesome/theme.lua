@@ -3,6 +3,7 @@
 --
 local theme_assets = require("beautiful.theme_assets")
 local xresources = require("beautiful.xresources")
+local xtheme = xresources.get_current_theme()
 local dpi = xresources.apply_dpi
 
 local gfs = require("gears.filesystem")
@@ -13,26 +14,26 @@ local theme = {}
 
 theme.font          = "sans 9"
 
-theme.bg_normal     = "#262626"
-theme.bg_focus      = "#6C6C6C"
-theme.bg_urgent     = "#87875F"
-theme.bg_minimize   = "#1C1C1C"
-theme.bg_systray    = theme.bg_normal
+theme.bg_normal     = xtheme.background
+theme.bg_focus      = xtheme.color7
+theme.bg_urgent     = xtheme.color3
+theme.bg_minimize   = xtheme.color0
+theme.bg_systray    = xtheme.background
 
-theme.fg_normal     = "#BCBCBC"
-theme.fg_focus      = "#BCBCBC"
-theme.fg_urgent     = "#262626"
-theme.fg_minimize   = "#BCBCBC"
+theme.fg_normal     = xtheme.foreground
+theme.fg_focus      = xtheme.foreground
+theme.fg_urgent     = xtheme.background
+theme.fg_minimize   = xtheme.foreground
 
 theme.useless_gap   = dpi(0)
 theme.border_width  = dpi(1)
-theme.border_normal = "#444444"
-theme.border_focus  = "#5F8787"
-theme.border_marked = "#5F5F87"
+theme.border_normal = xtheme.color8
+theme.border_focus  = xtheme.color6
+theme.border_marked = xtheme.color5
 
-theme.hotkeys_bg            = "#262626"
-theme.hotkeys_fg            = "#BCBCBC"
-theme.hotkeys_modifiers_fg  = "#5F8787"
+theme.hotkeys_bg            = xtheme.background
+theme.hotkeys_fg            = xtheme.foregound
+theme.hotkeys_modifiers_fg  = xtheme.color6
 
 -- Generate taglist squares:
 local taglist_square_size = dpi(4)
