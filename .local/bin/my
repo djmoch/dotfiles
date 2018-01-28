@@ -57,14 +57,9 @@ case $command in
 
         for locker in light-locker cinnamon-screensaver gnome-screensaver xscreensaver
         do
-            if type $locker-command > /dev/null 2>&1 && ps -U $LOGNAME -o cmd= | grep $locker > /dev/null 2>&1
+            if type $locker-command > /dev/null 2>&1 && ps -U $LOGNAME -o cmd= | grep ^[^_[:space:]]*$locker > /dev/null 2>&1
             then
-                if [ "$locker" = "light-locker" ]
-                then
-                    locker="xset dpms force off"
-                else
-                    locker="$locker-command -l"
-                fi
+                locker="$locker-command -l"
                 locker_running=1
                 break
             fi

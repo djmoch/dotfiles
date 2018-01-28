@@ -71,3 +71,39 @@ XDvi.wwwBrowser: my-open
 XDvi.expertMode: 31
 XDvi.shrinkFactor: 7
 XDvi.altFont: UTF8
+
+! Xscreensaver
+XScreenSaver.timeout: 0:05:00
+XScreenSaver.cycle: 0:00:00
+XScreenSaver.lock: true
+XScreenSaver.lockTimeout: 0:00:03
+XScreenSaver.passwdTimeout: 0:00:30
+XScreenSaver.dpmsEnabled: true
+XScreenSaver.dpmsStandby: 0:00:00
+XScreenSaver.dpmsSuspend: 0:00:00
+XScreenSaver.dpmsOff: 0:15:00
+XScreenSaver.dpmsQuickOff: false
+XScreenSaver.verbose: true
+XScreenSaver.timestamp: true
+XScreenSaver.splash:  false
+XScreenSaver.loadURL: my-open '%s'
+XScreenSaver.memoryLimit: 0
+XScreenSaver.fade:  false
+XScreenSaver.unfade:  false
+XScreenSaver.captureStderr: false
+XScreenSaver.ignoreUninstalledPrograms: false
+XScreenSaver.grabDesktopImages:  false
+XScreenSaver.grabVideoFrames:    false
+XScreenSaver.chooseRandomImages: false
+XScreenSaver.mode:  one
+XScreenSaver.selected: 116
+XScreenSaver.textMode: file
+XScreenSaver.textFile:
+XScreenSaver.pointerPollTime:    0:00:05
+XScreenSaver.pointerHysteresis:  10
+XScreenSaver.windowCreationTimeout:0:00:30
+XScreenSaver.initialDelay: 0:00:00
+XScreenSaver.GetViewPortIsFullOfLies: false
+XScreenSaver.procInterrupts: true
+XScreenSaver.xinputExtensionDev: false
+XScreenSaver.authWarningSlack:   20
