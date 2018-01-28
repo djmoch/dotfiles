@@ -45,14 +45,14 @@ then
         if type $wm > /dev/null 2>&1
         then
             set -- $wm
-            EXEC=1
             break
         fi
     done
 fi
 
 case $1 in
-    awesome|i3|twm)
+    start*|*session) ;;
+    *)
         __autostart "$@" &
         ;;
 esac
