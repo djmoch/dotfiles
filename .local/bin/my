@@ -7,7 +7,7 @@
 # have one handler, but exist to avoid re-writes across my dotfiles
 # later on.
 
-[ $# -eq 0 ] && exit 1
+[ $# -eq 0 -o -z "$DISPLAY" ] && exit 1
 
 log="$HOME/.local/var/log/my"
 command=$1
@@ -35,25 +35,7 @@ __getlocker()
 
 case $command in
     term)
-        : ${XDG_CURRENT_DESKTOP:=${XDG_SESSION_DESKTOP:-X-Generic}}
         SHLVL=0; export SHLVL
-        case $XDG_CURRENT_DESKTOP in
-            XFCE)
-                if type xfce4-terminal > /dev/null 2>&1
-                then
-                    [ "$1" = "-e" ] && shift && set -- "-x" $@
-                    exec xfce4-terminal "$@"
-                fi
-                ;;
-            X-Cinnamon)
-                if type gnome-terminal > /dev/null 2>&1
-                then
-                    [ "$1" = "-e" ] && shift && set -- "-x" $@
-                    exec gnome-terminal "$@"
-                fi
-                ;;
-        esac
-        # If we get here, then handle generically
         if type urxvt > /dev/null 2>&1
         then
             exec urxvt "$@"
@@ -65,7 +47,17 @@ case $command in
             exec x-terminal-emulator "$@"
         fi
 
+        [ "$1" = "-e" ] && shift && set -- "-x" $@
+        if type xfce4-terminal > /dev/null 2>&1
+        then
+            exec xfce4-terminal "$@"
+        elif type gnome-terminal > /dev/null 2>&1
+        then
+            exec gnome-terminal "$@"
+        fi
+
         __mylog "my term" "No terminal emulator found"
+        exit 1
         ;;
     lock)
         sleep 1
