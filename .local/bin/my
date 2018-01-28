@@ -18,6 +18,21 @@ __mylog()
     echo "$1 (`date +'%m/%d/%Y %H:%M:%S'`): $2" >> $log
 }
 
+__getlocker()
+{
+    for locker in light-locker cinnamon-screensaver gnome-screensaver xscreensaver
+    do
+        if type $locker-command > /dev/null 2>&1 && ps -U $LOGNAME -o cmd= | grep ^[^_[:space:]]*$locker > /dev/null 2>&1
+        then
+            echo $locker
+            exit 0
+        fi
+    done
+
+    __mylog "__getlocker" "No screen locker running"
+    exit 1
+}
+
 case $command in
     term)
         : ${XDG_CURRENT_DESKTOP:=${XDG_SESSION_DESKTOP:-X-Generic}}
@@ -55,22 +70,14 @@ case $command in
     lock)
         sleep 1
 
-        for locker in light-locker cinnamon-screensaver gnome-screensaver xscreensaver
-        do
-            if type $locker-command > /dev/null 2>&1 && ps -U $LOGNAME -o cmd= | grep ^[^_[:space:]]*$locker > /dev/null 2>&1
-            then
-                locker="$locker-command -l"
-                locker_running=1
-                break
-            fi
-        done
+        locker=`__getlocker`
 
-        if [ -z "$locker_running" ]
+        [ -z "$locker" ] && exit 1
+        if [ "$locker" = "light-locker" ]
         then
-            __mylog "my lock" "No screen locker running"
-            exit 1
+            exec xset dpms force off
         else
-            exec $locker
+            exec $locker-command -l
         fi
         ;;
     wallpaper)
@@ -80,6 +87,12 @@ case $command in
     standby)
         if type systemctl > /dev/null 2>&1
         then
+            locker=`__getlocker`
+            [ -z "$locker" ] && exit 1
+            if [ ! "$locker" = "light-locker" ]
+            then
+                $locker-command -l
+            fi
             exec systemctl hybrid-sleep
         else
             __mylog "my standby" "No handler found"
