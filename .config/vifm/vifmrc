@@ -89,7 +89,7 @@ filetype *
         \ {Open with my-open}
         \ my open %c
 
-set vifminfo=dhistory,savedirs,chistory,state,tui,shistory,
+set vifminfo=dhistory,chistory,state,tui,shistory,
     \phistory,fhistory,dirstack,registers,bookmarks,bmarks
 
 nnoremap s :shell<cr>
