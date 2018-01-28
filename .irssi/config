@@ -31,17 +31,10 @@ chatnets = {
 };
 
 channels = (
-  { name = "#irssi"; chatnet = "Freenode"; autojoin = "Yes"; },
-  { name = "#keybase"; chatnet = "Freenode"; autojoin = "No"; },
-  { name = "#tmux"; chatnet = "Freenode"; autojoin = "Yes"; },
-  { name = "#firefox"; chatnet = "Mozilla"; autojoin = "Yes"; },
-  {
-    name = "#archlinux-offtopic";
-    chatnet = "Freenode";
-    autojoin = "Yes";
-  },
+  { name = "#firefox"; chatnet = "Mozilla"; },
   { name = "#vim"; chatnet = "Freenode"; autojoin = "Yes"; },
-  { name = "#archlinux"; chatnet = "freenode"; autojoin = "yes"; }
+  { name = "#archlinux"; chatnet = "freenode"; autojoin = "yes"; },
+  { name = "#archlinux-aur"; chatnet = "Freenode"; autojoin = "yes"; }
 );
 
 aliases = {
@@ -332,7 +325,7 @@ windows = {
       {
         type = "CHANNEL";
         chat_type = "IRC";
-        name = "#tmux";
+        name = "#archlinux";
         tag = "Freenode";
       }
     );
@@ -344,7 +337,7 @@ windows = {
       {
         type = "CHANNEL";
         chat_type = "IRC";
-        name = "#irssi";
+        name = "#archlinux-aur";
         tag = "Freenode";
       }
     );
@@ -358,30 +351,6 @@ windows = {
         chat_type = "IRC";
         name = "#firefox";
         tag = "Mozilla";
-      }
-    );
-    sticky = "yes";
-    parent = "2";
-  };
-  6 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#archlinux-offtopic";
-        tag = "Freenode";
-      }
-    );
-    sticky = "yes";
-    parent = "2";
-  };
-  7 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#archlinux";
-        tag = "Freenode";
       }
     );
     sticky = "yes";
