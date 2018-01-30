@@ -473,6 +473,8 @@ awful.rules.rules = {
 
         name = {
           "Event Tester",  -- xev.
+          "xbindkeys_show",
+          "xfontsel"
         },
         role = {
           "AlarmWindow",  -- Thunderbird's calendar.
