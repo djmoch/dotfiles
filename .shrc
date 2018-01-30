@@ -6,14 +6,7 @@
 
 set -o emacs
 
-if [ -n "$BASH" ]
-then
-    user=`printf '\033[34m%s\033[m' "$LOGNAME"`
-    host=`printf '\033[32m\\h\033[m'`
-    PS1="$user@$host:\W\$ "
-else
-    PS1="$LOGNAME@\h:\W\$ "
-fi
+PS1="$LOGNAME@\h:\W\$ "
 export PS1
 
 # Turn on ls colors
