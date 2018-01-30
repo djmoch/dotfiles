@@ -7,24 +7,25 @@ floating_modifier $mod
 # {{{ Theme
 font pango:sans 9
 
+# XRDB            alias       xrdb name       default
 set_from_resource $background i3wm.background #262626
 set_from_resource $foreground i3wm.foreground #BCBCBC
-set_from_resource $color0 i3wm.color0 #1C1C1C
-set_from_resource $color8 i3wm.color8 #444444
-set_from_resource $color1 i3wm.color1 #AF5F5F
-set_from_resource $color9 i3wm.color9 #FF8700
-set_from_resource $color2 i3wm.color2 #5F875F
-set_from_resource $color10 i3wm.color10 #87AF87
-set_from_resource $color3 i3wm.color3 #87875F
-set_from_resource $color11 i3wm.color11 #FFFFAF
-set_from_resource $color4 i3wm.color4 #5F87AF
-set_from_resource $color12 i3wm.color12 #8FAFD7
-set_from_resource $color5 i3wm.color5 #5F5F87
-set_from_resource $color13 i3wm.color13 #8787AF
-set_from_resource $color6 i3wm.color6 #5F8787
-set_from_resource $color14 i3wm.color14 #5FAFAF
-set_from_resource $color7 i3wm.color7 #6C6C6C
-set_from_resource $color15 i3wm.color15 #FFFFFF
+set_from_resource $color0     i3wm.color0     #1C1C1C
+set_from_resource $color8     i3wm.color8     #444444
+set_from_resource $color1     i3wm.color1     #AF5F5F
+set_from_resource $color9     i3wm.color9     #FF8700
+set_from_resource $color2     i3wm.color2     #5F875F
+set_from_resource $color10    i3wm.color10    #87AF87
+set_from_resource $color3     i3wm.color3     #87875F
+set_from_resource $color11    i3wm.color11    #FFFFAF
+set_from_resource $color4     i3wm.color4     #5F87AF
+set_from_resource $color12    i3wm.color12    #8FAFD7
+set_from_resource $color5     i3wm.color5     #5F5F87
+set_from_resource $color13    i3wm.color13    #8787AF
+set_from_resource $color6     i3wm.color6     #5F8787
+set_from_resource $color14    i3wm.color14    #5FAFAF
+set_from_resource $color7     i3wm.color7     #6C6C6C
+set_from_resource $color15    i3wm.color15    #FFFFFF
 
 # class                 border      backgr.     text        indicator   child_border
 client.focused          $foreground $color7     $foreground $color7     $foreground
@@ -37,15 +38,14 @@ client.background       $background
 # }}}
 
 # {{{ Key Bindings
-bindsym $mod+Return exec my term
 bindsym $mod+q kill
 bindsym $mod+r exec dmenu_run
 bindsym $mod+p exec --no-startup-id i3-dmenu-desktop
 
-bindsym $mod+h focus left
-bindsym $mod+j focus down
-bindsym $mod+k focus up
-bindsym $mod+l focus right
+bindsym $mod+Control+h focus left
+bindsym $mod+Control+j focus down
+bindsym $mod+Control+k focus up
+bindsym $mod+Control+l focus right
 bindsym $mod+Shift+h move left
 bindsym $mod+Shift+j move down
 bindsym $mod+Shift+k move up
@@ -85,6 +85,14 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 
 bindsym $mod+Control+r restart
+# }}}
+
+# {{{ Rules
+for_window [class="^pinentry$"] floating enable
+for_window [title="^xbindkeys_show$"] floating enable
+for_window [title="^xfontsel$"] floating enable
+for_window [window_type="^popup_menu$"] floating enable
+popup_during_fullscreen leave_fullscreen
 # }}}
 
 # {{{ Resize Mode
