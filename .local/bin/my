@@ -64,13 +64,9 @@ case $command in
 
         locker=`__getlocker`
 
-        [ -z "$locker" ] && exit 1
-        if [ "$locker" = "light-locker" ]
-        then
-            exec xset dpms force off
-        else
-            exec $locker-command -l
-        fi
+        [ -z "$locker" ] && __mylog "my lock" "no locker running"; exit 1
+        [ "$locker" = "light-locker" ] || $locker-command -l
+        exec xset dpms force off
         ;;
     wallpaper)
         xsetroot -solid "#444444"
@@ -81,10 +77,7 @@ case $command in
         then
             locker=`__getlocker`
             [ -z "$locker" ] && exit 1
-            if [ ! "$locker" = "light-locker" ]
-            then
-                $locker-command -l
-            fi
+            [ "$locker" = "light-locker" ] || $locker-command -l
             exec systemctl hybrid-sleep
         else
             __mylog "my standby" "No handler found"
