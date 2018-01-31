@@ -2,9 +2,12 @@
 #
 # ~/.xsession
 #
+date +'%m/%d/%Y %H:%M:%S' >&2
+env >&2
 [ -r "$HOME/.xsession.local" ] && . "$HOME/.xsession.local"
 [ -n "$DISPLAY" ] && echo "$DISPLAY" > "$HOME/.xdisplay"
 [ -f "$HOME/.xdisplay" ] && chmod 600 "$HOME/.xdisplay"
+echo "$$" > "$HOME/.xsession.pid" && chmod 600 "$HOME/.xsession.pid"
 
 __autostart()
 {
@@ -23,13 +26,14 @@ __autostart()
 
     if [ -n "$AUTOSTART_CMD" ]
     then
-        $AUTOSTART_CMD
+        echo "Running autostart command: $AUTOSTART_CMD" >&2
+        $AUTOSTART_CMD >&2
     else
-        xbindkeys
+        xbindkeys >&2
     fi
 }
 
-xset dpms 0 0 900 s 300 0 s noblank s noexpose s on
+xset dpms 0 0 900 s 300 0 s blank s noexpose s on
 [ -r "$HOME/.Xmouse" ] && xmodmap .Xmouse
 
 SHLVL=0; export SHLVL
@@ -41,9 +45,9 @@ if [ $# -eq 0 ]
 then
     for wm in awesome i3 startxfce4 cinnamon-session twm
     do
-        >&2 echo "No params provided. Setting window manager."
         if type $wm > /dev/null 2>&1
         then
+            echo "Setting window manager to $wm" >&2
             set -- $wm
             break
         fi
