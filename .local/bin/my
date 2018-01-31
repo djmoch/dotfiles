@@ -96,6 +96,7 @@ case $command in
             fi
             if [ ! "$locker" = "light-locker" ]
             then
+                sleep 1
                 $locker-command -l
                 xset dpms force off
             fi
