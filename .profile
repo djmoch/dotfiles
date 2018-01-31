@@ -28,14 +28,12 @@ else
     export LESSOPEN
 fi
 
-# Keep the go folder hidden
 if type go > /dev/null 2>&1
 then
     GOPATH="$HOME/.go"
     export GOPATH
 fi
 
-# Add our default paths
 __addpath ()
 {
     if [ -d "$1" ]

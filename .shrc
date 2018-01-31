@@ -9,7 +9,6 @@ set -o emacs
 PS1="$LOGNAME@\h:\W\$ "
 export PS1
 
-# Turn on ls colors
 if type dircolors > /dev/null 2>&1
 then
     if [ -n "$SOURCE_DIRCOLORS" ]
@@ -18,13 +17,19 @@ then
         unset SOURCE_DIRCOLORS
     fi
     alias ls="ls --color=auto"
+    LSCOLORPARAM="--color=auto"
 else
     CLICOLOR=1
     LSCOLORS=ExFxBxDxCxegedabagacad
     export CLICOLOR LSCOLORS
+    LSCOLORPARAM=""
 fi
 
-# Colorize others if they exist
+alias ll="ls $LSCOLORPARAM -l"
+alias la="ls $LSCOLORPARAM -A"
+alias lla="ls $LSCOLORPARAM -lA"
+unset LSCOLORPARAM
+
 COLORIZE_CMDS="pacman grep egrep fgrep"
 for cmd in $COLORIZE_CMDS
 do
@@ -34,37 +39,41 @@ do
     fi
 done
 
-# Handy Tmux aliases
 if type tmux > /dev/null 2>&1
 then
     alias tas=tmux\ attach-session\ -t
     alias tns=tmux\ new-session\ -s
     alias tls=tmux\ list-sessions
+    alias ts=tmux-session
 fi
 
-alias export="export -p"
-
-# Configure GPG and start the agent if it isn't already running
-if type gpg-connect-agent > /dev/null 2>&1
+if type lpass > /dev/null 2>&1
 then
-    export GPG_TTY=`tty`
-    gpg-connect-agent updatestartuptty /bye > /dev/null 2>&1
-
-    # Configure GPG as an SSH key provider
-    # Assume SSH agent is forwarded if we're in an SSH session
-    if [ -z "$SSH_TTY" ] && type gpgconf > /dev/null 2>&1
-    then
-        unset SSH_AGENT_PID
-        if [ "`gpgconf --list-dirs agent-ssh-socket | wc -l`" -eq 1 ]
-        then
-            export SSH_AUTH_SOCK=`gpgconf --list-dirs agent-ssh-socket`
-        fi
-    fi
+    alias lpl="lpass login"
+    alias lps="lpass show"
+    alias lpp="lpass show --password"
+    alias lpc="lpass show --password -c"
 fi
 
 if [ "$VISUAL" = "vi" ]
 then
     alias vim=vi
+fi
+
+if type gpg-connect-agent > /dev/null 2>&1
+then
+    GPG_TTY=`tty`; export GPG_TTY
+    gpg-connect-agent updatestartuptty /bye > /dev/null 2>&1
+
+    if [ -z "$SSH_TTY" ] && type gpgconf > /dev/null 2>&1
+    then
+        if [ "`gpgconf --list-dirs agent-ssh-socket | wc -l`" -eq 1 ]
+        then
+            unset SSH_AGENT_PID
+            SSH_AUTH_SOCK=`gpgconf --list-dirs agent-ssh-socket`
+            export SSH_AUTH_SOCK
+        fi
+    fi
 fi
 
 if [ -r /etc/motd -a -n "$DISPLAY" -a -z "$SSH_TTY" ]
