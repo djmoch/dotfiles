@@ -36,7 +36,16 @@ __getlocker()
 case $command in
     term)
         SHLVL=0; export SHLVL
-        if type urxvt > /dev/null 2>&1
+        if type urxvtd > /dev/null 2>&1
+        then
+            urxvtc "$@"
+            if [ "$?" -eq 2 ]
+            then
+                urxvtd -q -o -f
+                urxvtc "$@"
+            fi
+            exit 0
+        elif type urxvt > /dev/null 2>&1
         then
             exec urxvt "$@"
         elif type xterm > /dev/null 2>&1
@@ -64,7 +73,11 @@ case $command in
 
         locker=`__getlocker`
 
-        [ -z "$locker" ] && __mylog "my lock" "no locker running"; exit 1
+        if [ -z "$locker" ]
+        then
+            __mylog "my lock" "no locker running"
+            exit 1
+        fi
         [ "$locker" = "light-locker" ] || $locker-command -l
         exec xset dpms force off
         ;;
@@ -76,8 +89,16 @@ case $command in
         if type systemctl > /dev/null 2>&1
         then
             locker=`__getlocker`
-            [ -z "$locker" ] && exit 1
-            [ "$locker" = "light-locker" ] || $locker-command -l
+            if [ -z "$locker" ]
+            then
+                __mylog "my standby" "no locker running"
+                exit 1
+            fi
+            if [ ! "$locker" = "light-locker" ]
+            then
+                $locker-command -l
+                xset dpms force off
+            fi
             exec systemctl hybrid-sleep
         else
             __mylog "my standby" "No handler found"
