@@ -285,4 +285,38 @@ case $command in
             exit 1
         fi
         ;;
+    copy)
+        uname=`uname -s`
+
+        case $uname in
+            *Darwin*)
+                reattach-to-user-namespace pbcopy
+                ;;
+            *CYGWIN*)
+                cat > /dev/clipboard
+                ;;
+            *Linux*)
+                xclip -selection clipboard
+                ;;
+            *)
+                return
+        esac
+        ;;
+    paste)
+        uname=`uname -s`
+
+        case $uname in
+            *Darwin*)
+                reattach-to-user-namespace pbpaste
+                ;;
+            *CYGWIN*)
+                cat /dev/clipboard
+                ;;
+            *Linux*)
+                xclip -o
+                ;;
+            *)
+                return
+        esac
+        ;;
 esac
