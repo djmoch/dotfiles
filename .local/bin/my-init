@@ -54,9 +54,9 @@ then
     echo " Initializing Termcaps"
     if infocmp tmux-256color > /dev/null 2>&1
     then
-        tic "$HOME/.config/terminfo/tmux.terminfo"
+        tic "$HOME/.local/lib/terminfo/tmux.terminfo"
     else
-        tic "$HOME/.config/terminfo/tmux-from-screen.terminfo"
+        tic "$HOME/.local/lib/terminfo/tmux-from-screen.terminfo"
     fi
 fi
 
