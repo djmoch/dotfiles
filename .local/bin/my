@@ -267,7 +267,7 @@ case $command in
         ;;
     status)
         echo -n "Batt: `my battery percent`% | "
-        cat $HOME/.config/forecastio/current_forecast.txt
+        cat $HOME/.local/var/forecastio/current_forecast.txt
         echo -n " | "
         [ -z "$1" ] && date +'%l:%M %p'
         exit 0

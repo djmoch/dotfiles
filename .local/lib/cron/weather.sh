@@ -7,6 +7,6 @@ else
     exit 1
 fi
 
-cd "$HOME/.config/forecastio/"
+cd "$HOME/.local/lib/forecastio/"
 
 ./weather.py

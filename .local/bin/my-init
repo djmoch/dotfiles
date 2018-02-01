@@ -119,6 +119,7 @@ then
 fi
 
 [ ! -d "$HOME/.local/var/log" ] && mkdir "$HOME/.local/var/log"
+[ ! -d "$HOME/.local/var/forecastio" ] && mkdir "$HOME/.local/var/forecastio"
 
 if [ ! -f "$HOME/._.djmoch" ]
 then

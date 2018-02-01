@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 from datetime import datetime
 import math
-from os import environ
+import os
 import sys
 import forecastio
 import requests
@@ -29,7 +29,9 @@ def generate_forecast():
         high = str(int(math.ceil(day.data[0].temperatureMax)))
         low = str(int(math.ceil(day.data[0].temperatureMin)))
 
-        with open('current_forecast.txt', 'w') as outfile:
+        out_filename = os.path.join(os.environ['HOME'], '.local/var/forecastio/current_forecast.txt')
+
+        with open(out_filename, 'w') as outfile:
             outfile.write(temp + ", " + str(current_temp.summary) + ", " + high +"\u00b0/"+low + "\u00b0 F")
     except requests.packages.urllib3.exceptions.NewConnectionError:
         error = True
