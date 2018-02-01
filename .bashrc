@@ -8,12 +8,10 @@ shopt -s globstar
 
 export HISTCONTOL=erasedups
 
-# Git command line configuration
 GIT_PS1_SHOWDIRTYSTATE=1
 GIT_PS1_SHOWUNTRACKEDFILES=1
-source "$HOME/.config/bash/git-prompt.sh"
+source "$HOME/.local/lib/sh/git-prompt.sh"
 
-# Customize the prompt
 if [ x$TERM == xlinux ]
 then
     usercolor='\[\033[01;34m\]'
@@ -23,7 +21,6 @@ fi
 
 export PS1=$usercolor'\u\[\033[m\]@\[\033[32m\]\h:\[\033[m\]\W\[\033[31m\]$(__git_ps1 " (%s)")\[\033[m\]\$ '
 
-# Configure Homebrew
 if command -v brew > /dev/null 2>&1
 then
     export HOMEBREW_NO_ANALYTICS=1
@@ -37,12 +34,6 @@ then
     fi
 fi
 
-# $BASH_COMPLETION should contain the path to the bash_completion
-# script. If the variable is defined and is readable, it will be
-# sourced.
-#
-# NOTE: Might want to check that this isn't already sourced elsewhere
-# (e.g.  /etc/profile).
 [ -r "$BASH_COMPLETION" ] && source "$BASH_COMPLETION"
 unset BASH_COMPLETION
 
