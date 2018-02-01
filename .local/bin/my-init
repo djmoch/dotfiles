@@ -118,8 +118,8 @@ then
     cd - > /dev/null 2>&1
 fi
 
-[ ! -d "$HOME/.local/var/log" ] && mkdir "$HOME/.local/var/log"
-[ ! -d "$HOME/.local/var/forecastio" ] && mkdir "$HOME/.local/var/forecastio"
+[ ! -d "$HOME/.local/var/log" ] && mkdir -p "$HOME/.local/var/log"
+[ ! -d "$HOME/.local/var/forecastio" ] && mkdir -p "$HOME/.local/var/forecastio"
 
 if [ ! -f "$HOME/._.djmoch" ]
 then
