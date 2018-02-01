@@ -55,6 +55,11 @@ then
     alias lpc="lpass show --password -c"
 fi
 
+if type feh > /dev/null 2>&1
+then
+    alias feh="feh --auto-rotate --scale-down"
+fi
+
 if [ "$VISUAL" = "vi" ]
 then
     alias vim=vi
