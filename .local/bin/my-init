@@ -11,7 +11,7 @@ __has()
     for token in $@
     do
         type $token > /dev/null 2>&1
-        [ $? -ne 0 ] && echo "$token doesn't exist" && return 1
+        [ $? -ne 0 ] && echo " $token doesn't exist" && return 1
     done
     return 0
 }
@@ -26,8 +26,8 @@ __clone()
 
 __optclone_pathogen()
 {
-    vim --cmd "redir! > /tmp/djmoch-vimpackages | silent echo has('packages') | q"
-    case `cat /tmp/djmoch-vimpackages` in
+    vim --cmd "redir! > /tmp/vimpackages.$$ | silent echo has('packages') | q"
+    case `cat /tmp/vimpackages.$$` in
         *0*)
             echo -n "  Cloning tpope/vim-pathogen ... "
             git clone https://github.com/tpope/vim-pathogen.git > /dev/null 2>&1
@@ -46,7 +46,7 @@ then
     rm -rf "$HOME/.terminfo"
     rm -rf "$vim_bundle_path"
     rm "$HOME/.less"
-    type crontab > /dev/null 2>&1 && crontab -r
+    type crontab > /dev/null 2>&1 && crontab -r > /dev/null 2>&1
 fi
 
 # Terminfo
@@ -108,6 +108,8 @@ then
     __clone jpalardy/vim-slime
     cd - > /dev/null 2>&1
 fi
+
+[ ! -d "$HOME/.local/var/log" ] && mkdir "$HOME/.local/var/log"
 
 if [ ! -f "$HOME/._.djmoch" ]
 then
