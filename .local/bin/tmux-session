@@ -1,26 +1,30 @@
-#!/usr/bin/env bash
-if [[ "$1" == "-r" ]]
+#!/bin/sh
+if [ "$1" == "-r" ]
 then
-    for line in $(tmux list-sessions -F "#S")
+    for line in `tmux list-sessions -F "#S"`
     do
-        session=$(echo $line | sed 's~:~~')
+        session=`echo $line | sed 's~:~~'`
+        columns=`tput cols`
         echo $session
         case $session in
             iterm)
-                tmux setw -t $session:1 main-pane-width $(($(tput cols) - 80))
-                tmux selectl -t $session:1 main-vertical
+                width=`echo "$columns - 80" | bc`
                 ;;
             code)
-                tmux setw -t $session:1 main-pane-width $(($(tput cols) - 80))
-                tmux selectl -t $session:1 main-vertical
+                width=`echo "$columns - 80" | bc`
                 ;;
             chat)
-                tmux setw -t $session:1 main-pane-width $(($(tput cols) - 30))
-                tmux selectl -t $session:1 main-vertical
+                width=`echo "$columns - 30" | bc`
                 ;;
             *)
+                unset width
                 return
         esac
+        if [ -n "$width" ]
+        then
+            tmux setw -t $session:1 main-pane-width $width
+            tmux selectl -t $session:1 main-vertical
+        fi
     done
     exit
 fi
@@ -30,18 +34,22 @@ then
     tmux attach-session -t $1
     exit
 fi
+
 if echo $1 | grep iterm > /dev/null 2>&1
 then
     name=iterm
-    tmux new-session -d -x $(tput cols) -y $(tput lines) -s $name vim
+    columns=`tput cols`
+    width=`echo "$columns - 80" | bc`
+    tmux new-session -d -x $columns -y `tput lines` -s $name vim
     tmux rename-window -t $name:1 code
-    tmux setw main-pane-width $(($(tput cols) - 80))
+    tmux setw main-pane-width $width
     tmux splitw
     tmux selectl main-vertical
     if echo $1 | grep chat > /dev/null 2>&1
     then
+        width=`echo "$columns - 30" | bc`
         tmux new-window -t $name -n "chat" irssi
-        tmux setw main-pane-width $(($(tput cols) - 30))
+        tmux setw main-pane-width $width
         tmux splitw -h cat ~/.irssi/nicklistfifo
         tmux selectl main-vertical
         tmux select-pane -t $name:2.1
@@ -57,7 +65,7 @@ then
         tmux renamew "mail-&-rss"
     fi
     tmux new-window -t $name -n vitals htop
-    uname=$(uname -s)
+    uname=`uname -s`
     case $uname in
         *Darwin*)
             tmux splitw -h nettop
@@ -67,29 +75,34 @@ then
             ;;
     esac
     tmux new-window -t $name -n simplenote sncli
-fi
-if [[ $1 == "code" ]]
+elif [ $1 = "code" ]
 then
     name=code
-    tmux new-session -d -x $(tput cols) -y $(tput lines) -s $name vim
+    columns=`tput cols`
+    width=`echo "$columns - 80" | bc`
+    tmux new-session -d -x $columns -y `tput lines` -s $name vim
     tmux rename-window -t $name:1 code
-    tmux setw main-pane-width $(($(tput cols) - 80))
+    tmux setw main-pane-width $width
     tmux splitw
     tmux selectl main-vertical
-fi
-if [[ $1 == "notes" ]]
+elif [ $1 = "notes" ]
 then
     name=notes
-    tmux new-session -d -x $(tput cols) -y $(tput lines) -s $name sncli
-fi
-if [[ $1 == "chat" ]]
+    tmux new-session -d -x `tput cols` -y `tput lines` -s $name sncli
+elif [ $1 = "chat" ]
 then
     name=chat
-    tmux new-session -d -x $(tput cols) -y $(tput lines) -s $name irssi
-    tmux setw main-pane-width $(($(tput cols) - 30))
+    columns=`tput cols`
+    width=`echo "$columns - 30" | bc`
+    tmux new-session -d -x $columns -y `tput lines` -s $name irssi
+    tmux setw main-pane-width $width
     tmux splitw -h cat ~/.irssi/nicklistfifo
     tmux selectl main-vertical
 fi
-tmux select-window -t $name:1
-tmux select-pane -t $name:1.1
-tmux attach-session -t $name
+
+if [ -n "$name" ]
+then
+    tmux select-window -t $name:1
+    tmux select-pane -t $name:1.1
+    tmux attach-session -t $name
+fi
