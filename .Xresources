@@ -5,6 +5,14 @@
 #define FIXED -misc-fixed-medium-r-normal--13-*-*-*-*-*-iso8859-*
 #define UTF8 -misc-fixed-medium-r-normal--13-*-*-*-*-*-iso10646-*
 
+! Xft
+Xft.rgba: rgb
+Xft.antialias: 1
+Xft.autohint: 0
+Xft.hinting: 1
+Xft.hintsytle: hintlight
+Xft.lcdfilter: lcddefault
+
 ! Global defaults
 *background: #262626
 *foreground: #BCBCBC
@@ -107,3 +115,5 @@ XScreenSaver.GetViewPortIsFullOfLies: false
 XScreenSaver.procInterrupts: true
 XScreenSaver.xinputExtensionDev: false
 XScreenSaver.authWarningSlack:   20
+
+#include ".Xresources.local"
