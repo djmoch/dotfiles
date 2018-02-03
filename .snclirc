@@ -1,6 +1,6 @@
 [sncli]
 cfg_sn_username=djmoch@gmail.com
-cfg_sn_password_eval=secret-tool lookup account djmoch@gmail.com service com.simplenote
+cfg_sn_password_eval=my-netrc simplenote.com password
 clr_default_fg=default
 clr_default_bg=default
 clr_status_bar_fg=black

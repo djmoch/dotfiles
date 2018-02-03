@@ -73,8 +73,9 @@ then
     log_dir="$HOME/.local/var/log"
     cat > /tmp/crontab.$$ <<-EOF
 # m h  dom mon dow   command
+
 */5 * * * * $cron_dir/weather.sh > $log_dir/weather 2>&1
-*/15 * * * * $cron_dir/vdirsyncer.sh > $log_dir/vdirsyncer 2>&1
+*/15 * * * * PATH="$HOME/.local/bin":$PATH $cron_dir/vdirsyncer.sh > $log_dir/vdirsyncer 2>&1
 */15 * * * * $cron_dir/photosync.sh > $log_dir/photosync 2>&1
 
 EOF

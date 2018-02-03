@@ -4,7 +4,7 @@ macro o set browser "open %u" ; open-in-browser ; set browser "w3m %u"
 feedhq-flag-share "s"
 feedhq-flag-star "x"
 feedhq-login "djmoch"
-feedhq-passwordeval "secret-tool lookup account djmoch service org.feedhq"
+feedhq-passwordeval "my-netrc feedhq.org password"
 urls-source "feedhq"
 bookmark-cmd "~/.newsboat/bookmark-pinboard.sh"
 
