@@ -319,4 +319,7 @@ case $command in
                 return
         esac
         ;;
+    netrc)
+        exec my-netrc "$@"
+        ;;
 esac
