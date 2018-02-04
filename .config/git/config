@@ -3,7 +3,7 @@
 	name = Daniel Moch
 	signingkey = 84BDDD43
 [core]
-	excludesfile = /home/djmoch/.cvsignore
+	excludesfile = ~/.cvsignore
 [commit]
 	gpgSign = true
 [push]
