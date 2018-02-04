@@ -121,6 +121,7 @@ fi
 
 [ ! -d "$HOME/.local/var/log" ] && mkdir -p "$HOME/.local/var/log"
 [ ! -d "$HOME/.local/var/forecastio" ] && mkdir -p "$HOME/.local/var/forecastio"
+[ ! -d "$HOME/.vim/undo/" ] && mkdir -p "$HOME/.vim/undo"
 
 if [ ! -f "$HOME/._.djmoch" ]
 then
