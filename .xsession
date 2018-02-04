@@ -2,12 +2,10 @@
 #
 # ~/.xsession
 #
+echo "Running $HOME/.xsession as PID $$" >&2
 date +'%m/%d/%Y %H:%M:%S' >&2
 env >&2
 [ -r "$HOME/.xsession.local" ] && . "$HOME/.xsession.local"
-[ -n "$DISPLAY" ] && echo "$DISPLAY" > "$HOME/.xdisplay"
-[ -f "$HOME/.xdisplay" ] && chmod 600 "$HOME/.xdisplay"
-echo "$$" > "$HOME/.xsession.pid" && chmod 600 "$HOME/.xsession.pid"
 
 __autostart()
 {
