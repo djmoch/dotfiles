@@ -1,3 +1,4 @@
+syntax: glob
 *.class
 *.pyc
 *.pyo
@@ -9,4 +10,15 @@ __pycache__
 *.sqlite3
 .DS_Store
 tags
+TAGS
 .netrwhist
+*~
+*.old
+*.bak
+*.BAK
+*.orig
+*.out
+*.o
+*.obj
+*.so
+*.exe

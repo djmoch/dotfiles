@@ -3,7 +3,7 @@
 	name = Daniel Moch
 	signingkey = 84BDDD43
 [core]
-	excludesfile = ~/.config/git/ignore
+	excludesfile = /home/djmoch/.cvsignore
 [commit]
 	gpgSign = true
 [push]
@@ -17,3 +17,5 @@
 [mergetool]
 	prompt = false
 [gpg]
+[alias]
+	ls = ls-tree --name-only -r
