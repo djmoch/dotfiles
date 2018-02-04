@@ -180,9 +180,6 @@ end
 screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
-    -- Wallpaper
-    -- set_wallpaper(s) rely on feh
-
     -- Each screen has its own tag table.
     awful.tag(
         {"1", "2", "3", "4", "5", "6", "7", "8", "9"},
@@ -205,6 +202,9 @@ awful.screen.connect_for_each_screen(function(s)
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist(s, awful.widget.taglist.filter.all, taglist_buttons)
 
+    -- Create a tasklist widget
+    s.mytasklist = awful.widget.tasklist(s, awful.widget.tasklist.filter.currenttags, tasklist_buttons)
+
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s })
 
@@ -216,8 +216,9 @@ awful.screen.connect_for_each_screen(function(s)
             mylauncher,
             s.mytaglist,
             s.mypromptbox,
+            s.mytasklist,
         },
-        nil, -- Middle widgets
+        nil, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             mystatus,
