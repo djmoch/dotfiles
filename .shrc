@@ -81,7 +81,7 @@ then
     fi
 fi
 
-if [ -r /etc/motd -a -n "$DISPLAY" -a -z "$SSH_TTY" ]
+if [ -r /etc/motd -a -n "$DISPLAY" -a -z "$SSH_TTY" -a ! -f "$HOME/.hushlogin" ]
 then
     [ $SHLVL -le 1 ] && cat /etc/motd
 fi
