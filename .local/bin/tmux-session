@@ -1,5 +1,5 @@
 #!/bin/sh
-if [ "$1" == "-r" ]
+if [ "$1" = "-r" ]
 then
     for line in `tmux list-sessions -F "#S"`
     do
