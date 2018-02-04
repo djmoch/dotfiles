@@ -1,27 +1,12 @@
-# Vi keymap
 set vi-cmd-mode-string "[n]"
 set vi-ins-mode-string "[i]"
 set emacs-mode-string ""
-
-# Single-tab completion
 set show-all-if-ambiguous on
-
-# Make completion behavior for symlinked directories the same as regular directories
 set mark-symlinked-directories on
-
-# My speakers are almost always muted, so use the visual bell instead
 set bell-style visible
-
-# Right arrow to cycle through possible completions
 Control-Space: menu-complete
-
-# Up arrow will try to complete from my history
 "\e[A": history-search-backward
-
 set keymap vi-command
-
-# k key in vi-command to complete from my history
 "k": history-search-backward
-
-# l key to cycle through possible completions
 "L": menu-complete
+set keymap emacs
