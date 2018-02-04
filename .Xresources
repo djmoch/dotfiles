@@ -115,5 +115,3 @@ XScreenSaver.GetViewPortIsFullOfLies: false
 XScreenSaver.procInterrupts: true
 XScreenSaver.xinputExtensionDev: false
 XScreenSaver.authWarningSlack:   20
-
-#include ".Xresources.local"
