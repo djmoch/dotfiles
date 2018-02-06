@@ -38,31 +38,22 @@ do
         alias $cmd="$cmd --color=auto"
     fi
 done
+unset COLORIZE_CMDS
 
-if type tmux > /dev/null 2>&1
-then
-    alias tas=tmux\ attach-session\ -t
-    alias tns=tmux\ new-session\ -s
-    alias tls=tmux\ list-sessions
-    alias ts=tmux-session
-fi
-
-if type lpass > /dev/null 2>&1
-then
-    alias lpl="lpass login"
-    alias lps="lpass show"
-    alias lpp="lpass show --password"
-    alias lpc="lpass show --password -c"
-fi
-
-if type feh > /dev/null 2>&1
-then
-    alias feh="feh --auto-rotate --scale-down"
-fi
+alias tas="tmux attach-session -t"
+alias tns="tmux new-session -s"
+alias tls="tmux list-sessions"
+alias ts="tmux-session"
+alias lpl="lpass login"
+alias lps="lpass show"
+alias lpp="lpass show --password"
+alias lpc="lpass show --password -c"
+alias feh="feh --auto-rotate --scale-down"
+alias rsync="rsync -C --include=.git/"
 
 if [ "$VISUAL" = "vi" ]
 then
-    alias vim=vi
+    alias vim="vi"
 fi
 
 if type gpg-connect-agent > /dev/null 2>&1

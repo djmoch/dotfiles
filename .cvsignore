@@ -22,3 +22,6 @@ TAGS
 *.obj
 *.so
 *.exe
+*.vdi
+*.vmdk
+*.vhd
