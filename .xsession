@@ -14,7 +14,8 @@ __autostart()
         AUTOSTART_CMD="dex -ae $1"
     elif type fbautostart > /dev/null 2>&1
     then
-        AUTOSTART_CMD="FBXDG_DE=$1 fbautostart"
+        FBXDG_DE=$1
+        AUTOSTART_CMD="fbautostart"
     fi
 
     until ps -u $LOGNAME -U $LOGNAME | grep $1 > /dev/null 2>&1
