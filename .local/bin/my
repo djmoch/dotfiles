@@ -267,23 +267,17 @@ case $command in
         ;;
     status)
         echo -n "Batt: `my battery percent`% | "
-        cat $HOME/.local/var/forecastio/current_forecast.txt
+        cat $HOME/.local/var/forecastio/current_forecast.txt | tr -d '\n'
         echo -n " | "
-        [ -z "$1" ] && date +'%l:%M %p'
+        date +'%l:%M %p'
         exit 0
         ;;
     i3status)
-        if type i3status > /dev/null 2>&1
-        then
-            i3status | while :
+            while :
             do
-                read line
-                echo "`my status noclock` $line" || exit 1
+                echo "`my status`" || exit 1
+                sleep 15
             done
-        else
-            __mylog "my i3status" "i3status not found"
-            exit 1
-        fi
         ;;
     copy)
         uname=`uname -s`
