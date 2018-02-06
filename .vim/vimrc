@@ -260,10 +260,12 @@ function! MyHelp(topic)
     endif
 endfunction
 
-function! MyBuffer(buffer)
+function! MyBuffer(...)
     let l:splitcmd = MyWinWidth() ? 'vsplit' : 'split'
     execute l:splitcmd
-    execute bufnr(a:buffer).'buffer'
+    if a:0 == 1
+        execute bufnr(a:1).'buffer'
+    endif
 endfunction
 " }}}
 
@@ -276,6 +278,7 @@ endif
 command! -complete=file -nargs=? New call MyNewWindow(<f-args>)
 command! -complete=help -nargs=1 Help call MyHelp(<f-args>)
 command! -complete=buffer -nargs=1 Buffer call MyBuffer(<f-args>)
+command! Split call MyBuffer()
 " }}}
 
 " Auto-commands {{{
