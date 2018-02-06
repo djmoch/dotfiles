@@ -27,7 +27,6 @@ if has('vim_starting')
     if has('win32') || has('win64') || $PATH =~ 'cygdrive'
         set fileformats=dos,unix
     endif
-    set encoding=utf-8
     set undofile
     if has('packages')
         if isdirectory(expand('~/Documents/src/vim_plugins'))
