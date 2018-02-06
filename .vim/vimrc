@@ -268,10 +268,10 @@ endfunction
 " }}}
 
 " Commands {{{
-if has('mac')
+if !has('win32') && !has('win64')
     command! -range=% IX silent execute <line1>.','.<line2>."w !curl -n -F"
                 \ ."'f:1=<-' ix.io | tr -d '\\n' | "
-                \."reattach-to-user-namespace pbcopy"
+                \."my copy"
 endif
 command! -complete=file -nargs=? New call MyNewWindow(<f-args>)
 command! -complete=help -nargs=1 Help call MyHelp(<f-args>)
