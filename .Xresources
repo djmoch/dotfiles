@@ -103,8 +103,6 @@ XScreenSaver.ignoreUninstalledPrograms: false
 XScreenSaver.grabDesktopImages:  false
 XScreenSaver.grabVideoFrames:    false
 XScreenSaver.chooseRandomImages: false
-XScreenSaver.mode:  one
-XScreenSaver.selected: 116
 XScreenSaver.textMode: file
 XScreenSaver.textFile:
 XScreenSaver.pointerPollTime:    0:00:05
