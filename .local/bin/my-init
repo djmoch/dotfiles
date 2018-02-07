@@ -126,13 +126,14 @@ then
     unset vim_bundle_path
 fi
 
+[ -d "$HOME/.dotfiles" ] && cp "$HOME/.local/lib/dotfiles/pre-push" "$HOME/.dotfiles/.git/hooks/"
 [ ! -d "$HOME/.local/var/log" ] && mkdir -p "$HOME/.local/var/log"
 [ ! -d "$HOME/.local/var/forecastio" ] && mkdir -p "$HOME/.local/var/forecastio"
 [ ! -d "$HOME/.vim/undo/" ] && mkdir -p "$HOME/.vim/undo"
 
 if [ ! -f "$HOME/._.djmoch" ]
 then
-    touch "$HOME/._.djmoch"
+    : > "$HOME/._.djmoch"
     chmod 000 "$HOME/._.djmoch"
 fi
 
