@@ -50,6 +50,7 @@ alias lpp="lpass show --password"
 alias lpc="lpass show --password -c"
 alias feh="feh --auto-rotate --scale-down"
 alias rsync="rsync -C --include=.git/"
+alias ag="ag -p ~/.cvsignore"
 
 if [ "$VISUAL" = "vi" ]
 then

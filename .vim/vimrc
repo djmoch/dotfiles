@@ -385,8 +385,7 @@ if has('win32') || has('win64')
     set grepprg=findstr\ /n\ /S
     set viminfo+=n$HOME/vimfiles/viminfo
 else
-    set grepprg=ag\ --vimgrep\ --ignore=tags\ -p\ ~/.config/git/ignore\
-                \ $*
+    set grepprg=ag\ --vimgrep\ -p\ ~/.cvsignore\ $*
     set grepformat=%f:%l:%c:%m
     set viminfo+=n$HOME/.vim/viminfo
 endif
