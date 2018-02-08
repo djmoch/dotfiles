@@ -90,7 +90,7 @@ XScreenSaver.dpmsEnabled: true
 XScreenSaver.dpmsStandby: 0:00:00
 XScreenSaver.dpmsSuspend: 0:00:00
 XScreenSaver.dpmsOff: 0:15:00
-XScreenSaver.dpmsQuickOff: false
+XScreenSaver.dpmsQuickOff: true
 XScreenSaver.verbose: true
 XScreenSaver.timestamp: true
 XScreenSaver.splash:  false
