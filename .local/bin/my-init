@@ -23,9 +23,19 @@ __has()
 
 __clone()
 {
-    echo -n "  Cloning $1 ... "
-    git clone https://github.com/$1.git > /dev/null 2>&1
-    [ $? -ne 0 ] && echo "FAILED!" && return 1
+    if [ -d "$1" ]
+    then
+        echo -n "  Updating $1 ..."
+        cd "$1"
+        git pull > /dev/null 2>&1
+        result=$?
+        cd ..
+    else
+        echo -n "  Cloning $1 ... "
+        git clone https://github.com/$1.git > /dev/null 2>&1
+        result=$?
+    fi
+    [ $result -ne 0 ] && echo "FAILED!" && return 1
     echo "Succeeded"
 }
 
@@ -42,7 +52,6 @@ __optclone_pathogen()
     esac
 }
 
-echo "Performing run-once initializations"
 
 if [ -n "$force_init" ]
 then
@@ -54,7 +63,15 @@ then
     type crontab > /dev/null 2>&1 && crontab -r > /dev/null 2>&1
 fi
 
-if __has "infocmp" "tic" && [ ! -d "$HOME/.terminfo" ]
+if [ -f "$HOME/._.djmoch" ]
+then
+    echo "Already initialized. Exiting."
+    exit 0
+fi
+
+echo "Performing run-once initializations"
+
+if __has "infocmp" "tic"
 then
     echo " Initializing Termcaps"
     if infocmp tmux-256color > /dev/null 2>&1
@@ -65,7 +82,7 @@ then
     fi
 fi
 
-if __has "lesskey" && [ ! -f "$HOME/.less" ]
+if __has "lesskey"
 then
     echo " Initializing .less"
     lesskey
@@ -89,10 +106,10 @@ EOF
 fi
 
 # Vim plugins
-vim_bundle_path="$HOME/.vim/pack/bundle"
 if __has "vim" "git" && [ ! -d "$vim_bundle_path" ]
 then
     echo " Downloading Vim plugins"
+    vim_bundle_path="$HOME/.vim/pack/bundle"
     # Plugins that should always be enabled
     mkdir -p $vim_bundle_path/start
     cd $vim_bundle_path/start
@@ -126,15 +143,41 @@ then
     unset vim_bundle_path
 fi
 
+for shell in bash dash sh
+do
+    preferred_shell=`cat /etc/shells | grep /bash$`
+    [ "$preferred_shell" = "" ] || break
+done
+if cat /etc/passwd | grep ^$LOGNAME.*$preferred_shell$ > /dev/null 2>&1
+then
+    echo "Login shell already set to $preferred_shell"
+else
+    echo "Setting login shell to $preferred_shell"
+    chsh -s $preferred_shell
+fi
+
+for locker in xscreensaver light-locker cinnamon-screensaver
+do
+    if type $locker > /dev/null 2>&1
+    then
+        echo "Creating autostart entry for $locker"
+        cat > "$HOME/.config/autostart/$locker.desktop" <<-EOF
+[Desktop Entry]
+TryExec=$locker
+Exec=$locker
+Name=$locker
+Comment=Screen locker
+Type=Application
+EOF
+        break
+    fi
+done
+
 [ -d "$HOME/.dotfiles" ] && cp "$HOME/.local/lib/dotfiles/pre-push" "$HOME/.dotfiles/.git/hooks/"
 [ ! -d "$HOME/.local/var/log" ] && mkdir -p "$HOME/.local/var/log"
 [ ! -d "$HOME/.local/var/forecastio" ] && mkdir -p "$HOME/.local/var/forecastio"
 [ ! -d "$HOME/.vim/undo/" ] && mkdir -p "$HOME/.vim/undo"
-
-if [ ! -f "$HOME/._.djmoch" ]
-then
-    : > "$HOME/._.djmoch"
-    chmod 000 "$HOME/._.djmoch"
-fi
+: > "$HOME/._.djmoch"
+chmod 000 "$HOME/._.djmoch"
 
 unset __clone __has __optclone_pathogen
