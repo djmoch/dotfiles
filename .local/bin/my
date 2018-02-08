@@ -316,4 +316,50 @@ case $command in
     netrc)
         exec my-netrc "$@"
         ;;
+    dotfiles)
+        predicate="$1" && shift
+        case $predicate in
+            age)
+                current=`date '+%s'`
+                dotdate=`date -r $HOME/._.djmoch '+%s'`
+                if [ $? -ne 0 ]
+                then
+                    __mylog "my dofiles: Dotfile config not initialized"
+                    exit 1
+                fi
+                echo "$current - $dotdate" | bc
+                ;;
+            check)
+                age=`my dotfiles age`
+                if [ $age -gt 604800 ]
+                then
+                    echo "Dotfiles more than one week old"
+                    exit 1
+                fi
+                ;;
+            update)
+                if [ -d "$HOME/.dotfiles" ]
+                then
+                    cd "$HOME/.dotfiles"
+                    status=`git fetch --dry-run`
+                    [ ! "$status" = "" ] && git pull > /dev/null 2>&1
+                elif [ -d "$HOME/.dotfiles_tgz" ]
+                then
+                    curl https://danielmoch.com/static/dotfiles.tar.gz > /tmp/dotfiles.tgz.$$
+                    oldsum=`shasum -a 256 "$HOME/.dotfiles_tgz/dotfiles.tar.gz" | awk '{print $1}'`
+                    newsum=`shasum -a 256 "/tmp/dotfiles.tgz.$$" | awk '{print $1}'`
+                    if [ ! "$oldsum" = "$newsum" ]
+                    then
+                        mv /tmp/dotfiles.tgz.$$ "$HOME/.dotfiles_tgz/dotfiles.tar.gz"
+                        cd "$HOME"
+                        tar xzvf .dotfiles_tgz/dotfiles.tar.gz
+                    else
+                        rm /tmp/dotfiles.tgz.$$
+                    fi
+                fi
+                my init > /dev/null 2>&1
+                touch "$HOME/._.djmoch"
+                ;;
+        esac
+        ;;
 esac

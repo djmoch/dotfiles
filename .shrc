@@ -76,4 +76,5 @@ fi
 if [ -r /etc/motd -a -n "$DISPLAY" -a -z "$SSH_TTY" -a ! -f "$HOME/.hushlogin" ]
 then
     [ $SHLVL -le 1 ] && cat /etc/motd
+    my dotfiles check
 fi
