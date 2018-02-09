@@ -1,3 +1,4 @@
+# {{{ General settings
 ignore *
 unignore from: subject to cc date x-mailer x-url user-agent
 
@@ -14,6 +15,9 @@ macro index,pager,attach,compose \cb "\
 macro generic,pager <F1> "<shell-escape> less /usr/share/doc/mutt/manual.txt<Enter>" "show Mutt documentation"
 
 macro index,pager y "<change-folder>?<toggle-mailboxes>" "show incoming mailboxes list"
+
+macro index <F9> "<sync-mailbox><enter-command>source ~/.config/mutt/account.gmail<enter><change-folder>!<enter>"
+macro index <F10> "<sync-mailbox><enter-command>source ~/.config/mutt/account.icloud<enter><change-folder>!<enter>"
 
 set sort="reverse-threads"
 set strict_threads="yes"
@@ -46,9 +50,126 @@ alternative_order text/plain text/enriched text/html
 
 set imap_authenticators="login"
 set smtp_authenticators="login"
+# }}}
 
-source ~/.config/mutt/smime
-source ~/.config/mutt/gpg
-source ~/.mutt/account.default
-source ~/.mutt/account.macros
-source ~/.config/mutt/colors
+# {{{ GPG
+set pgp_decode_command="gpg --status-fd=2 %?p?--passphrase-fd 0? --no-verbose --quiet --batch --output - %f"
+set pgp_verify_command="gpg --status-fd=2 --no-verbose --quiet --batch --output - --verify %s %f"
+set pgp_decrypt_command="gpg --status-fd=2 %?p?--passphrase-fd 0? --no-verbose --quiet --batch --output - %f"
+set pgp_sign_command="gpg --no-verbose --batch --quiet --output - %?p?--passphrase-fd 0? --armor --detach-sign --textmode %?a?-u %a? %f"
+set pgp_clearsign_command="gpg --no-verbose --batch --quiet --output - %?p?--passphrase-fd 0? --armor --textmode --clearsign %?a?-u %a? %f"
+set pgp_encrypt_only_command="pgpewrap gpg --batch --quiet --no-verbose --output - --encrypt --textmode --armor --always-trust -- -r %r -- %f"
+set pgp_encrypt_sign_command="pgpewrap gpg %?p?--passphrase-fd 0? --batch --quiet --no-verbose --textmode --output - --encrypt --sign %?a?-u %a? --armor --always-trust -- -r %r -- %f"
+set pgp_import_command="gpg --no-verbose --import %f"
+set pgp_export_command="gpg --no-verbose --export --armor %r"
+set pgp_verify_key_command="gpg --verbose --batch --fingerprint --check-sigs %r"
+set pgp_list_pubring_command="gpg --no-verbose --batch --quiet --with-colons --with-fingerprint --with-fingerprint --list-keys %r"
+set pgp_list_secring_command="gpg --no-verbose --batch --quiet --with-colons --with-fingerprint --with-fingerprint --list-secret-keys %r"
+set pgp_good_sign="^\\[GNUPG:\\] GOODSIG"
+set pgp_decryption_okay="^\\[GNUPG:\\] DECRYPTION_OKAY"
+# }}}
+
+# {{{ S/MIME
+set smime_timeout=300
+set crypt_autosign = yes
+set crypt_replyencrypt = yes
+set crypt_replysign = yes
+set crypt_replysignencrypted = yes
+set crypt_verify_sig = yes
+set smime_default_key="12345678.0"
+set smime_ca_location="/usr/local/etc/openssl/cert.pem"
+set smime_certificates="~/.mutt/smime/certificates"
+set smime_keys="~/.mutt/smime/keys"
+set smime_pk7out_command="openssl smime -verify -in %f -noverify -pk7out"
+set smime_get_cert_command="openssl pkcs7 -print_certs -in %f"
+set smime_get_signer_cert_command="openssl smime -verify -in %f -noverify -signer %c -out /dev/null"
+set smime_get_cert_email_command="openssl x509 -in %f -noout -email"
+set smime_import_cert_command="smime_keys add_cert %f"
+set smime_encrypt_with="aes256"
+set smime_encrypt_command="openssl smime -encrypt -%a -outform DER -in %f %c"
+set smime_sign_digest_alg="sha256"
+set smime_sign_command="openssl smime -sign -md %d -signer %c -inkey %k -passin stdin -in %f -certfile %i -outform DER"
+set smime_decrypt_command="openssl smime -decrypt -passin stdin -inform DER -in %f -inkey %k -recip %c"
+set smime_verify_command="openssl smime -verify -inform DER -in %s %C -content %f"
+set smime_verify_opaque_command="\
+openssl smime -verify -inform DER -in %s %C || \
+openssl smime -verify -inform DER -in %s -noverify 2>/dev/null"
+# }}}
+
+# {{{ Colors
+color normal        color250        color235
+color error         color208        color235
+color tilde         color250        color235        
+color message       color250        color235        
+color markers       color250        color235
+color attachment    color103        color235        
+color search        color250        color235        
+color status        color235        color101
+color indicator     color235        color110        
+color tree          color108        color235
+
+mono  bold          bold
+mono  underline     underline
+mono  indicator     reverse
+mono  error         bold
+
+color index         color250        color235        "~A"                        # all messages
+color index         color131        color235        "~E"                        # expired messages
+color index         color231        color235        "~N"                        # new messages
+color index         color250        color235        "~O"                        # old messages
+color index         color103        color235        "~Q"                        # messages that have been replied to
+color index         color242        color235        "~R"                        # read messages
+color index         color231        color235        "~U"                        # unread messages
+color index         color231        color235        "~U~$"                      # unread, unreferenced messages
+color index         color242        color235        "~v"                        # messages part of a collapsed thread
+color index         color242        color235        "~P"                        # messages from me
+color index         color110        color235        "~p!~F"                     # messages to me
+color index         color110        color235        "~N~p!~F"                   # new messages to me
+color index         color110        color235        "~U~p!~F"                   # unread messages to me
+color index         color242        color235        "~R~p!~F"                   # messages to me
+color index         color108        color235        "~F"                        # flagged messages
+color index         color108        color235        "~F~p"                      # flagged messages to me
+color index         color108        color235        "~N~F"                      # new flagged messages
+color index         color108        color235        "~N~F~p"                    # new flagged messages to me
+color index         color108        color235        "~U~F~p"                    # new flagged messages to me
+color index         color235        color131        "~D"                        # deleted messages
+color index         color242        color235        "~v~(!~N)"                  # collapsed thread with no unread
+color index         color250        color235        "~v~(~N)"                   # collapsed thread with some unread
+color index         color242         color235        "~N~v~(~N)"                 # collapsed thread with unread parent
+color index         color108        color235        "~v~(~F)!~N"                # collapsed thread with flagged, no unread
+color index         color250        color235        "~v~(~F~N)"                 # collapsed thread with some unread & flagged
+color index         color108        color235        "~N~v~(~F~N)"               # collapsed thread with unread parent & flagged
+color index         color108        color235        "~N~v~(~F)"                 # collapsed thread with unread parent, no unread inside, but some flagged
+color index         color242        color235        "~v~(~p)"                   # collapsed thread with unread parent, no unread inside, some to me directly
+color index         color235        color131        "~v~(~D)"                   # thread with deleted (doesn't differentiate between all or partial)
+color hdrdefault    color250        color235        
+color header        color231        color235        "^(From)"
+color header        color231        color235        "^(Subject)"
+color quoted        color14         color235        
+color quoted1       color103        color235        
+color quoted2       color108        color235        
+color quoted3       color131        color235        
+color quoted4       color229        color235        
+color signature     color250        color235        
+color bold          color231        color235        
+color underline     color231        color235
+color normal        color250        color235        
+color body          color250        color235        "[;:][-o][)/(|]"    # emoticons
+color body          color231        color235        "[;:][)(|]"         # emoticons
+color body          color231        color235        "[*]?((N)?ACK|CU|LOL|SCNR|BRB|BTW|CWYL|\
+                                                     |FWIW|vbg|GD&R|HTH|HTHBE|IMHO|IMNSHO|\
+                                                     |IRL|RTFM|ROTFL|ROFL|YMMV)[*]?"
+color body          color231        color235        "[ ][*][^*]*[*][ ]?" # more emoticon?
+color body          color231        color235        "[ ]?[*][^*]*[*][ ]" # more emoticon?
+color body          color231        color131        "(BAD signature)"
+color body          color103        color235        "(Good signature)"
+color body          color103        color235        "^gpg: Good signature .*"
+color body          color242        color235        "^gpg: "
+color body          color231        color131        "^gpg: BAD signature from.*"
+mono  body          bold                            "^gpg: Good signature"
+mono  body          bold                            "^gpg: BAD signature from.*"
+color body          color110        color235        "([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0-9a-f][0-9a-f])*@)?((([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)(:[0-9]+)?)|([a-z0-9_.!~*'()$,;:@&=+-]|%[0-9a-f][0-9a-f])+)(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?(#([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?|(www|ftp)\\.(([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?(:[0-9]+)?(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?(#([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?)[^].,:;!)? \t\r\n<>\"]"
+color body          color110        color235        "((@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\]),)*@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\]):)?[0-9a-z_.+%$-]+@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\])"
+# }}}
+
+source ~/.config/mutt/account.icloud
