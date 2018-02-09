@@ -1,0 +1,23 @@
+[calendars]
+
+[[home]]
+path = ~/.local/share/calendars/nextcloud/home
+type = discover
+color = 4
+
+[[family]]
+path = ~/.local/share/calendars/nextcloud/family
+type = discover
+color = 2
+
+[[planning_center]]
+path = ~/.local/share/calendars/planningcenter
+type = discover
+color = 3
+
+[locale]
+timeformat = %I:%M %p
+dateformat = %m/%d/%Y
+longdateformat = %m/%d/%Y
+datetimeformat = %m/%d/%Y %I:%M %p
+longdatetimeformat = %m/%d/%Y %I:%M %p
