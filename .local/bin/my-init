@@ -23,10 +23,11 @@ __has()
 
 __clone()
 {
-    if [ -d "$1" ]
+    dir=`echo "$1" | cut -d '/' -f2`
+    if [ -d $dir ]
     then
         echo -n "  Updating $1 ..."
-        cd "$1"
+        cd $dir
         git pull > /dev/null 2>&1
         result=$?
         cd ..
@@ -44,9 +45,19 @@ __optclone_pathogen()
     vim --cmd "redir! > /tmp/vimpackages.$$ | silent echo has('packages') | q"
     case `cat /tmp/vimpackages.$$` in
         *0*)
-            echo -n "  Cloning tpope/vim-pathogen ... "
-            git clone https://github.com/tpope/vim-pathogen.git > /dev/null 2>&1
-            [ $? -ne 0 ] && echo "FAILED!" && return 1
+            if [ -d vim-pathogen ]
+            then
+                echo -n "  Updating tpope/vim-pathogen ..."
+                cd vim-pathogen
+                git pull > /dev/null 2>&1
+                result=$?
+                cd ..
+            else
+                echo -n "  Cloning tpope/vim-pathogen ... "
+                git clone https://github.com/tpope/vim-pathogen.git > /dev/null 2>&1
+                result=$?
+            fi
+            [ $result -ne 0 ] && echo "FAILED!" && return 1
             echo "Succeeded"
             ;;
     esac
@@ -55,12 +66,12 @@ __optclone_pathogen()
 
 if [ -n "$force_init" ]
 then
-    echo " Re-initialization requested"
+    echo "Re-initialization requested"
     rm -f "$HOME/._.djmoch"
     rm -rf "$HOME/.terminfo"
     rm -rf "$vim_bundle_path"
     rm "$HOME/.less"
-    type crontab > /dev/null 2>&1 && crontab -r > /dev/null 2>&1
+    type crontab > /dev/null 2>&1 && echo -n " " && crontab -r
 fi
 
 if [ -f "$HOME/._.djmoch" ]
@@ -145,14 +156,14 @@ fi
 
 for shell in bash dash sh
 do
-    preferred_shell=`cat /etc/shells | grep /bash$`
+    preferred_shell=`cat /etc/shells | grep /$shell$`
     [ "$preferred_shell" = "" ] || break
 done
 if cat /etc/passwd | grep ^$LOGNAME.*$preferred_shell$ > /dev/null 2>&1
 then
-    echo "Login shell already set to $preferred_shell"
+    echo " Login shell already set to $preferred_shell"
 else
-    echo "Setting login shell to $preferred_shell"
+    echo " Setting login shell to $preferred_shell"
     chsh -s $preferred_shell
 fi
 
@@ -160,7 +171,7 @@ for locker in xscreensaver light-locker cinnamon-screensaver
 do
     if type $locker > /dev/null 2>&1
     then
-        echo "Creating autostart entry for $locker"
+        echo " Creating autostart entry for $locker"
         cat > "$HOME/.config/autostart/$locker.desktop" <<-EOF
 [Desktop Entry]
 TryExec=$locker
