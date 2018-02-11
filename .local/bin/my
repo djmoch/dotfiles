@@ -340,7 +340,7 @@ case $command in
                         rm /tmp/dotfiles.tgz.$$
                     fi
                 fi
-                my init > /dev/null 2>&1
+                my init -f > /dev/null 2>&1
                 touch "$HOME/._.djmoch"
                 ;;
         esac
