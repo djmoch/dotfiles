@@ -7,7 +7,7 @@
 # have one handler, but exist to avoid re-writes across my dotfiles
 # later on.
 
-[ $# -eq 0 -o -z "$DISPLAY" ] && exit 1
+[ $# -eq 0 ] && exit 1
 
 log="$HOME/.local/var/log/my"
 command=$1
@@ -160,7 +160,6 @@ case $command in
         xrandr_options=`xrandr -q | grep ' disconnected' | awk '{print $1}'`
         for option in $xrandr_options
         do
-            __mylog "my screen" "Executing xrandr --output $option --off"
             xrandr --output $option --off
         done
 
@@ -168,7 +167,6 @@ case $command in
         numoptions=`echo $xrandr_options | wc -w`
         if [ $numoptions -eq 1 ]
         then
-            __mylog "my screen" "Executing xrandr --output $xrandr_options --auto --primary"
             xrandr --output $xrandr_options --auto --primary
         else
             # Prefer external monitors
@@ -182,12 +180,11 @@ case $command in
                 [ -n "$primary_found" ] && selection=$option && break
             done
 
-            __mylog "my screen" "Executing xrandr --output $selection --auto --primary"
             xrandr --output $selection --auto --primary
 
             for option in $xrandr_options
             do
-                [ $option != $selection ] && __mylog "my screen" "Executing xrandr --output $option --off" && xrandr --output $option --off
+                [ $option != $selection ] && xrandr --output $option --off
             done
         fi
         exec my wallpaper
@@ -319,23 +316,9 @@ case $command in
     dotfiles)
         predicate="$1" && shift
         case $predicate in
-            age)
-                current=`date '+%s'`
-                dotdate=`date -r $HOME/._.djmoch '+%s'`
-                if [ $? -ne 0 ]
-                then
-                    __mylog "my dofiles: Dotfile config not initialized"
-                    exit 1
-                fi
-                echo "$current - $dotdate" | bc
-                ;;
             check)
-                age=`my dotfiles age`
-                if [ $age -gt 604800 ]
-                then
-                    echo "Dotfiles more than one week old"
-                    exit 1
-                fi
+                cd "$HOME"
+                find . -maxdepth 1 -name ._.djmoch -mtime +8 -exec echo "Dotfiles more than one week old" \;
                 ;;
             update)
                 if [ -d "$HOME/.dotfiles" ]
@@ -362,4 +345,39 @@ case $command in
                 ;;
         esac
         ;;
+    cron)
+        case ":$PATH:" in
+            *:"$HOME/.local/bin":*) ;;
+            *) PATH="$HOME/.local/bin:$PATH" ;;
+        esac
+        cronpath="$HOME/.local/lib/cron"
+        logpath="$HOME/.local/var/log"
+        for job in $cronpath/*
+        do
+            [ -f $job -a -x $job ] && $job > $logpath/`basename $job`
+        done
+        ;;
+    login_async)
+        starttime=`date '+%s'`
+        current=`date '+%s'`
+        while [ `echo "$current - $starttime" | bc` -le 120 ]
+        do
+            if ping -c 1 danielmoch.com > /dev/null 2>&1
+            then
+                connected=1
+                break
+            fi
+            sleep 1
+            current=`date '+%s'`
+        done
+        if [ -n "$connected" ]
+        then
+            cd "$HOME"
+            find . -maxdepth 1 -name ._.djmoch -mtime +8 -exec my dotfiles update \;
+        fi
+        ;;
+    login)
+        my login_async &
+        ;;
+    *) echo "my: command $command not found" >&2
 esac

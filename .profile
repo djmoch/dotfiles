@@ -63,3 +63,5 @@ if type my-init > /dev/null 2>&1 && [ ! -f "$HOME/._.djmoch" ]
 then
     my-init
 fi
+
+my login

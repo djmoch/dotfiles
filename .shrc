@@ -79,5 +79,4 @@ then
     then
         [ $SHLVL -le 1 ] && cat /etc/motd
     fi
-    my dotfiles check
 fi
