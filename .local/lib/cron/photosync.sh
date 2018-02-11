@@ -19,19 +19,22 @@ else
 fi
 
 # Mount the WebDAV folder and set so only we can read it
-if mount /mnt/nextcloud > /dev/null 2>&1
+if mount /mnt/nextcloud
 then
     echo "NextCloud WebDAV successfully mounted. Setting permissions."
     chmod 700 /mnt/nextcloud
 
-    # Rsync from WebDAV to ~/Photos (unidirectionally for now, in order to
-    # preserve server space)
+    # Rsync from WebDAV to ~/Photos
     echo "Syncing Photos from WebDAV to $LOCAL_FOLDER"
     rsync -aq /mnt/nextcloud/Photos/* $LOCAL_FOLDER
 
+    # Rsync from ~/Photos to WebDAV 
+    echo "Syncing Photos from $LOCAL_FOLDER to WebDAV"
+    rsync -aq $LOCAL_FOLDER/* /mnt/nextcloud/Photos
+
     # Finish by unmounting the WebDAV folder
     echo "Unmounting nextcloud.danielmoch.com"
-    umount /mnt/nextcloud > /dev/null 2>&1
+    umount /mnt/nextcloud
 else
     echo "NextCloud WebDAV mount FAILED. Exiting."
     exit -2
