@@ -102,17 +102,23 @@ fi
 if __has "crontab" && [ -n "$crontab_init" ]
 then
     echo " Installing crontab"
-    localbin="$HOME/.local/bin"
     crontab -l > /tmp/crontab.$$.orig
     [ $? -ne 0 ] && echo "" > /tmp/crontab.$$.orig
-    cat >> /tmp/crontab.$$ <<-EOF
-0 * * * * "\$HOME/.local/bin/my" cron
+    grep .local/bin/my /tmp/crontab.$$.orig > /dev/null 2>&1
+    if [ ! $? -eq 0 ]
+    then
+        cat >> /tmp/crontab.$$ <<-EOF
+# crontab created by my-init on `date '+%m/%d/%Y'`
+# m h dom mon dow command
+*/15 * * * * "\$HOME/.local/bin/my" cron
+
+# Entries below this line created manually
 EOF
-    cat /tmp/crontab.$$.orig >> /tmp/crontab.$$
-    cat /tmp/crontab.$$ | crontab
-    rm /tmp/crontab.$$
+        cat /tmp/crontab.$$.orig >> /tmp/crontab.$$
+        cat /tmp/crontab.$$ | crontab
+        rm /tmp/crontab.$$
+    fi
     rm /tmp/crontab.$$.orig
-    unset localbin
 fi
 
 # Vim plugins
