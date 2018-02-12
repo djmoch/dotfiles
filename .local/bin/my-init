@@ -106,7 +106,7 @@ then
     crontab -l > /tmp/crontab.$$.orig
     [ $? -ne 0 ] && echo "" > /tmp/crontab.$$.orig
     cat >> /tmp/crontab.$$ <<-EOF
-*/15 * * * * "\$HOME/.local/bin/my" cron
+0 * * * * "\$HOME/.local/bin/my" cron
 EOF
     cat /tmp/crontab.$$.orig >> /tmp/crontab.$$
     cat /tmp/crontab.$$ | crontab
