@@ -322,6 +322,7 @@ nnoremap <Leader>s :call MyScratchBuffer()<CR>
 nnoremap <Leader>n :New<Space>
 nnoremap <Leader>h :Help<Space>
 nnoremap <Leader>l :ls<CR>:b
+nnoremap <Leader>L :ls<CR>:Buffer
 nnoremap <leader>b :Buffer<Space>
 nnoremap <leader>x :call MyHexToggle()<CR>
 if exists('$TMUX')
