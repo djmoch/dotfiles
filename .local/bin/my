@@ -354,7 +354,7 @@ case $command in
         logpath="$HOME/.local/var/log"
         for job in $cronpath/*
         do
-            [ -f $job -a -x $job ] && $job > $logpath/`basename $job`
+            [ -f $job -a -x $job ] && $job > $logpath/`basename $job` 2>&1
         done
         ;;
     login_async)
