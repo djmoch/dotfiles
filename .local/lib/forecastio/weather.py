@@ -9,6 +9,8 @@ import requests
 
 def generate_forecast():
     error = False
+    latitude = None
+    longitude = None
 
     try:
         # I keep my api key for forecast.io in a separate text file so I don't accidentally publish it anywhere.
@@ -16,8 +18,30 @@ def generate_forecast():
             api_key = apifile.read()
             api_key = api_key.strip()
 
-        # Resolving location from IP is always going to be a best guess, but it's better than hardcoding location data
-        latitude, longitude = requests.get('https://ipinfo.io').json()['loc'].split(',')
+        try:
+            with open('zipcode.txt', 'r') as zipcodefile:
+                zipcode = zipcodefile.read()
+                zipcode = zipcode.strip()
+        except FileNotFoundError:
+            zipcode = None
+
+        if zipcode is None:
+            # Resolving location from IP is always going to be a best guess, but it's better than hardcoding location data
+            latitude, longitude = requests.get('https://ipinfo.io').json()['loc'].split(',')
+        else:
+            try:
+                with open('zipcodeapi_api.txt', 'r') as zipcodeapifile:
+                    zipcodeapi_key = zipcodeapifile.read()
+                    zipcodeapi_key = zipcodeapi_key.strip()
+            except FileNotFoundError:
+                sys.stdout.writelines(datetime.now().strftime("%m/%d/%Y %I:%M:%S:") + " Could not find zipcodeapi key\n")
+                exit()
+
+            location = requests.get('https://www.zipcodeapi.com/rest/' + zipcodeapi_key + \
+                    '/info.json/' + zipcode + '/degrees').json()
+            print(location)
+            latitude = location['lat']
+            longitude = location['lng']
 
         # Now we're ready to actually get the weather
         forecast = forecastio.load_forecast(api_key, latitude, longitude)
