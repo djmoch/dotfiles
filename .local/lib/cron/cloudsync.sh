@@ -52,20 +52,30 @@ then
 
     # Rsync from WebDAV to ~/Photos
     echo "Syncing Photos from WebDAV to $LOCAL_PHOTOS"
-    rsync -aq /mnt/nextcloud/Photos/$year/$month/* $LOCAL_PHOTOS
+    [ ! -d $LOCAL_PHOTOS/$year/$month ] && mkdir -p $LOCAL_PHOTOS/$year/$month
+    rsync -aq /mnt/nextcloud/Photos/$year/$month/* $LOCAL_PHOTOS/$year/$month
     if [ -z "$firstrun" -a $lastrun_month -ne $month ]
     then
         # TODO: What if we're more than a month behind?
-        rsync -aq /mnt/nextcloud/Photos/$lastrun_year/$lastrun_month/* $LOCAL_PHOTOS
+        if [ ! -d $LOCAL_PHOTOS/$lastrun_year/$lastrun_month ]
+        then
+            mkdir -p $LOCAL_PHOTOS/$lastrun_year/$lastrun_month
+        fi
+        rsync -aq /mnt/nextcloud/Photos/$lastrun_year/$lastrun_month/* $LOCAL_PHOTOS/$lastrun_year/$lastrun_month
     fi
 
     # Rsync from ~/Photos to WebDAV 
     echo "Syncing Photos from $LOCAL_PHOTOS to WebDAV"
-    rsync -aq $LOCAL_PHOTOS/$year/$month/* /mnt/nextcloud/Photos
+    [ ! -d /mnt/nextcloud/Photos/$year/$month ] && mkdir -p /mnt/nextcloud/Photos/$year/$month
+    rsync -aq $LOCAL_PHOTOS/$year/$month/* /mnt/nextcloud/Photos/$year/$month
     if [ -z "$firstrun" -a $lastrun_month -ne $month ]
     then
+        if [ ! -d /mnt/nextcloud/Photos/$lastrun_year/$lastrun_month ]
+        then
+            mkdir -p /mnt/nextcloud/Photos/$lastrun_year/$lastrun_month
+        fi
         # TODO: What if we're more than a month behind?
-        rsync -aq $LOCAL_PHOTOS/$lastrun_year/$lastrun_month/* /mnt/nextcloud/Photos
+        rsync -aq $LOCAL_PHOTOS/$lastrun_year/$lastrun_month/* /mnt/nextcloud/Photos/$lastrun_year/$lastrun_month
     fi
 
     # Rsync from WebDAV to ~/Documents/Mobile
