@@ -39,7 +39,6 @@ def generate_forecast():
 
             location = requests.get('https://www.zipcodeapi.com/rest/' + zipcodeapi_key + \
                     '/info.json/' + zipcode + '/degrees').json()
-            print(location)
             latitude = location['lat']
             longitude = location['lng']
 
