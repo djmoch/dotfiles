@@ -57,6 +57,12 @@ then
     alias vim="vi"
 fi
 
+case `uname -s` in
+    *Darwin*)
+        alias jackd="jackd -d coreaudio > /dev/null 2>&1 &"
+        ;;
+esac
+
 if type gpg-connect-agent > /dev/null 2>&1
 then
     GPG_TTY=`tty`; export GPG_TTY

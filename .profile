@@ -28,6 +28,16 @@ else
     export LESSOPEN
 fi
 
+if type brew > /dev/null 2>&1
+then
+    HOMEBREW_NO_ANALYTICS=1
+    HOMEBREW_NO_INSECURE_REDIRECT=1
+    HOMEBREW_CASK_OPTS=--require-sha\ --appdir="$HOME/Applications"
+    HOMEBREW_NO_AUTO_UPDATE=1
+    export HOMEBREW_NO_ANALYTICS HOMEBREW_NO_INSECURE_REDIRECT
+    export HOMEBREW_CASK_OPTS HOMEBREW_NO_AUTO_UPDATE
+fi
+
 if type go > /dev/null 2>&1
 then
     GOPATH="$HOME/.go"
@@ -54,6 +64,10 @@ __addpath ()
 
 __addpath "$HOME/.go/bin"
 __addpath "$HOME/.cargo/bin"
+if type brew > /dev/null 2>&1
+then
+    __addpath "`brew --prefix`/bin" "before"
+fi
 __addpath "$HOME/.local/bin" "before"
 
 unset __addpath
