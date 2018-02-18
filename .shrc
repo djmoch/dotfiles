@@ -63,6 +63,11 @@ case `uname -s` in
         ;;
 esac
 
+if echo $LANG | grep UTF-8 > /dev/null 2>&1
+then
+    alias screen="screen -U"
+fi
+
 if type gpg-connect-agent > /dev/null 2>&1
 then
     GPG_TTY=`tty`; export GPG_TTY
