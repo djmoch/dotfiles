@@ -192,8 +192,11 @@ done
 [ -d "$HOME/.dotfiles" ] && cp "$HOME/.local/lib/dotfiles/pre-push" "$HOME/.dotfiles/.git/hooks/"
 [ ! -d "$HOME/.local/var/log" ] && mkdir -p "$HOME/.local/var/log"
 [ ! -d "$HOME/.local/var/forecastio" ] && mkdir -p "$HOME/.local/var/forecastio"
+[ ! -f "$HOME/.local/var/forecastio/current_forecast.txt" ] && echo \
+    "Weather not available" > \
+    "$HOME/.local/var/forecastio/current_forecast.txt"
 [ ! -d "$HOME/.vim/undo/" ] && mkdir -p "$HOME/.vim/undo"
-: > "$HOME/._.djmoch"
+touch "$HOME/._.djmoch"
 chmod 000 "$HOME/._.djmoch"
 
 unset __clone __has __optclone_pathogen

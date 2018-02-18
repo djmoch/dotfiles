@@ -325,7 +325,7 @@ case $command in
                 then
                     cd "$HOME/.dotfiles"
                     status=`git fetch --dry-run`
-                    [ ! "$status" = "" ] && git pull > /dev/null 2>&1
+                    [ ! "$status" = "" ] && git pull --no-commit > /dev/null 2>&1
                 elif [ -d "$HOME/.dotfiles_tgz" ]
                 then
                     curl https://danielmoch.com/static/dotfiles.tar.gz > /tmp/dotfiles.tgz.$$
