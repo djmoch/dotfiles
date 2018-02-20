@@ -10,8 +10,8 @@ import sys
 def parse_netrc(host, token=None):
     try:
         authenticators = netrc.netrc().authenticators(host)
-    except FileNotFoundError:
-        exit('my-netrc: You don\'t have a netrc file!')
+    except Exception as error:
+        exit(str(error))
     if authenticators is None:
         exit('my-netrc: ' + host + ' not found')
     elif token == 'login':
