@@ -156,6 +156,7 @@ then
     __clone jpalardy/vim-slime
     cd - > /dev/null 2>&1
     
+    vim --cmd 'silent! execute "helptags ALL" | q'
     unset vim_bundle_path
 fi
 
