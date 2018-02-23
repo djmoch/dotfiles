@@ -42,7 +42,7 @@ my screen
 
 if [ $# -eq 0 ]
 then
-    for wm in awesome i3 startxfce4 cinnamon-session twm
+    for wm in awesome i3 startxfce4 twm cinnamon-session
     do
         if type $wm > /dev/null 2>&1
         then
