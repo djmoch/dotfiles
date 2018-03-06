@@ -297,7 +297,7 @@ augroup myvimrc
     autocmd QuickFixCmdPost    l* nested lwindow
     autocmd QuickFixCmdPre [^l]* nested silent! cclose
     autocmd QuickFixCmdPre    l* nested silent! lclose
-    autocmd BufNewFile *.py,*.cpp,*.java call MySkeleton()
+    autocmd BufNewFile Makefile,*.py,*.cpp,*.java call MySkeleton()
     autocmd VimEnter * let w:active_window = 1 | call MyItalicize() | call MyDiffOpt()
     autocmd WinEnter * let w:active_window = 1
     autocmd WinLeave * unlet! w:active_window
