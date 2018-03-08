@@ -1,6 +1,6 @@
 browser "w3m %u"
 auto-reload yes
-macro o set browser "open %u" ; open-in-browser ; set browser "w3m %u"
+macro o set browser "my-open %u" ; open-in-browser ; set browser "w3m %u"
 feedhq-flag-share "s"
 feedhq-flag-star "x"
 feedhq-login "djmoch"
