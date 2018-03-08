@@ -160,7 +160,7 @@ then
     unset vim_bundle_path
 fi
 
-for shell in bash dash sh
+for shell in zsh bash dash sh
 do
     preferred_shell=`cat /etc/shells | grep /$shell$`
     [ "$preferred_shell" = "" ] || break
