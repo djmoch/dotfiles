@@ -162,7 +162,7 @@ fi
 
 for shell in zsh bash dash sh
 do
-    preferred_shell=`cat /etc/shells | grep /$shell$`
+    preferred_shell=`cat /etc/shells | grep /$shell$ | tr '\n' ' ' | cut -d ' ' -f 1`
     [ "$preferred_shell" = "" ] || break
 done
 if cat /etc/passwd | grep ^$LOGNAME.*$preferred_shell$ > /dev/null 2>&1
