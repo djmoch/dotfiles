@@ -5,7 +5,7 @@
 [ -r "$HOME/.zshrc.local" ] && source "$HOME/.zshrc.local"
 
 setopt auto_list extended_glob append_history hist_ignore_all_dups
-setopt prompt_subst correct
+setopt prompt_subst correct auto_param_slash
 
 bindkey -e
 bindkey '^[[A' history-beginning-search-backward
