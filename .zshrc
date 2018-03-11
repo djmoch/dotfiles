@@ -35,6 +35,7 @@ PS1="%{$usercolor%}%n%{$reset%}@%{$fg[green]%}%m:%{$reset%}%c%{$fg[red]%}\$(__gi
 unset usercolor reset
 
 [ -d /usr/share/zsh/site-functions/ ] && fpath=(/usr/share/zsh/site-functions/ $fpath)
+[ -d "$HOME/.zsh/functions" ] && fpath=("$HOME/.zsh/functions" $fpath)
 
 _my()
 {
