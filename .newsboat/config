@@ -7,6 +7,8 @@ feedhq-login "djmoch"
 feedhq-passwordeval "my-netrc feedhq.org password"
 urls-source "feedhq"
 bookmark-cmd "~/.newsboat/bookmark-pinboard.sh"
+bind-key j down
+bind-key k up
 
 color background            color250    color235
 color listnormal            color242    color235
