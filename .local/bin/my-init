@@ -142,7 +142,6 @@ then
     __clone junegunn/goyo.vim
     __clone junegunn/limelight.vim
     __clone ajh17/VimCompletesMe
-    __clone skammer/vim-css-color
     __clone ludovicchabant/vim-gutentags
     __clone beloglazov/vim-online-thesaurus
     __clone jszakmeister/vim-togglecursor
@@ -154,6 +153,7 @@ then
     mkdir -p $vim_bundle_path/opt
     cd $vim_bundle_path/opt
     __clone jpalardy/vim-slime
+    __clone skammer/vim-css-color
     cd - > /dev/null 2>&1
     
     vim --cmd 'silent! execute "helptags ALL" | q'
