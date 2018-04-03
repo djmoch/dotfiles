@@ -2,6 +2,6 @@
 cd .dotfiles
 tar czvf dotfiles.tar.gz `git ls master ..`
 scp dotfiles.tar.gz dotcom:~
-ssh dotcom update_dotfiles
+ssh dotcom sudo update_dotfiles
 rm dotfiles.tar.gz
 exit 0
