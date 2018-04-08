@@ -10,6 +10,7 @@ month=`date '+%m'`
 lastrun_dir="$HOME/.local/var/`basename $0`"
 lastrun_file="$lastrun_dir/lastrun"
 mobile_docs="$HOME/Documents/Mobile"
+server_fqdn="nextcloud.djmoch.org"
 
 if [ -d "$lastrun_dir" ]
 then
@@ -28,12 +29,12 @@ echo "$year $month" > $lastrun_file
 
 [ ! -d "$mobile_docs" ] && mkdir -p "$mobile_docs"
 
-# Only do the following if nextcloud.danielmoch.com is reachable
-if ping -c 1 nextcloud.danielmoch.com > /dev/null 2>&1
+# Only do the following if the server is reachable
+if ping -c 1 $server_fqdn > /dev/null 2>&1
 then
-    echo "nextcloud.danielmoch.com reachable. Proceeding."
+    echo "$server_fqdn reachable. Proceeding."
 else
-    echo "nextcloud.danielmoch.com NOT reachable. Exiting."
+    echo "$server_fqdn NOT reachable. Exiting."
     exit -1
 fi
 
@@ -87,7 +88,7 @@ then
     rsync -aq "$mobile_docs"/* /mnt/nextcloud/Documents
 
     # Finish by unmounting the WebDAV folder
-    echo "Unmounting nextcloud.danielmoch.com"
+    echo "Unmounting $server_fqdn"
     umount /mnt/nextcloud
 else
     echo "NextCloud WebDAV mount FAILED. Exiting."
