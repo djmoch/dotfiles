@@ -34,7 +34,8 @@ channels = (
   { name = "#firefox"; chatnet = "Mozilla"; },
   { name = "#vim"; chatnet = "Freenode"; autojoin = "Yes"; },
   { name = "#archlinux"; chatnet = "freenode"; autojoin = "yes"; },
-  { name = "#archlinux-aur"; chatnet = "Freenode"; autojoin = "yes"; }
+  { name = "#archlinux-aur"; chatnet = "Freenode"; autojoin = "yes"; },
+  { name = "#golug"; chatnet = "Freenode"; autojoin = "yes"; }
 );
 
 aliases = {
@@ -345,6 +346,18 @@ windows = {
     parent = "2";
   };
   5 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#golug";
+        tag = "Freenode";
+      }
+    );
+    sticky = "yes";
+    parent = "2";
+  };
+  6 = {
     items = (
       {
         type = "CHANNEL";
