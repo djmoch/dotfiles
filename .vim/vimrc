@@ -301,6 +301,7 @@ augroup myvimrc
     autocmd VimEnter * let w:active_window = 1 | call MyItalicize() | call MyDiffOpt()
     autocmd WinEnter * let w:active_window = 1
     autocmd WinLeave * unlet! w:active_window
+    autocmd BufEnter * let &titlestring=hostname() . ':%t%h'
     if has('win32') || has('win64')
         autocmd GuiEnter * simalt ~x
     elseif has('gui_macvim')

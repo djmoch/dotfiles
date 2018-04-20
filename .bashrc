@@ -20,6 +20,7 @@ else
 fi
 
 export PS1=$usercolor'\u\[\033[m\]@\[\033[32m\]\h:\[\033[m\]\W\[\033[31m\]$(__git_ps1 " (%s)")\[\033[m\]\$ '
+export PROMPT_COMMAND='echo -ne "\033]0;${USER}@${HOSTNAME}:${PWD}\007"'
 
 [ -r "$BASH_COMPLETION" ] && source "$BASH_COMPLETION"
 unset BASH_COMPLETION
