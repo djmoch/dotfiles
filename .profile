@@ -5,7 +5,9 @@
 
 if [ "$0" = "sh" -o "$0" = "-sh" ]
 then
+    HOSTNAME=`hostname | cut -d . -f 1`
     ENV="$HOME/.shrc"; export ENV
+    printf "\033]0;${USER}@${HOSTNAME}\007"
 fi
 
 if type vim > /dev/null 2>&1
