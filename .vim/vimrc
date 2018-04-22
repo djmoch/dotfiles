@@ -392,5 +392,8 @@ else
 endif
 set autowrite
 set pastetoggle=<F2>
+if $SHELL =~ 'zsh' || $SHELL =~ 'bash'
+    set title
+endif
 let &titlestring=hostname() . ':%t%h'
 " }}}
