@@ -193,6 +193,7 @@ done
 [ -d "$HOME/.dotfiles" ] && cp "$HOME/.local/lib/dotfiles/pre-push" "$HOME/.dotfiles/.git/hooks/"
 [ ! -d "$HOME/.local/var/log" ] && mkdir -p "$HOME/.local/var/log"
 [ ! -d "$HOME/.local/var/forecastio" ] && mkdir -p "$HOME/.local/var/forecastio"
+[ ! -d "$HOME/.local/lib/cron.d" ] && mkdir -p "$HOME/.local/lib/cron.d"
 [ ! -f "$HOME/.local/var/forecastio/current_forecast.txt" ] && echo \
     "Weather not available" > \
     "$HOME/.local/var/forecastio/current_forecast.txt"

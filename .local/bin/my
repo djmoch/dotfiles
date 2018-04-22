@@ -350,7 +350,7 @@ case $command in
             *:"$HOME/.local/bin":*) ;;
             *) PATH="$HOME/.local/bin:$PATH" ;;
         esac
-        cronpath="$HOME/.local/lib/cron"
+        cronpath="$HOME/.local/lib/cron.d"
         logpath="$HOME/.local/var/log"
         for job in $cronpath/*
         do

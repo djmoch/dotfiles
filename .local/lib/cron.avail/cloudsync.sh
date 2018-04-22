@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# ~/.local/lib/cron/cloudsync.sh
+# ~/.local/lib/cron.avail/cloudsync.sh
 #
 
 echo "Beginning cloud sync at `date`"
