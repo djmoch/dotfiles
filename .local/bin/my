@@ -126,7 +126,7 @@ case $command in
         exec my-open "$@"
         ;;
     sound)
-        if type pactl > /dev/null 2>&1
+        if type pactl > /dev/null 2>&1 && pactl stat > /dev/null 2>&1
         then
             [ -z "$1" ] && exit 1
             if [ $1 = "status" ]
