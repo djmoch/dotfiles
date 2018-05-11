@@ -12,7 +12,7 @@ GIT_PS1_SHOWDIRTYSTATE=1
 GIT_PS1_SHOWUNTRACKEDFILES=1
 source "$HOME/.local/lib/sh/git-prompt.sh"
 
-if [ $TERM = linux ]
+if [ $TERM = linux ] && [ $TERM = cygwin ]
 then
     usercolor='\[\033[01;34m\]'
 else

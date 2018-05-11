@@ -22,7 +22,7 @@ source "$HOME/.local/lib/sh/git-prompt.sh"
 
 autoload -Uz colors && colors
 
-if [ $TERM = linux ]
+if [ $TERM = linux ] && [ $TERM = cygwin ]
 then
     usercolor="$fg_bold[blue]"
 else
