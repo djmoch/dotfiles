@@ -1,28 +1,15 @@
 servers = (
   {
-    address = "chat.freenode.net";
-    chatnet = "Freenode";
+    address = "sweetwater.djmoch.org";
+    chatnet = "Sweetwater";
     port = "7000";
-    use_tls = "yes";
-    tls_verify = "yes";
-  },
-  {
-    address = "irc.mozilla.org";
-    chatnet = "Mozilla";
-    port = "6697";
     use_tls = "yes";
     tls_verify = "yes";
   }
 );
 
 chatnets = {
-  Freenode = {
-    type = "IRC";
-    max_kicks = "1";
-    max_msgs = "4";
-    max_whois = "1";
-  };
-  Mozilla = {
+  Sweetwater = {
     type = "IRC";
     max_kicks = "1";
     max_msgs = "4";
@@ -31,11 +18,10 @@ chatnets = {
 };
 
 channels = (
-  { name = "#firefox"; chatnet = "Mozilla"; },
-  { name = "#vim"; chatnet = "Freenode"; autojoin = "Yes"; },
-  { name = "#archlinux"; chatnet = "freenode"; autojoin = "yes"; },
-  { name = "#archlinux-aur"; chatnet = "Freenode"; autojoin = "yes"; },
-  { name = "#golug"; chatnet = "Freenode"; autojoin = "yes"; }
+  { name = "#archlinux"; chatnet = "sweetwater"; autojoin = "yes"; },
+  { name = "#archlinux-aur"; chatnet = "sweetwater"; autojoin = "yes"; },
+  { name = "#vim"; chatnet = "sweetwater"; autojoin = "yes"; },
+  { name = "#golog"; chatnet = "sweetwater"; autojoin = "yes"; }
 );
 
 aliases = {
@@ -316,7 +302,7 @@ windows = {
         type = "CHANNEL";
         chat_type = "IRC";
         name = "#vim";
-        tag = "Freenode";
+        tag = "Sweetwater";
       }
     );
     sticky = "yes";
@@ -327,7 +313,7 @@ windows = {
         type = "CHANNEL";
         chat_type = "IRC";
         name = "#archlinux";
-        tag = "Freenode";
+        tag = "Sweetwater";
       }
     );
     sticky = "yes";
@@ -339,7 +325,7 @@ windows = {
         type = "CHANNEL";
         chat_type = "IRC";
         name = "#archlinux-aur";
-        tag = "Freenode";
+        tag = "Sweetwater";
       }
     );
     sticky = "yes";
@@ -351,19 +337,7 @@ windows = {
         type = "CHANNEL";
         chat_type = "IRC";
         name = "#golug";
-        tag = "Freenode";
-      }
-    );
-    sticky = "yes";
-    parent = "2";
-  };
-  6 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#firefox";
-        tag = "Mozilla";
+        tag = "Sweetwater";
       }
     );
     sticky = "yes";
