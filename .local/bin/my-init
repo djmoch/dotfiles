@@ -11,6 +11,8 @@ do
     shift
 done
 
+vim_bundle_path="$HOME/.vim/pack/bundle"
+
 __has()
 {
     for token in $@
@@ -72,6 +74,8 @@ then
     rm -rf "$HOME/.terminfo"
     rm -rf "$vim_bundle_path"
     rm "$HOME/.less"
+    cat "$HOME/.gnupg/gpg-agent.conf" | grep -v pinentry-program \
+        | tee "$HOME/.gnupg/gpg-agent.conf" > /dev/null 2>&1
 fi
 
 if [ -f "$HOME/._.djmoch" ]
@@ -125,7 +129,6 @@ fi
 if __has "vim" "git" && [ ! -d "$vim_bundle_path" ]
 then
     echo " Downloading Vim plugins"
-    vim_bundle_path="$HOME/.vim/pack/bundle"
     # Plugins that should always be enabled
     mkdir -p $vim_bundle_path/start
     cd $vim_bundle_path/start
@@ -165,7 +168,7 @@ do
     preferred_shell=`cat /etc/shells | grep /$shell$ | tr '\n' ' ' | cut -d ' ' -f 1`
     [ "$preferred_shell" = "" ] || break
 done
-if cat /etc/passwd | grep ^$LOGNAME.*$preferred_shell$ > /dev/null 2>&1
+if getent passwd | grep ^$LOGNAME.*$preferred_shell$ > /dev/null 2>&1
 then
     echo " Login shell already set to $preferred_shell"
 else
@@ -189,6 +192,31 @@ EOF
         break
     fi
 done
+
+cat $HOME/.gnupg/gpg-agent.conf | grep pinentry-program
+if [ $? -ne 0 ]
+then
+    echo " Configuring pinentry in gpg-agent.conf"
+    pinentry=""
+    if type pinentry > /dev/null 2>&1
+    then
+        pinentry=`which pinentry`
+    fi
+    case `uname -s` in
+        *Darwin*)
+            pinentry="/usr/local/bin/pinentry-mac $pinentry"
+            ;;
+    esac
+
+    for testpath in $pinentry
+    do
+        if [ -x $testpath ]
+        then
+            echo "pinentry-program $testpath" >> $HOME/.gnupg/gpg-agent.conf
+            break
+        fi
+    done
+fi
 
 [ -d "$HOME/.dotfiles" ] && cp "$HOME/.local/lib/dotfiles/pre-push" "$HOME/.dotfiles/.git/hooks/"
 [ ! -d "$HOME/.local/var/log" ] && mkdir -p "$HOME/.local/var/log"
