@@ -34,12 +34,9 @@ RPS1="[%?]"
 PS1="%{$usercolor%}%n%{$reset%}@%{$fg[green]%}%m:%{$reset%}%c%{$fg[red]%}\$(__git_ps1 \" (%s)\")%{$reset%}%(!.#.\$) "
 unset usercolor reset
 
-preexec()
-{
-    base=`echo $2|cut -d ' ' -f 1`
-    print -Pn "\033]0;%n@%m:`basename $base`\007"
-}
-precmd() { print -Pn "\033]0;%n@%m:%~\007" }
+set_title() { print -Pn "\033]0;%n@%m:$1\007" }
+preexec() { set_title "$2" }
+precmd() { set_title "%~" }
 
 [ -d /usr/share/zsh/site-functions/ ] && fpath=(/usr/share/zsh/site-functions/ $fpath)
 [ -d "$HOME/.zsh/functions" ] && fpath=("$HOME/.zsh/functions" $fpath)
