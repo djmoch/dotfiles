@@ -74,8 +74,7 @@ then
     rm -rf "$HOME/.terminfo"
     rm -rf "$vim_bundle_path"
     rm "$HOME/.less"
-    cat "$HOME/.gnupg/gpg-agent.conf" | grep -v pinentry-program \
-        | tee "$HOME/.gnupg/gpg-agent.conf" > /dev/null 2>&1
+    rm "$HOME/.gnupg/gpg-agent.conf"
 fi
 
 if [ -f "$HOME/._.djmoch" ]
@@ -193,10 +192,9 @@ EOF
     fi
 done
 
-cat $HOME/.gnupg/gpg-agent.conf | grep pinentry-program
-if [ $? -ne 0 ]
+if [ ! -f "$HOME/.gnupg/gpg-agent.conf" ]
 then
-    echo " Configuring pinentry in gpg-agent.conf"
+    echo " Creating gpg-agent.conf and configuring pinentry"
     pinentry=""
     if type pinentry > /dev/null 2>&1
     then
@@ -212,7 +210,12 @@ then
     do
         if [ -x $testpath ]
         then
-            echo "pinentry-program $testpath" >> $HOME/.gnupg/gpg-agent.conf
+            cat > "$HOME/.gnupg/gpg-agent.conf" <<-EOF
+default-cache-ttl 600
+max-cache-ttl 7200
+enable-ssh-support
+pinentry-program $testpath
+EOF
             break
         fi
     done
