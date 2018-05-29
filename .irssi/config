@@ -21,7 +21,7 @@ channels = (
   { name = "#archlinux"; chatnet = "sweetwater"; autojoin = "yes"; },
   { name = "#archlinux-aur"; chatnet = "sweetwater"; autojoin = "yes"; },
   { name = "#vim"; chatnet = "sweetwater"; autojoin = "yes"; },
-  { name = "#golog"; chatnet = "sweetwater"; autojoin = "yes"; }
+  { name = "#golug"; chatnet = "Sweetwater"; autojoin = "yes"; }
 );
 
 aliases = {
