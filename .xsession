@@ -3,9 +3,9 @@
 # ~/.xsession
 #
 echo "Running $HOME/.xsession as PID $$" >&2
+[ -r "$HOME/.xsession.local" ] && . "$HOME/.xsession.local"
 date +'%m/%d/%Y %H:%M:%S' >&2
 env >&2
-[ -r "$HOME/.xsession.local" ] && . "$HOME/.xsession.local"
 
 __autostart()
 {
@@ -18,7 +18,7 @@ __autostart()
         AUTOSTART_CMD="fbautostart"
     fi
 
-    until ps -u $LOGNAME -U $LOGNAME | grep $1 > /dev/null 2>&1
+    until ps -U $LOGNAME | grep $1 > /dev/null 2>&1
     do
         sleep 1
     done

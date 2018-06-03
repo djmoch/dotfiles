@@ -22,7 +22,7 @@ __getlocker()
 {
     for locker in light-locker cinnamon-screensaver gnome-screensaver xscreensaver
     do
-        if type $locker-command > /dev/null 2>&1 && ps -U $LOGNAME -o cmd= | grep ^[^_[:space:]]*$locker > /dev/null 2>&1
+        if type $locker-command > /dev/null 2>&1 && ps -U $LOGNAME -o command= | grep ^[^_[:space:]]*$locker > /dev/null 2>&1
         then
             echo $locker
             exit 0
