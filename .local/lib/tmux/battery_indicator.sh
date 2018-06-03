@@ -4,8 +4,7 @@
 #
 SMILE='☻ '
 
-battery_percent=`my battery percent`
-charged_slots=$(($battery_percent/30+1))
+charged_slots=$((`my battery percent` / 25))
 [ $charged_slots -gt 3 ] && charged_slots=3
 
 echo -n '#[fg=colour108]'
