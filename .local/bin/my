@@ -257,7 +257,7 @@ case $command in
                 exit 0
                 ;;
             percent)
-                echo "`my battery remaining`/`my battery total` * 100" | bc -l | cut -d '.' -f 1
+                echo "$((`my battery remaining` * 100 / `my battery total`))"
                 exit 0
                 ;;
         esac
@@ -359,8 +359,8 @@ case $command in
         ;;
     login_async)
         starttime=`date '+%s'`
-        current=`date '+%s'`
-        while [ `echo "$current - $starttime" | bc` -le 120 ]
+        runningtime=0
+        while [ $runningtime -le 120 ]
         do
             if ping -c 1 danielmoch.com > /dev/null 2>&1
             then
@@ -368,7 +368,7 @@ case $command in
                 break
             fi
             sleep 1
-            current=`date '+%s'`
+            runningtime=$((`date '+%s'` - $starttime))
         done
         if [ -n "$connected" ]
         then
