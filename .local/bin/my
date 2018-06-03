@@ -328,14 +328,14 @@ case $command in
                     [ ! "$status" = "" ] && git pull --no-commit > /dev/null 2>&1
                 elif [ -d "$HOME/.dotfiles_tgz" ]
                 then
-                    curl https://danielmoch.com/static/dotfiles.tar.gz > /tmp/dotfiles.tgz.$$
+                    curl -s https://danielmoch.com/static/dotfiles.tar.gz > /tmp/dotfiles.tgz.$$
                     oldsum=`shasum -a 256 "$HOME/.dotfiles_tgz/dotfiles.tar.gz" | awk '{print $1}'`
                     newsum=`shasum -a 256 "/tmp/dotfiles.tgz.$$" | awk '{print $1}'`
                     if [ ! "$oldsum" = "$newsum" ]
                     then
                         mv /tmp/dotfiles.tgz.$$ "$HOME/.dotfiles_tgz/dotfiles.tar.gz"
                         cd "$HOME"
-                        tar xzvf .dotfiles_tgz/dotfiles.tar.gz
+                        tar xzf .dotfiles_tgz/dotfiles.tar.gz
                     else
                         rm /tmp/dotfiles.tgz.$$
                     fi
