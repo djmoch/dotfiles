@@ -1,4 +1,4 @@
-# This script lightly modified from the original, found at:
+# lightly modified version of the original, found here:
 # https://github.com/ervandew/keyring/blob/master/irssi/scripts/keyring.pl
 use strict;
 
@@ -15,15 +15,20 @@ Irssi::command_bind keyring => sub {
     my $command = $_;
     my @parts = split(/\s/, $command);
     my $username;
-    my $chatnet;
-    my $nick;
     my $username_alt;
     if ($parts[0] eq 'connect'){
       if (scalar(@parts) >= 5){
-        $chatnet = "$parts[1]";
-        $nick = "$parts[4]";
         $username = "$parts[4]\@$parts[1]";
       }
+    }elsif ($parts[0] eq 'xmppconnect'){
+      foreach (@parts) {
+        if ($_ =~ '@'){
+          $username = $_;
+          last;
+        }
+      }
+    }elsif ($parts[0] eq 'set'){
+      $username = "$parts[1]";
     }else{
       next;
     }
@@ -31,13 +36,6 @@ Irssi::command_bind keyring => sub {
     # handle alternate username
     if ($command =~ m/.*<password:([^>]*)>.*/){
       $username_alt = $1;
-      $username_alt =~ s/@/ /g;
-    }
-
-    # handle reset command
-    if ($account eq 'reset'){
-      Irssi::command("network modify -sasl_mechanism '' -sasl_username '' -sasl_password '' $chatnet");
-      next
     }
 
     # just print available account names
@@ -63,7 +61,7 @@ Irssi::command_bind keyring => sub {
     if ($username_alt){
       $username = $username_alt;
     }
-    my  $pid = open3($stdin, $stdout, $stderr, "secret-tool lookup $username");
+    my  $pid = open3($stdin, $stdout, $stderr, "my netrc $parts[1] password");
     waitpid($pid, 0);
 
     my $status = $? >> 8;
@@ -76,8 +74,7 @@ Irssi::command_bind keyring => sub {
       }else{
         print "keyring: connecting $username";
         $command =~ s/<password(:[^>]*)?>/$password/;
-        Irssi::command("network modify -sasl_mechanism PLAIN -sasl_username $nick -sasl_password $password $chatnet");
-        Irssi::command("connect $chatnet");
+        Irssi::command($command);
       }
     }else{
       my $error = join('', <$stderr>);

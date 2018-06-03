@@ -1,2 +1,1 @@
-connect freenode 7000 <password:account@djmoch@service@net.freenode.chat> djmoch
-connect mozilla 6697 <password:account@djmoch@service@org.mozilla.irc> djmoch
+connect sweetwater.djmoch.org 7000 <password> djmoch
