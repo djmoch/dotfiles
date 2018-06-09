@@ -72,16 +72,6 @@ if type gpg-connect-agent > /dev/null 2>&1
 then
     GPG_TTY=`tty`; export GPG_TTY
     gpg-connect-agent updatestartuptty /bye > /dev/null 2>&1
-
-    if [ -z "$SSH_TTY" ] && type gpgconf > /dev/null 2>&1
-    then
-        if [ "`gpgconf --list-dirs agent-ssh-socket | wc -l`" -eq 1 ]
-        then
-            unset SSH_AGENT_PID
-            SSH_AUTH_SOCK=`gpgconf --list-dirs agent-ssh-socket`
-            export SSH_AUTH_SOCK
-        fi
-    fi
 fi
 
 if [ ! -f "$HOME/.hushlogin" ]
