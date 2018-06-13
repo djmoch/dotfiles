@@ -12,6 +12,7 @@ do
 done
 
 vim_bundle_path="$HOME/.vim/pack/bundle"
+configdir=${XDG_CONFIG_HOME:-$HOME/.config}
 
 __has()
 {
@@ -75,6 +76,11 @@ then
     rm -rf "$vim_bundle_path"
     rm "$HOME/.less"
     rm "$HOME/.gnupg/gpg-agent.conf"
+    if ps -U $LOGNAME | grep systemd > /dev/null 2>&1
+    then
+        rm $configdir/systemd/user/my-cron.service
+        rm $configdir/systemd/user/my-cron.timer
+    fi
 fi
 
 if [ -f "$HOME/._.djmoch" ]
@@ -102,7 +108,31 @@ then
     lesskey
 fi
 
-if __has "crontab" && [ -n "$crontab_init" ]
+if ps -U $LOGNAME | grep systemd > /dev/null 2>&1 \
+    && [ -n "$crontab_init" ]
+then
+    echo " Installing systemd timers"
+    cat >> $configdir/systemd/user/my-cron.service <<-EOF
+[Unit]
+Description=djmoch "my cron" service
+
+[Service]
+Type=simple
+ExecStart=$HOME/.local/bin/my cron systemd
+EOF
+    cat >> $configdir/systemd/user/my-cron.timer <<-EOF
+[Unit]
+Description=djmoch "my cron" timer
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=15min
+
+[Install]
+WantedBy=timers.target
+EOF
+    systemctl --user enable my-cron.timer
+elif __has "crontab" && [ -n "$crontab_init" ]
 then
     echo " Installing crontab"
     crontab -l > /tmp/crontab.$$.orig
