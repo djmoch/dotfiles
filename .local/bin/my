@@ -321,6 +321,14 @@ case $command in
                 find . -maxdepth 1 -name ._.djmoch -mtime +8 -exec echo "Dotfiles more than one week old" \;
                 ;;
             update)
+                if type sha256sum > /dev/null 2>&1
+                then
+                    sha_exec=sha256sum
+                    fieldnum=1 
+                else
+                    sha_exec=sha256
+                    fieldnum=4
+                fi
                 if [ -d "$HOME/.dotfiles" ]
                 then
                     cd "$HOME/.dotfiles"
@@ -329,8 +337,8 @@ case $command in
                 elif [ -d "$HOME/.dotfiles_tgz" ]
                 then
                     curl -s https://danielmoch.com/static/dotfiles.tar.gz > /tmp/dotfiles.tgz.$$
-                    oldsum=`shasum -a 256 "$HOME/.dotfiles_tgz/dotfiles.tar.gz" | awk '{print $1}'`
-                    newsum=`shasum -a 256 "/tmp/dotfiles.tgz.$$" | awk '{print $1}'`
+                    oldsum=`$sha_exec "$HOME/.dotfiles_tgz/dotfiles.tar.gz" | cut -d ' ' -f $fieldnum`
+                    newsum=`$sha_exec "/tmp/dotfiles.tgz.$$" | cut -d ' ' -f $fieldnum`
                     if [ ! "$oldsum" = "$newsum" ]
                     then
                         mv /tmp/dotfiles.tgz.$$ "$HOME/.dotfiles_tgz/dotfiles.tar.gz"
