@@ -76,11 +76,6 @@ then
     rm -rf "$vim_bundle_path"
     rm "$HOME/.less"
     rm "$HOME/.gnupg/gpg-agent.conf"
-    if ps -U $LOGNAME | grep systemd > /dev/null 2>&1
-    then
-        rm $configdir/systemd/user/my-cron.service
-        rm $configdir/systemd/user/my-cron.timer
-    fi
 fi
 
 if [ -f "$HOME/._.djmoch" ]
