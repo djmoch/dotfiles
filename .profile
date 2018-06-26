@@ -22,6 +22,8 @@ PAGER=less
 LESS="-FMRqX#10"
 export EDITOR VISUAL PAGER LESS
 
+WWW_HOME=https://danielmoch.com; export WWW_HOME
+
 if type lesspipe > /dev/null 2>&1
 then
     eval `lesspipe`
