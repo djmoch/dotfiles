@@ -1,5 +1,4 @@
 #!/bin/sh
-
 #
 # ~/.local/bin/my-open
 #
@@ -8,6 +7,20 @@
 # attempt to resolve the different handlers into a platform-independent
 # one.
 #
+if [ "$1" = "-T" ]
+then
+    shift
+    for b in w3m lynx
+    do
+        if type $b > /dev/null 2>&1
+        then
+            browser=$b
+            break
+        fi
+    done
+    $browser $1
+    exit
+fi
 
 # Find handler, if one is available
 if type cygstart > /dev/null 2>&1

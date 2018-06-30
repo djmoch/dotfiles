@@ -16,7 +16,7 @@ use_dictcommand 1
 dictcommand file:///$LIB/w3mdict.cgi
 multicol 0
 alt_entity 0
-graphic_char 0
+graphic_char 2
 display_borders 0
 fold_textarea 0
 display_ins_del 1
@@ -42,9 +42,9 @@ image_color green
 form_color red
 mark_color cyan
 bg_color terminal
-active_style 0
+active_style 1
 active_color cyan
-visited_anchor 0
+visited_anchor 1
 visited_color magenta
 pagerline 10000
 use_history 1
@@ -54,7 +54,7 @@ confirm_qq 1
 close_tab_back 0
 mark 0
 emacs_like_lineedit 0
-vi_prec_num 0
+vi_prec_num 1
 mark_all_pages 0
 wrap_search 0
 ignorecase_search 1
@@ -72,13 +72,13 @@ document_root
 personal_document_root 
 cgi_bin 
 index_file 
-mime_types ~/.mime.types, /usr/etc/mime.types
+mime_types ~/.mime.types, /usr/share/cups/mime/mime.types
 mailcap ~/.mailcap
 urimethodmap ~/.w3m/urimethodmap, /usr/etc/w3m/urimethodmap
 editor $EDITOR
 mailto_options 1
-mailer mutt
-extbrowser /usr/bin/firefox
+mailer ~/.local/bin/my mailto
+extbrowser ~/.local/bin/my-open
 extbrowser2 
 extbrowser3 
 extbrowser4 
@@ -102,7 +102,7 @@ accept_encoding gzip, compress, bzip, bzip2, deflate
 accept_media text/html, text/*;q=0.5, image/*, application/*, audio/*, video/*
 argv_is_url 1
 retry_http 1
-default_url 1
+default_url 0
 follow_redirection 10
 meta_refresh 0
 dns_order 0

@@ -34,6 +34,26 @@ __getlocker()
 }
 
 case $command in
+    mailto)
+        for m in mutt mail
+        do
+            if type $m > /dev/null 2>&1
+            then
+                mailer=$m
+                break
+            fi
+        done
+        if [ -n "$2" ]
+        then
+            $mailer -s "$2" $1
+        else
+            $mailer $1
+        fi
+        ;;
+    search)
+        query=`echo $1 | tr ' ' '+'`
+        exec my open -T https://duckduckgo.com/?q=$query
+        ;;
     term)
         SHLVL=0; export SHLVL
         if type urxvtd > /dev/null 2>&1
