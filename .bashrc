@@ -34,7 +34,7 @@ _my()
     selector="${COMP_WORDS[1]}"
     opts="term lock wallpaper standby shutdown perms init open sound \
         kbopts screen brightness battery status i3status copy paste \
-        netrc dotfiles cron login_async login"
+        netrc dotfiles cron login_async login mailto search"
 
     case "$selector" in
         sound)
@@ -80,6 +80,10 @@ _my()
             return 0
             ;;
         open)
+            if [ "$prev" = "$selector" ]
+            then
+                COMPREPLY=( $(compgen -W -T -- $cur) )
+            fi
             _filedir
             return 0
             ;;

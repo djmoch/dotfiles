@@ -74,6 +74,8 @@ _my()
                 'cron:run cron jobs'
                 'login_async:login (blocking)'
                 'login:login'
+                'mailto:send email'
+                'search:search DuckDuckGo in the terminal'
             )
             _describe -t subcommands 'my subcommand' subcommands && ret=0
             ;;
@@ -148,7 +150,12 @@ _my()
                     fi
                     ;;
                 open)
-                    _files
+                    if [ $CURRENT -eq 2 ]
+                    then
+                        _alternative 'arguments:open in terminal:(-T)' 'files:filename:_files' && ret=0
+                    else
+                        _files
+                    fi
                     ;;
                 init)
                     args=(
@@ -171,6 +178,18 @@ _my()
                         )
                         _describe -t subcommands 'netrc subcommand' subcommands && ret=0
                     fi
+                    ;;
+                mailto)
+                    if [ $CURRENT -eq 2 ]
+                    then
+                        _alternative 'address:email address to send:()' && ret=0
+                    elif [ $CURRENT -eq 3 ]
+                    then
+                        _alternative 'subject:email subject line:()' && ret=0
+                    fi
+                    ;;
+                search)
+                    _alternative 'term:search term:()' && ret=0
                     ;;
             esac
     esac
