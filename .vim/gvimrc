@@ -2,7 +2,7 @@ nnoremap <Leader>rc :e $MYGVIMRC<CR>
 
 
 if has('gui_gtk2') || has('gui_gtk3')
-    set guifont=Meslo\ LG\ M\ DZ\ Regular\ 10
+    set guifont=Mono\ 10
 else
     set guifont=Meslo\ LG\ M\ DZ\ Regular:h12,Menlo\ Regular:h12,Consolas:h11
 endif
