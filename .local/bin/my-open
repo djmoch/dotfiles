@@ -10,16 +10,73 @@
 if [ "$1" = "-T" ]
 then
     shift
-    for b in w3m lynx
+
+    configfile="${XDG_CONFIG_HOME:-$HOME/.config}/my-open/config"
+
+    if [ ! -f "$configfile" ]
+    then
+        echo "my-open: No config file. Creating skeleton."
+        mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/my-open"
+        configname=${configfile/$HOME/'~'}
+        cat >> "$configfile" <<-EOF
+#
+# $configname
+#
+# format: [mimetype]:default fallback1 fallback2 ...
+# second segment of mimetype can be a wildcard. my-open looks for exact
+# matches first.
+EOF
+        exit 2
+    fi
+
+    if type xdg-mime > /dev/null 2>&1
+    then
+        mimecmd="xdg-mime query filetype %s"
+    elif type mimetype > /dev/null 2>&1
+    then
+        mimecmd="mimetype %s"
+    else
+        echo "my-open: No way to determine MIME type" >&2
+        exit 1
+    fi
+
+    if [ -f "$1" -o -d "$1" ]
+    then
+        mimecmd=`printf "$mimecmd" "$1"`
+        mimetype=`$mimecmd`
+    else
+        mimetype='text/html'
+    fi
+
+    handlers=`cat $configfile | grep -Ev '^#' | grep $mimetype | \
+        cut -d ':' -f 2`
+    if [ -z "$handlers" ]
+    then
+        mimetype="`echo $mimetype | cut -d '/' -f 1`/*"
+        handlers=`cat $configfile | grep -Ev '^#' | grep $mimetype | \
+            cut -d ':' -f 2`
+    fi
+    if [ -z "$handlers" ]
+    then
+        echo "my-open: No handler specified" >&2
+        exit 4
+    fi
+
+    for h in $handlers
     do
-        if type $b > /dev/null 2>&1
+        if type $h > /dev/null 2>&1
         then
-            browser=$b
+            handler=$h
             break
         fi
     done
-    $browser $1
-    exit
+
+    if [ -z "$handler" ]
+    then
+        echo "my-open: No handler found in \$PATH" >&2
+        exit 8
+    fi
+    exec $handler $@
 fi
 
 # Find handler, if one is available
