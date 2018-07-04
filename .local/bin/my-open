@@ -22,7 +22,7 @@ then
 #
 # $configname
 #
-# format: [mimetype]:default fallback1 fallback2 ...
+# format: [mimetype]:default fallback1 fallback2 ...:commandline
 # second segment of mimetype can be a wildcard. my-open looks for exact
 # matches first.
 EOF
@@ -44,17 +44,30 @@ EOF
     then
         mimecmd=`printf "$mimecmd" "$1"`
         mimetype=`$mimecmd`
+    elif echo "$1" | grep -E '^http:\/\/' > /dev/null 2>&1
+    then
+        mimetype='x-scheme-handler/http'
+    elif echo "$1" | grep -E '^https:\/\/' > /dev/null 2>&1
+    then
+        mimetype='x-scheme-handler/https'
+    elif echo "$1" | grep -E '^ftp:\/\/' > /dev/null 2>&1
+    then
+        mimetype='x-scheme-handler/ftp'
     else
-        mimetype='text/html'
+        mimetype='application/octet-stream'
     fi
 
     handlers=`cat $configfile | grep -Ev '^#' | grep $mimetype | \
         cut -d ':' -f 2`
+    cmdline=`cat $configfile | grep -Ev '^#' | grep $mimetype | \
+        cut -d ':' -f 3`
     if [ -z "$handlers" ]
     then
         mimetype="`echo $mimetype | cut -d '/' -f 1`/*"
         handlers=`cat $configfile | grep -Ev '^#' | grep $mimetype | \
             cut -d ':' -f 2`
+        cmdline=`cat $configfile | grep -Ev '^#' | grep $mimetype | \
+            cut -d ':' -f 3`
     fi
     if [ -z "$handlers" ]
     then
@@ -76,7 +89,8 @@ EOF
         echo "my-open: No handler found in \$PATH" >&2
         exit 8
     fi
-    exec $handler $@
+    set -- `printf -- "$cmdline" "$1"`
+    exec $handler "$@"
 fi
 
 # Find handler, if one is available
