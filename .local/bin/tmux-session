@@ -36,16 +36,18 @@ if echo $1 | grep iterm > /dev/null 2>&1
 then
     name=iterm
     columns=`tput cols`
-    width=$(($columns - 80))
+    width=$(($columns - 80 - 1))
     tmux new-session -d -x $columns -y `tput lines` -s $name vim
     tmux rename-window -t $name:1 code
+    tmux splitw -h -l 80
+    tmux setw main-pane-width $width
     tmux selectl main-vertical
     if echo $1 | grep chat > /dev/null 2>&1
     then
         width=$(($columns - 30))
         tmux new-window -t $name -n "chat" irssi
         tmux setw main-pane-width $width
-        tmux splitw -h cat ~/.irssi/nicklistfifo
+        tmux splitw -h -l 30 cat ~/.irssi/nicklistfifo
         tmux selectl main-vertical
         tmux select-pane -t $name:2.1
         tmux send-keys -t $name:2.1 "/keyring" "C-m" "/nicklist fifo" "C-m"
@@ -74,11 +76,11 @@ elif [ $1 = "code" ]
 then
     name=code
     columns=`tput cols`
-    width=$(($columns - 80))
+    width=$(($columns - 80 - 1))
     tmux new-session -d -x $columns -y `tput lines` -s $name vim
     tmux rename-window -t $name:1 code
     tmux setw main-pane-width $width
-    tmux splitw
+    tmux splitw -h -l 80
     tmux selectl main-vertical
 elif [ $1 = "notes" ]
 then
@@ -91,7 +93,7 @@ then
     width=$(($columns - 30))
     tmux new-session -d -x $columns -y `tput lines` -s $name irssi
     tmux setw main-pane-width $width
-    tmux splitw -h cat ~/.irssi/nicklistfifo
+    tmux splitw -h -l 30 cat ~/.irssi/nicklistfifo
     tmux selectl main-vertical
     tmux send-keys -t $name:1.1 "/keyring" "C-m" "/nicklist fifo" "C-m"
 fi
