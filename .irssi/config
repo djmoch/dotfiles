@@ -288,7 +288,7 @@ settings = {
     use_status_window = "yes";
     theme = "apprentice";
   };
-  "perl/core/scripts" = { nicklist_height = "55"; nicklist_width = "29"; };
+  "perl/core/scripts" = { nicklist_height = "46"; nicklist_width = "29"; };
 };
 keyboard = (
   { key = "meta-d"; id = "command"; data = "nicklist scroll +55"; },
