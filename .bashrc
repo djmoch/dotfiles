@@ -12,11 +12,11 @@ GIT_PS1_SHOWDIRTYSTATE=1
 GIT_PS1_SHOWUNTRACKEDFILES=1
 source "$HOME/.local/lib/sh/git-prompt.sh"
 
-if [ $TERM = linux ] || [ $TERM = cygwin ] || [[ $TERM = vt* ]]
+if [[ $TERM = *256color ]]
 then
-    usercolor='\[\033[01;34m\]'
-else
     usercolor='\[\033[34m\]'
+else
+    usercolor='\[\033[01;34m\]'
 fi
 
 export PS1=$usercolor'\u\[\033[m\]@\[\033[32m\]\h:\[\033[m\]\W\[\033[31m\]$(__git_ps1 " (%s)")\[\033[m\]\$ '

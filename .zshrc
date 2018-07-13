@@ -22,12 +22,13 @@ source "$HOME/.local/lib/sh/git-prompt.sh"
 
 autoload -Uz colors && colors
 
-if [ $TERM = linux ] || [ $TERM = cygwin ] || [[ $TERM = vt* ]]
+if [[ $TERM = *256color ]]
 then
-    usercolor="$fg_bold[blue]"
-else
     usercolor="$fg[blue]"
+else
+    usercolor="$fg_bold[blue]"
 fi
+
 reset=$'\e[00m'
 
 RPS1="[%?]"
