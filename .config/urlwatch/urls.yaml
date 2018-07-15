@@ -25,3 +25,7 @@ url: https://github.com/orakaro/rainbowstream/releases
 filter: pypiorg
 kind: url
 url: https://pypi.org/project/rainbowstream/#history
+---
+filter: github
+kind: url
+url: https://github.com/insanum/sncli/tags
