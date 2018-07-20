@@ -113,14 +113,14 @@ mono  underline     underline
 mono  indicator     reverse
 mono  error         bold
 
-color index         default         default         "~A"                        # all messages
+color index         white           default         "~A"                        # all messages
 color index         red             default         "~E"                        # expired messages
-color index         brightwhite     default         "~N"                        # new messages
+color index         default         default         "~N"                        # new messages
 color index         default         default         "~O"                        # old messages
 color index         brightmagenta   default         "~Q"                        # messages that have been replied to
 color index         white           default         "~R"                        # read messages
-color index         brightwhite     default         "~U"                        # unread messages
-color index         brightwhite     default         "~U~$"                      # unread, unreferenced messages
+color index         default         default         "~U"                        # unread messages
+color index         default         default         "~U~$"                      # unread, unreferenced messages
 color index         white           default         "~v"                        # messages part of a collapsed thread
 color index         white           default         "~P"                        # messages from me
 color index         brightblue      default         "~p!~F"                     # messages to me
