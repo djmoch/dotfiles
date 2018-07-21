@@ -10,6 +10,7 @@ month=`date '+%m'`
 lastrun_dir="$HOME/.local/var/`basename $0`"
 lastrun_file="$lastrun_dir/lastrun"
 mobile_docs="$HOME/Documents/Mobile"
+notes="$HOME/Documents/Notes"
 server_fqdn="nextcloud.djmoch.org"
 
 if [ -d "$lastrun_dir" ]
@@ -51,10 +52,9 @@ then
     echo "NextCloud WebDAV successfully mounted. Setting permissions."
     chmod 700 /mnt/nextcloud
 
-    # Rsync from WebDAV to ~/Photos
-    echo "Syncing Photos from WebDAV to $LOCAL_PHOTOS"
+    echo "Syncing Photos between WebDAV and $LOCAL_PHOTOS"
     [ ! -d $LOCAL_PHOTOS/$year/$month ] && mkdir -p $LOCAL_PHOTOS/$year/$month
-    rsync -aq /mnt/nextcloud/Photos/$year/$month/* $LOCAL_PHOTOS/$year/$month
+    unison -batch /mnt/nextcloud/Photos/$year/$month $LOCAL_PHOTOS/$year/$month
     if [ -z "$firstrun" -a $lastrun_month -ne $month ]
     then
         # TODO: What if we're more than a month behind?
@@ -62,30 +62,14 @@ then
         then
             mkdir -p $LOCAL_PHOTOS/$lastrun_year/$lastrun_month
         fi
-        rsync -aq /mnt/nextcloud/Photos/$lastrun_year/$lastrun_month/* $LOCAL_PHOTOS/$lastrun_year/$lastrun_month
+        unison -batch /mnt/nextcloud/Photos/$lastrun_year/$lastrun_month $LOCAL_PHOTOS/$lastrun_year/$lastrun_month
     fi
 
-    # Rsync from ~/Photos to WebDAV 
-    echo "Syncing Photos from $LOCAL_PHOTOS to WebDAV"
-    [ ! -d /mnt/nextcloud/Photos/$year/$month ] && mkdir -p /mnt/nextcloud/Photos/$year/$month
-    rsync -aq $LOCAL_PHOTOS/$year/$month/* /mnt/nextcloud/Photos/$year/$month
-    if [ -z "$firstrun" -a $lastrun_month -ne $month ]
-    then
-        if [ ! -d /mnt/nextcloud/Photos/$lastrun_year/$lastrun_month ]
-        then
-            mkdir -p /mnt/nextcloud/Photos/$lastrun_year/$lastrun_month
-        fi
-        # TODO: What if we're more than a month behind?
-        rsync -aq $LOCAL_PHOTOS/$lastrun_year/$lastrun_month/* /mnt/nextcloud/Photos/$lastrun_year/$lastrun_month
-    fi
+    echo "Syncing mobile documents between WebDAV and $mobile_docs"
+    unison -batch /mnt/nextcloud/Documents "$mobile_docs"
 
-    # Rsync from WebDAV to ~/Documents/Mobile
-    echo "Syncing mobile documents from WebDAV to $mobile_docs"
-    rsync -aq /mnt/nextcloud/Documents/* "$mobile_docs"
-
-    # Rsync from ~/Documents/Mobile to WebDAV
-    echo "Syncing mobile documents from $mobile_docs to WebDAV"
-    rsync -aq "$mobile_docs"/* /mnt/nextcloud/Documents
+    echo "Syncing notes between WebDAV and $notes"
+    unison -batch /mnt/nextcloud/Notes "$notes"
 
     # Finish by unmounting the WebDAV folder
     echo "Unmounting $server_fqdn"
