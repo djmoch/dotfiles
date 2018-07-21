@@ -16,6 +16,6 @@
 	tool = vimdiff
 [mergetool]
 	prompt = false
-[gpg]
 [alias]
 	ls = ls-tree --name-only -r
+	pretty = log --graph --abbrev-commit --pretty=oneline --decorate --all
