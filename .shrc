@@ -51,6 +51,7 @@ alias feh="feh --auto-rotate --scale-down"
 alias rsync="rsync -C --include=.git/"
 alias ag="ag -p ~/.cvsignore"
 alias pacupdates="cat /run/motd.pacman"
+alias psu="ps -U $LOGNAME"
 
 if [ "$VISUAL" = "vi" ]
 then
