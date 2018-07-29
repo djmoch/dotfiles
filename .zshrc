@@ -10,7 +10,10 @@ setopt prompt_subst correct auto_param_slash
 bindkey -e
 bindkey '^[[A' history-beginning-search-backward
 bindkey '^[[7~' beginning-of-line
+bindkey '^[[1~' beginning-of-line
 bindkey '^[[8~' end-of-line
+bindkey '^[[4~' end-of-line
+bindkey '^[[3~' delete-char
 
 HISTSIZE=1000
 HISTFILE="$HOME/.zsh_history"
