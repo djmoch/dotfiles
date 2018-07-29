@@ -125,7 +125,7 @@ class PyPIOrgFilter(filters.FilterBase):
 
         releases = soup.find_all('p', class_='release__version')
         if releases:
-            releases = [rel.a.text for rel in releases]
+            releases = [rel.text for rel in releases]
             return '\n'.join(releases)
         else:
             return data

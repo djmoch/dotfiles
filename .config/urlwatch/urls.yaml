@@ -12,10 +12,6 @@ url: https://pypi.org/project/django_csp/#history
 ---
 filter: pypiorg
 kind: url
-url: https://pypi.org/project/django_csp/#history
----
-filter: pypiorg
-kind: url
 url: https://pypi.org/project/python-forecastio/#history
 ---
 filter: github
@@ -29,3 +25,7 @@ url: https://pypi.org/project/rainbowstream/#history
 filter: github
 kind: url
 url: https://github.com/insanum/sncli/tags
+---
+filter: github
+kind: url
+url: https://github.com/soveran/clac/tags
