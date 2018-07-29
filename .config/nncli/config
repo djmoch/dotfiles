@@ -1,6 +1,7 @@
-[sncli]
-cfg_sn_username=djmoch@gmail.com
-cfg_sn_password_eval=my-netrc simplenote.com password
+[nncli]
+cfg_nn_username=djmoch
+cfg_nn_password_eval=my-netrc nextcloud.djmoch.org password
+cfg_nn_host=nextcloud.djmoch.org
 clr_default_fg=default
 clr_default_bg=default
 clr_status_bar_fg=black
