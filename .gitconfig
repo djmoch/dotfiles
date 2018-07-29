@@ -19,3 +19,5 @@
 [alias]
 	ls = ls-tree --name-only -r
 	pretty = log --graph --abbrev-commit --pretty=oneline --decorate --all
+[init]
+	templatedir = ~/.local/lib/gitdir

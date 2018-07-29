@@ -1,0 +1,9 @@
+*.cpp   diff=cpp
+*.cc    diff=cpp
+*.cs    diff=csharp
+*.css   diff=css
+*.html  diff=html
+*.java  diff=java
+*.py    diff=python
+*.tex   diff=tex
+*.latex diff=tex
