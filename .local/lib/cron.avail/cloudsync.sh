@@ -88,10 +88,6 @@ then
     echo "Syncing mobile documents from $mobile_docs to WebDAV"
     rsync -aq "$mobile_docs"/* /mnt/nextcloud/Documents
 
-    # Two-way sync for Notes
-    echo "Syncing notes between WebDAV and $notes"
-    unison -batch /mnt/nextcloud/Notes "$notes"
-
     # Finish by unmounting the WebDAV folder
     echo "Unmounting $server_fqdn"
     umount /mnt/nextcloud
