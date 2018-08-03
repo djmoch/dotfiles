@@ -128,12 +128,15 @@ function! MySkeleton()
     for l:token in l:comments
         if l:token =~ '^b\?:'
             let l:comment = substitute(l:token, '^b\?:', '', '')
-            let l:comment .= ' '
         endif
     endfor
     let l:idx = 0
     for l:line in l:skel
-        let l:line = l:comment . l:line
+        if l:line =~ "^$"
+            let l:line = l:comment
+        else
+            let l:line = l:comment .' '. l:line
+        endif
         let l:line = substitute(l:line, '{{ year }}', "\\=strftime('%Y')", '')
         let l:skel[l:idx] = l:line
         let l:idx += 1
