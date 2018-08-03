@@ -1,0 +1,16 @@
+#!/bin/sh
+#
+# ~/.local/bin/fws
+#
+# Remove trailing whitespace recursively. Pass in file extensions to
+# search for.
+
+case `uname -s` in
+    CYGWIN*) ext='\r' ;;
+    *) ext="" ;;
+esac
+
+for arg
+do
+    find . -name *.$arg -exec sed -i -e "s/[[:space:]]+\$/$ext/g" '{}' \;
+done
