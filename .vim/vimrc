@@ -132,7 +132,7 @@ function! MySkeleton()
     let l:lastcomment = ''
     let l:space = ''
     for l:token in l:comments
-        if l:token =~ '^s'
+        if l:token =~ '^s[^O]'
             let l:firstcomment = substitute(l:token, '^s.\+:', '', '')
             let l:comment = substitute(l:comments[l:idx + 1], '^m.\+:', '', '')
             if l:token =~ '^sr'
@@ -142,14 +142,16 @@ function! MySkeleton()
             endif
             let l:lastcomment = substitute(l:comments[l:idx + 2], '^e.\+:', '', '')
             let l:space = (l:comments[l:idx + 1] =~ '^mb') ? ' ' : ''
+            break
         elseif l:token =~ '^b\?:'
             let l:comment = substitute(l:token, '^b\?:', '', '')
             let l:firstcomment = l:comment
             let l:lastcomment = l:comment
             let l:rightalign = v:false
             let l:space = (l:token =~ '^b') ? ' ' : ''
+            break
         endif
-        break
+        let l:idx += 1
     endfor
     let l:idx = 0
     for l:line in l:skel

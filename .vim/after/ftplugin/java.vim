@@ -11,4 +11,4 @@ compiler javac
 
 execute InitializeClasspath() | execute BuildJavaMakeprg()
 
-let &comments='sr:/*,mb:*,ex:*/,b://'
+let &comments='sO:* -,mO:*  ,exO:*/,sr:/*,mb:*,ex:*/,b://'
