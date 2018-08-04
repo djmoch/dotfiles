@@ -126,24 +126,28 @@ function! MySkeleton()
     let l:skel = readfile(l:skelfiles[l:selection - 1])
     let l:comments = split(&comments, ',')
     let l:idx = 0
+    let l:firstcomment = ''
+    let l:comment = ''
+    let l:endspace = ''
+    let l:lastcomment = ''
+    let l:space = ''
     for l:token in l:comments
         if l:token =~ '^s'
             let l:firstcomment = substitute(l:token, '^s.\+:', '', '')
             let l:comment = substitute(l:comments[l:idx + 1], '^m.\+:', '', '')
-            let l:endspace = repeat(' ', len(l:firstcomment) - len(l:comment))
-            let l:comment = (l:token =~ '^sr') ?
-                        \ repeat(' ', len(l:firstcomment) -
-                        \             len(l:comment)) . l:comment
-                        \ : l:comment
+            if l:token =~ '^sr'
+                let l:offset = len(l:firstcomment) - len(l:comment)
+                let l:comment = repeat(' ', l:offset) . l:comment
+                let l:endspace = repeat(' ', l:offset)
+            endif
             let l:lastcomment = substitute(l:comments[l:idx + 2], '^e.\+:', '', '')
             let l:space = (l:comments[l:idx + 1] =~ '^mb') ? ' ' : ''
         elseif l:token =~ '^b\?:'
             let l:comment = substitute(l:token, '^b\?:', '', '')
-            let l:firstcomment = substitute(l:token, '^b\?:', '', '')
-            let l:lastcomment = substitute(l:token, '^b\?:', '', '')
+            let l:firstcomment = l:comment
+            let l:lastcomment = l:comment
             let l:rightalign = v:false
             let l:space = (l:token =~ '^b') ? ' ' : ''
-            let l:endspace = ''
         endif
         break
     endfor
@@ -318,7 +322,7 @@ augroup myvimrc
     autocmd QuickFixCmdPost    l* nested lwindow
     autocmd QuickFixCmdPre [^l]* nested silent! cclose
     autocmd QuickFixCmdPre    l* nested silent! lclose
-    autocmd BufNewFile Makefile,*.py,*.cpp,*.java call MySkeleton()
+    autocmd BufNewFile Makefile,*.py,*.cpp,*.java,LICENSE call MySkeleton()
     autocmd VimEnter * let w:active_window = 1 | call MyItalicize() | call MyDiffOpt()
     autocmd WinEnter * let w:active_window = 1
     autocmd WinLeave * unlet! w:active_window
