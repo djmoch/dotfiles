@@ -125,22 +125,40 @@ function! MySkeleton()
     endif
     let l:skel = readfile(l:skelfiles[l:selection - 1])
     let l:comments = split(&comments, ',')
+    let l:idx = 0
     for l:token in l:comments
-        if l:token =~ '^b\?:'
+        if l:token =~ '^s'
+            let l:firstcomment = substitute(l:token, '^s.\+:', '', '')
+            let l:comment = substitute(l:comments[l:idx + 1], '^m.\+:', '', '')
+            let l:endspace = repeat(' ', len(l:firstcomment) - len(l:comment))
+            let l:comment = (l:token =~ '^sr') ?
+                        \ repeat(' ', len(l:firstcomment) -
+                        \             len(l:comment)) . l:comment
+                        \ : l:comment
+            let l:lastcomment = substitute(l:comments[l:idx + 2], '^e.\+:', '', '')
+            let l:space = (l:comments[l:idx + 1] =~ '^mb') ? ' ' : ''
+        elseif l:token =~ '^b\?:'
             let l:comment = substitute(l:token, '^b\?:', '', '')
+            let l:firstcomment = substitute(l:token, '^b\?:', '', '')
+            let l:lastcomment = substitute(l:token, '^b\?:', '', '')
+            let l:rightalign = v:false
+            let l:space = (l:token =~ '^b') ? ' ' : ''
+            let l:endspace = ''
         endif
+        break
     endfor
     let l:idx = 0
     for l:line in l:skel
         if l:line =~ "^$"
             let l:line = l:comment
         else
-            let l:line = l:comment .' '. l:line
+            let l:line = l:comment . l:space . l:line
         endif
         let l:line = substitute(l:line, '{{ year }}', "\\=strftime('%Y')", '')
         let l:skel[l:idx] = l:line
         let l:idx += 1
     endfor
+    let l:skel = [l:firstcomment] + l:skel + [l:endspace . l:lastcomment]
 
     let l:lines = join(l:skel, "\n")
     silent execute '0put =printf(\"%s\", l:lines)'
