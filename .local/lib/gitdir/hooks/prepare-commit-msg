@@ -1,0 +1,17 @@
+#!/bin/sh
+# Template commit messages for various repos / repo types
+
+# Arch Linux PKGBUILD's
+if [ -f .SRCINFO -a -f PKGBUILD ]
+then
+    pkgbase=`cat .SRCINFO | grep ^pkgbase | cut -d '=' -f 2 | tr -d ' '`
+    pkgver=`cat .SRCINFO | grep pkgver | cut -d '=' -f 2 | tr -d ' '`
+    pkgrel=`cat .SRCINFO | grep pkgrel | cut -d '=' -f 2 | tr -d ' '`
+
+    msg="upgpkg: $pkgbase $pkgver-$pkgrel"
+    default=`cat $1`
+    echo $msg > $1
+    cat >> $1 <<-EOF
+$default
+EOF
+fi
