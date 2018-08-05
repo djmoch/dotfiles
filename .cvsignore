@@ -11,6 +11,7 @@ __pycache__
 .DS_Store
 tags
 tags.temp
+tags.lock
 TAGS
 .netrwhist
 *~
