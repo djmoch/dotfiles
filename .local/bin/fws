@@ -12,5 +12,5 @@ esac
 
 for arg
 do
-    find . -name *.$arg -exec sed -i -e "s/[[:space:]]+\$/$ext/g" '{}' \;
+    find . -name *.$arg -exec sed -i -e "s/[[:space:]]*\$/$ext/g" '{}' \;
 done
