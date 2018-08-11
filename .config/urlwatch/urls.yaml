@@ -29,3 +29,7 @@ url: https://github.com/insanum/sncli/tags
 filter: github
 kind: url
 url: https://github.com/soveran/clac/tags
+---
+filter: pypiorg
+kind: url
+url: https://pypi.org/project/sphinx-autorun/#history
