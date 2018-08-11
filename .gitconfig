@@ -21,5 +21,6 @@
 	pretty = log --graph --abbrev-commit --pretty=oneline --decorate --all
 	ls-all = !git ls-tree --name-only -r HEAD $(git rev-parse --show-toplevel)
 	ls-r = ls-tree --name-only -r HEAD
+	ctags = !`git rev-parse --git-dir`/hooks/ctags
 [init]
 	templatedir = ~/.local/lib/gitdir

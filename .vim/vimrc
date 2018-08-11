@@ -48,7 +48,6 @@ endif
 
 " Globals {{{
 let readline_has_bash=1
-let g:gutentags_project_root = ['.git','.project','.svn']
 let delimitMate_expand_space = 1
 let delimitMate_expand_cr    = 1
 if exists('$TMUX')

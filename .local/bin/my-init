@@ -169,7 +169,6 @@ then
     __clone junegunn/goyo.vim
     __clone junegunn/limelight.vim
     __clone ajh17/VimCompletesMe
-    __clone ludovicchabant/vim-gutentags
     __clone beloglazov/vim-online-thesaurus
     __clone jszakmeister/vim-togglecursor
     __clone chr4/sslsecure.vim
