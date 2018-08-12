@@ -2,16 +2,12 @@ syntax: glob
 *.class
 *.pyc
 *.pyo
-*/.git/*
-.git
-__pycache__
+__pycache__/
 .project
 .pydevproject
 *.sqlite3
 .DS_Store
 tags
-tags.temp
-tags.lock
 TAGS
 .netrwhist
 *~
