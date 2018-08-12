@@ -1,2 +1,20 @@
 #!/bin/sh
+if [ -f setup.py ]
+then
+    [ -d .env ] && rm -rf .env
+    echo "(Re)creating a virtual environment"
+    virtualenv .env
+    source .env/bin/activate
+    for req in `ls requirements*.txt`
+    do
+        echo -n "Installing requirements listed in $req ... "
+        pip install -r $req > /dev/null 2>&1
+        if [ $? -eq 0 ]
+        then
+            echo "Done"
+        else
+            echo "Complete with errors"
+        fi
+    done
+fi
 `git rev-parse --git-dir`/hooks/ctags >/dev/null 2>&1 &
