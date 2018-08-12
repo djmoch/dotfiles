@@ -73,7 +73,6 @@ then
     echo "Re-initialization requested"
     rm -f "$HOME/._.djmoch"
     rm -rf "$HOME/.terminfo"
-    rm -rf "$vim_bundle_path"
     rm "$HOME/.less"
     rm "$HOME/.gnupg/gpg-agent.conf"
 fi
@@ -150,7 +149,7 @@ EOF
 fi
 
 # Vim plugins
-if __has "vim" "git" && [ ! -d "$vim_bundle_path" ]
+if __has "vim" "git"
 then
     echo " Downloading Vim plugins"
     # Plugins that should always be enabled
@@ -168,9 +167,7 @@ then
     __clone Raimondi/delimitMate
     __clone junegunn/goyo.vim
     __clone junegunn/limelight.vim
-    __clone ajh17/VimCompletesMe
     __clone beloglazov/vim-online-thesaurus
-    __clone jszakmeister/vim-togglecursor
     __clone chr4/sslsecure.vim
     __optclone_pathogen
     cd - > /dev/null 2>&1
