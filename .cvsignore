@@ -23,4 +23,5 @@ TAGS
 *.vdi
 *.vmdk
 *.vhd
-.env/
+.env
+.eggs/
