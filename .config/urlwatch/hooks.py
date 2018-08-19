@@ -87,15 +87,10 @@ class GitHubFilter(filters.FilterBase):
     def filter(self, data, subfilter=None):
         soup = BeautifulSoup(data, "html5lib")
 
-        releases = soup.select('h1.release-title a')
-        tags = soup.select('span.tag-name')
+        releases = soup.select('h4.commit-title a')
 
         if releases:
             results = [rel.text for rel in releases]
-            return '\n'.join(results)
-
-        elif tags:
-            results = [tag.text for tag in tags]
             return '\n'.join(results)
 
         else:
