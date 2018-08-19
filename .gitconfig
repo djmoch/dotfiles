@@ -24,3 +24,5 @@
 	ctags = !`git rev-parse --git-dir`/hooks/ctags
 [init]
 	templatedir = ~/.local/lib/gitdir
+[credential]
+	helper = /usr/share/git/credential/netrc/git-credential-netrc
