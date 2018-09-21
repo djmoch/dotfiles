@@ -60,8 +60,7 @@ confidence=
 # --enable=similarities". If you want to run only the classes checker, but have
 # no Warning level messages displayed, use "--disable=all --enable=classes
 # --disable=W".
-disable=missing-docstring,
-        print-statement,
+disable=print-statement,
         parameter-unpacking,
         unpacking-in-except,
         old-raise-syntax,
@@ -410,7 +409,7 @@ expected-line-ending-format=
 ignore-long-lines=^\s*(# )?<?https?://\S+>?$
 
 # Number of spaces of indent required inside a hanging  or continued line.
-indent-after-paren=4
+indent-after-paren=8
 
 # String used as indentation unit. This is usually "    " (4 spaces) or "\t" (1
 # tab).
