@@ -33,3 +33,7 @@ url: https://github.com/soveran/clac/tags
 filter: pypiorg
 kind: url
 url: https://pypi.org/project/sphinx-autorun/#history
+---
+filter: pypiorg
+kind: url
+url: https://pypi.org/project/pocket/#history
