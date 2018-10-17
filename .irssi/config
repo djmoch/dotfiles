@@ -23,6 +23,7 @@ channels = (
   { name = "#vim"; chatnet = "sweetwater"; autojoin = "yes"; },
   { name = "#golug"; chatnet = "Sweetwater"; autojoin = "yes"; }
   { name = "#archlinux32"; chatnet = "Sweetwater"; autojoin = "yes"; }
+  { name = "#nikola"; chatnet = "Sweetwater"; autojoin = "yes"; }
 );
 
 aliases = {
@@ -350,6 +351,18 @@ windows = {
         type = "CHANNEL";
         chat_type = "IRC";
         name = "#golug";
+        tag = "Sweetwater";
+      }
+    );
+    sticky = "yes";
+    parent = "2";
+  };
+  7 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#nikola";
         tag = "Sweetwater";
       }
     );
