@@ -164,7 +164,6 @@ then
     __clone tpope/vim-surround
     __clone tpope/vim-unimpaired
     __clone tpope/vim-vinegar
-    __clone Raimondi/delimitMate
     __clone junegunn/goyo.vim
     __clone junegunn/limelight.vim
     __clone beloglazov/vim-online-thesaurus
