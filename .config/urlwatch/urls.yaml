@@ -37,3 +37,7 @@ url: https://pypi.org/project/sphinx-autorun/#history
 filter: pypiorg
 kind: url
 url: https://pypi.org/project/pocket/#history
+---
+filter: pypiorg
+kind: url
+url: https://pypi.org/project/pytest-flakes/#history
