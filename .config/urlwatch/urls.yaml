@@ -41,3 +41,7 @@ url: https://pypi.org/project/pocket/#history
 filter: pypiorg
 kind: url
 url: https://pypi.org/project/pytest-flakes/#history
+---
+filter: pypiorg
+kind: url
+url: https://pypi.org/project/tootstream/#history
