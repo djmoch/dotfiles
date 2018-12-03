@@ -29,6 +29,7 @@ unset collapse_unread
 bind browser y exit
 bind index - collapse-thread
 bind index _ collapse-all
+bind index . imap-fetch-mail
 bind pager j next-line
 bind pager <Down> next-line
 bind pager k previous-line
