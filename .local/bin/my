@@ -363,7 +363,7 @@ case $command in
                     then
                         mv /tmp/dotfiles.tgz.$$ "$HOME/.dotfiles_tgz/dotfiles.tar.gz"
                         cd "$HOME"
-                        tar xzf .dotfiles_tgz/dotfiles.tar.gz
+                        tar xzf .dotfiles_tgz/dotfiles.tar.gz --strip=1
                     else
                         rm /tmp/dotfiles.tgz.$$
                     fi
