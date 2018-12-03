@@ -1,7 +1,0 @@
-#!/bin/sh
-cd .dotfiles
-tar czvf dotfiles.tar.gz `git ls-r ..`
-scp dotfiles.tar.gz dotcom:~
-ssh dotcom sudo update_dotfiles
-rm dotfiles.tar.gz
-exit 0
