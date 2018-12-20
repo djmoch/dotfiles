@@ -374,7 +374,7 @@ case $command in
         esac
         ;;
     cron)
-        [ $1 = systemd ] && mycron_systemd=1
+        [ "$1" = systemd ] && mycron_systemd=1
         case ":$PATH:" in
             *:"$HOME/.local/bin":*) ;;
             *) PATH="$HOME/.local/bin:$PATH" ;;
