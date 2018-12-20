@@ -405,6 +405,7 @@ set nofileignorecase
 set history=10000
 set hlsearch
 set incsearch
+set mouse=a
 set backspace=indent,eol,start
 set backup
 set wildignore+=tags,*.class,*.pyc,*.pyo,__pycache__,*.o
