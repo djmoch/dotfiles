@@ -21,7 +21,7 @@ macro index <F10> "<sync-mailbox><enter-command>source ~/.config/mutt/account.ic
 
 set sort="reverse-threads"
 set strict_threads="yes"
-set sort_browser="reverse-date"
+set sort_browser="alpha"
 set sort_aux="last-date-received"
 set query_command = "khard email --parsable --search-in-source-files '%s'"
 unset collapse_unread
