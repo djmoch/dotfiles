@@ -45,3 +45,7 @@ url: https://pypi.org/project/pytest-flakes/#history
 filter: pypiorg
 kind: url
 url: https://pypi.org/project/tootstream/#history
+---
+filter: github
+kind: url
+url: https://github.com/vi/imlib2-heic/releases
