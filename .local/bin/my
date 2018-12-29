@@ -356,7 +356,7 @@ case $command in
                     [ ! "$status" = "" ] && git pull --no-commit > /dev/null 2>&1
                 elif [ -d "$HOME/.dotfiles_tgz" ]
                 then
-                    curl -s https://git.danielmoch.com/dotfiles.git/snapshot/dotfiles-master.tar.gz > /tmp/dotfiles.tgz.$$
+                    curl -s https://git.danielmoch.com/dotfiles/snapshot/dotfiles-master.tar.gz > /tmp/dotfiles.tgz.$$
                     oldsum=`$sha_exec "$HOME/.dotfiles_tgz/dotfiles.tar.gz" | cut -d ' ' -f $fieldnum`
                     newsum=`$sha_exec "/tmp/dotfiles.tgz.$$" | cut -d ' ' -f $fieldnum`
                     if [ ! "$oldsum" = "$newsum" ]
