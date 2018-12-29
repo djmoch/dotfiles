@@ -30,7 +30,7 @@ else
         *.diff|*.patch|*.py|*.rb|*.sql|*.ebuild|*.eclass)
             __pygmentize "$1"
             ;;
-        *shrc*|*profile*)
+        *shrc*|*profile*|*PKGBUILD)
             __pygmentize "$1" "sh"
             ;;
         *tar*)
