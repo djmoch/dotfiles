@@ -369,9 +369,9 @@ nnoremap <F5> :nohl<CR>
 nnoremap <F6> :call MySkeleton()<CR>
 nnoremap <F8> :Goyo<CR>
 if has('win32') || has('win64')
-    nnoremap <F9> :MakeJob! %:S<CR>
+    nnoremap <F9> :MakeJob!<CR>
 else
-    nnoremap <F9> :MakeJob! %<CR>
+    nnoremap <F9> :MakeJob!<CR>
 endif
 " }}}
 
@@ -385,10 +385,7 @@ set ttyfast
 set nowrap
 set noshowmode
 set showcmd
-set expandtab
-set textwidth=72
-set softtabstop=4
-set shiftwidth=4
+set textwidth=80
 set autoindent
 set visualbell
 set smartcase

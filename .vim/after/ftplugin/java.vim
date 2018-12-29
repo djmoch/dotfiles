@@ -8,6 +8,7 @@ setlocal sts=2 sw=2
 setlocal tw=120
 
 compiler javac
+set makeprg=javac\ %
 
 execute InitializeClasspath() | execute BuildJavaMakeprg()
 

@@ -6,5 +6,7 @@ compiler pylint
 
 " Check if Pipenv is available, and adjust makeprg if it is
 if(filereadable('Pipfile'))
-    let &makeprg= 'pipenv run '.&makeprg
+    let &makeprg= 'pipenv run '.&makeprg.' %'
+else
+    let &makeprg= &makeprg.' %'
 endif
