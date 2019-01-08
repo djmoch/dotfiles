@@ -33,7 +33,6 @@ __autostart()
 }
 
 xset dpms 0 0 900 s 300 0 s blank s noexpose s on
-[ -r "$HOME/.Xmouse" ] && xmodmap .Xmouse
 
 SHLVL=0; export SHLVL
 
