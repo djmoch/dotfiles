@@ -16,7 +16,7 @@ macro generic,pager <F1> "<shell-escape> less /usr/share/doc/mutt/manual.txt<Ent
 
 macro index,pager y "<change-folder>?<toggle-mailboxes>" "show incoming mailboxes list"
 
-macro index <F9> "<sync-mailbox><enter-command>source ~/.config/mutt/account.gmail<enter><change-folder>!<enter>"
+macro index <F9> "<sync-mailbox><enter-command>source ~/.config/mutt/account.dotcom<enter><change-folder>!<enter>"
 macro index <F10> "<sync-mailbox><enter-command>source ~/.config/mutt/account.icloud<enter><change-folder>!<enter>"
 
 set sort="reverse-threads"
