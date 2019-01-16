@@ -1,3 +1,5 @@
+import os
+editor = os.environ.get('EDITOR', 'vi')
 c.aliases['o'] = 'open'
 c.aliases['h'] = 'help'
 
@@ -15,8 +17,12 @@ c.content.default_encoding = 'utf-8'
 c.content.desktop_capture = 'ask'
 c.content.javascript.enabled = False
 
-c.url.default_page = 'https://start.duckduckgo.com/html'
-c.url.start_pages = 'https://archlinux.org'
+c.spellcheck.languages = ['en-US']
+
+c.url.default_page = 'https://archlinux.org'
+c.url.start_pages = ['https://mastodon.technology',
+                     'https://twitter.com',
+                     'https://archlinux.org']
 c.url.searchengines = { 'DEFAULT': 'https://duckduckgo.com/html/?q={}' }
 
 config.bind('<z><l>', "spawn --userscript qute-pass -u '^user.*:\s(.*)$' -U secret -d dmenu")
@@ -25,6 +31,7 @@ config.bind('<Ctrl-p>', 'completion-item-focus prev', mode="command")
 config.bind('<Ctrl-Shift-N>', 'completion-item-focus next-category', mode="command")
 config.bind('<Ctrl-Shift-P>', 'completion-item-focus prev-category', mode="command")
 config.bind('<z><c>', 'config-edit')
+config.bind('<,><z><c>', 'spawn -v my term -e ' + editor + ' .config/qutebrowser/config_local.py')
 
 # JavaScript whitelist
 config.set('content.javascript.enabled', True, 'https://mastodon.technology')
