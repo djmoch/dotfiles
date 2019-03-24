@@ -216,7 +216,7 @@ case $command in
             then
                 # Future-proofing ... gmux is specific, imagine other
                 # systems will be different
-                for opt in gmux
+                for opt in gmux intel_backlight
                 do
                     selection=`xbacklight -list | grep $opt`
                     num=`echo $selection | wc -w`
