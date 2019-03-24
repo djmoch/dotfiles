@@ -21,9 +21,11 @@ channels = (
   { name = "#archlinux"; chatnet = "sweetwater"; autojoin = "yes"; },
   { name = "#archlinux-aur"; chatnet = "sweetwater"; autojoin = "yes"; },
   { name = "#vim"; chatnet = "sweetwater"; autojoin = "yes"; },
-  { name = "#golug"; chatnet = "Sweetwater"; autojoin = "yes"; }
-  { name = "#archlinux32"; chatnet = "Sweetwater"; autojoin = "yes"; }
+  { name = "#archlinux32"; chatnet = "Sweetwater"; autojoin = "yes"; },
   { name = "#nikola"; chatnet = "Sweetwater"; autojoin = "yes"; }
+  { name = "#indieweb"; chatnet = "Sweetwater"; autojoin = "yes"; }
+  { name = "#indieweb-dev"; chatnet = "Sweetwater"; autojoin = "yes"; }
+  { name = "#indieweb-meta"; chatnet = "Sweetwater"; autojoin = "yes"; }
 );
 
 aliases = {
@@ -297,7 +299,7 @@ keyboard = (
   { key = "meta-u"; id = "command"; data = "nicklist scroll -55"; }
 );
 windows = {
-  1 = { immortal = "yes"; name = "(status)"; level = "ALL"; };
+  1 = { immortal = "yes"; name = "(status)"; level = "ALL"; sticky = "yes"; };
   2 = {
     items = (
       {
@@ -350,7 +352,7 @@ windows = {
       {
         type = "CHANNEL";
         chat_type = "IRC";
-        name = "#golug";
+        name = "#nikola";
         tag = "Sweetwater";
       }
     );
@@ -362,7 +364,31 @@ windows = {
       {
         type = "CHANNEL";
         chat_type = "IRC";
-        name = "#nikola";
+        name = "#indieweb";
+        tag = "Sweetwater";
+      }
+    );
+    sticky = "yes";
+    parent = "2";
+  };
+  8 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#indieweb-dev";
+        tag = "Sweetwater";
+      }
+    );
+    sticky = "yes";
+    parent = "2";
+  };
+  9 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#indieweb-meta";
         tag = "Sweetwater";
       }
     );
