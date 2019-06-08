@@ -20,7 +20,7 @@ c.content.javascript.enabled = False
 c.spellcheck.languages = ['en-US']
 
 c.url.default_page = 'https://archlinux.org'
-c.url.start_pages = ['https://mastodon.technology',
+c.url.start_pages = ['https://mastodon.danielmoch.com',
                      'https://twitter.com',
                      'https://archlinux.org']
 c.url.searchengines = { 'DEFAULT': 'https://duckduckgo.com/?q={}' }
@@ -30,12 +30,12 @@ config.bind('<Ctrl-n>', 'completion-item-focus next', mode="command")
 config.bind('<Ctrl-p>', 'completion-item-focus prev', mode="command")
 config.bind('<Ctrl-Shift-N>', 'completion-item-focus next-category', mode="command")
 config.bind('<Ctrl-Shift-P>', 'completion-item-focus prev-category', mode="command")
-config.bind('<z><c>', 'config-edit')
-config.bind('<,><z><c>', 'spawn -v my term -e ' + editor + ' .config/qutebrowser/config_local.py')
+config.bind('<c><e>', 'config-edit')
+config.bind('<c><s>', 'config-source')
+config.bind('<,><c><e>', 'spawn -v my term -e ' + editor + ' .config/qutebrowser/config_local.py')
 
 # JavaScript whitelist
 config.set('content.javascript.enabled', True, 'https://duckduckgo.com')
-config.set('content.javascript.enabled', True, 'https://mastodon.technology')
 config.set('content.javascript.enabled', True, 'https://twitter.com')
 config.set('content.javascript.enabled', True, 'https://github.com')
 config.set('content.javascript.enabled', True, 'https://*.djmoch.org')
