@@ -43,6 +43,13 @@ macro index <F6> \
 macro index <F5> "<change-folder>!<enter>" "Return to INBOX"
 # }}}
 
+# {{{ Hooks
+message-hook '~s .*' 'uncolor body red default "^-.*"'
+message-hook '~s .*' 'uncolor body green default "^\\+.*"'
+message-hook '~s \\[PATCH' 'color body red default "^-.*"'
+message-hook '~s \\[PATCH' 'color body green default "^\\+.*"'
+# }}}
+
 # {{{ General Settings
 set realname		= "Daniel Moch"
 set sendmail_wait	= -1
