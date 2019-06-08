@@ -1,9 +1,11 @@
-# {{{ General settings
+# {{{ Headers
 ignore *
 unignore from: subject to cc date x-mailer x-url user-agent
 
 hdr_order date from to cc subject
+# }}}
 
+# {{{ Macros
 macro index \eb "<search>~b " "search in message bodies"
 
 macro index,pager,attach,compose \cb "\
@@ -18,18 +20,42 @@ macro index,pager y "<change-folder>?<toggle-mailboxes>" "show incoming mailboxe
 
 macro index <F9> "<sync-mailbox><enter-command>source ~/.config/mutt/account.dotcom<enter><change-folder>!<enter>"
 macro index <F10> "<sync-mailbox><enter-command>source ~/.config/mutt/account.icloud<enter><change-folder>!<enter>"
+macro index <F8> \
+"<enter-command>set my_old_pipe_decode=\$pipe_decode my_old_wait_key=\$wait_key nopipe_decode nowait_key<enter>\
+<shell-escape>notmuch-mutt -r --prompt search<enter>\
+<change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter>\
+<enter-command>set pipe_decode=\$my_old_pipe_decode wait_key=\$my_old_wait_key<enter>" \
+"notmuch: search mail"
 
-set sort="reverse-threads"
-set strict_threads="yes"
-set sort_browser="alpha"
-set sort_aux="last-date-received"
-set query_command = "khard email --parsable --search-in-source-files '%s'"
+macro index <F4> \
+"<enter-command>set my_old_pipe_decode=\$pipe_decode my_old_wait_key=\$wait_key nopipe_decode nowait_key<enter>\
+<pipe-message>notmuch-mutt -r thread<enter>\
+<change-folder-readonly>`echo ${XDG_CACHE_HOME:-$HOME/.cache}/notmuch/mutt/results`<enter>\
+<enter-command>set pipe_decode=\$my_old_pipe_decode wait_key=\$my_old_wait_key<enter>" \
+"notmuch: reconstruct thread"
+
+macro index <F6> \
+"<enter-command>set my_old_pipe_decode=\$pipe_decode my_old_wait_key=\$wait_key nopipe_decode nowait_key<enter>\
+<pipe-message>notmuch-mutt tag -- -inbox<enter>\
+<enter-command>set pipe_decode=\$my_old_pipe_decode wait_key=\$my_old_wait_key<enter>" \
+"notmuch: remove message from inbox"
+
+macro index <F5> "<change-folder>!<enter>" "Return to INBOX"
+# }}}
+
+# {{{ General Settings
+set realname		= "Daniel Moch"
+set sendmail_wait	= -1
+set sort		= "reverse-threads"
+set strict_threads	= "yes"
+set sort_browser	= "alpha"
+set sort_aux		= "last-date-received"
+set query_command	= "khard email --parsable --search-in-source-files '%s'"
 unset collapse_unread
 
 bind browser y exit
 bind index - collapse-thread
 bind index _ collapse-all
-bind index . imap-fetch-mail
 bind pager j next-line
 bind pager <Down> next-line
 bind pager k previous-line
@@ -48,9 +74,6 @@ attachments   -I message/external-body
 
 auto_view text/html
 alternative_order text/plain text/enriched text/html
-
-set imap_authenticators="login"
-set smtp_authenticators="login"
 # }}}
 
 # {{{ GPG
@@ -173,4 +196,4 @@ color body          brightblue      default         "([a-z][a-z0-9+-]*://(((([a-
 color body          brightblue      default         "((@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\]),)*@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\]):)?[0-9a-z_.+%$-]+@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\])"
 # }}}
 
-source ~/.config/mutt/account.dotcom
+source ~/.config/mutt/account.default
