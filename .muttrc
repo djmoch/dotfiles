@@ -1,8 +1,8 @@
 # {{{ Headers
 ignore *
-unignore from: subject to cc date x-mailer x-url user-agent
+unignore from: subject to cc date x-mailer x-url user-agent list-id
 
-hdr_order date from to cc subject
+hdr_order date from to cc subject list-id
 # }}}
 
 # {{{ Macros
