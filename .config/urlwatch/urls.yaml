@@ -1,14 +1,6 @@
-filter: github
-kind: url
-url: https://github.com/mozilla/django-csp/releases
----
 filter: pypiorg
 kind: url
 url: https://pypi.org/project/django-otp/#history
----
-filter: pypiorg
-kind: url
-url: https://pypi.org/project/django_csp/#history
 ---
 filter: pypiorg
 kind: url
@@ -21,10 +13,6 @@ url: https://github.com/orakaro/rainbowstream/releases
 filter: pypiorg
 kind: url
 url: https://pypi.org/project/rainbowstream/#history
----
-filter: github
-kind: url
-url: https://github.com/insanum/sncli/tags
 ---
 filter: github
 kind: url
@@ -49,3 +37,7 @@ url: https://pypi.org/project/tootstream/#history
 filter: github
 kind: url
 url: https://github.com/vi/imlib2-heic/releases
+---
+filter: github
+kind: url
+url: https://github.com/tootsuite/mastodon/releases
