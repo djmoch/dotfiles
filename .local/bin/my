@@ -2,6 +2,7 @@
 #
 # ~/.local/bin/my
 #
+# vim: set sts=4 sw=4 et:
 
 # Command and handlers for them are added as-needed. Some commands only
 # have one handler, but exist to avoid re-writes across my dotfiles
@@ -341,21 +342,18 @@ case $command in
                 find . -maxdepth 1 -name ._.djmoch -mtime +8 -exec echo "Dotfiles more than one week old" \;
                 ;;
             update)
-                if type sha256sum > /dev/null 2>&1
+                if [ -d "$HOME/.dotfiles_tgz" ]
                 then
-                    sha_exec=sha256sum
-                    fieldnum=1 
-                else
-                    sha_exec=sha256
-                    fieldnum=4
-                fi
-                if [ -d "$HOME/.dotfiles" ]
-                then
-                    cd "$HOME/.dotfiles"
-                    status=`git fetch --dry-run`
-                    [ ! "$status" = "" ] && git pull --no-commit > /dev/null 2>&1
-                elif [ -d "$HOME/.dotfiles_tgz" ]
-                then
+
+                    if type sha256sum > /dev/null 2>&1
+                    then
+                        sha_exec=sha256sum
+                        fieldnum=1
+                    else
+                        sha_exec=sha256
+                        fieldnum=4
+                    fi
+
                     curl -s https://git.danielmoch.com/dotfiles/snapshot/dotfiles-master.tar.gz > /tmp/dotfiles.tgz.$$
                     oldsum=`$sha_exec "$HOME/.dotfiles_tgz/dotfiles.tar.gz" | cut -d ' ' -f $fieldnum`
                     newsum=`$sha_exec "/tmp/dotfiles.tgz.$$" | cut -d ' ' -f $fieldnum`
