@@ -28,3 +28,5 @@
 	helper = /usr/share/git/credential/netrc/git-credential-netrc
 [include]
 	path = ~/.gitconfig.local
+[pull]
+	rebase = true
