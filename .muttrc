@@ -40,7 +40,7 @@ macro index <F6> \
 <enter-command>set pipe_decode=\$my_old_pipe_decode wait_key=\$my_old_wait_key<enter>" \
 "notmuch: remove message from inbox"
 
-macro index <F5> "<change-folder>!<enter>" "Return to INBOX"
+macro index <F5> "<enter-command>toggle sidebar_visible<enter>" "Toggle the sidebar"
 # }}}
 
 # {{{ Hooks
@@ -55,18 +55,23 @@ message-hook '~s \\[PATCH' 'color body brightwhite default "^(diff|index|new|\\+
 # }}}
 
 # {{{ General Settings
-set realname		= "Daniel Moch"
-set sendmail_wait	= -1
-set sort		= "reverse-threads"
-set strict_threads	= "yes"
-set sort_browser	= "alpha"
-set sort_aux		= "last-date-received"
-set query_command	= "khard email --parsable --search-in-source-files '%s'"
+set realname			= "Daniel Moch"
+set sendmail_wait		= -1
+set sort			= "reverse-threads"
+set strict_threads		= "yes"
+set sort_browser		= "alpha"
+set sort_aux			= "last-date-received"
+set query_command		= "khard email --parsable --search-in-source-files '%s'"
+set sidebar_sort_method		= "alpha"
+set sidebar_visible
 unset collapse_unread
 
 bind browser y exit
 bind index - collapse-thread
 bind index _ collapse-all
+bind index J sidebar-next
+bind index K sidebar-prev
+bind index O sidebar-open
 bind pager j next-line
 bind pager <Down> next-line
 bind pager k previous-line
