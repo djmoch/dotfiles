@@ -30,3 +30,5 @@
 	path = ~/.gitconfig.local
 [pull]
 	rebase = true
+[sendemail]
+	confirm = auto
