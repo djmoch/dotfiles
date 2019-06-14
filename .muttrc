@@ -34,13 +34,7 @@ macro index <F4> \
 <enter-command>set pipe_decode=\$my_old_pipe_decode wait_key=\$my_old_wait_key<enter>" \
 "notmuch: reconstruct thread"
 
-macro index <F6> \
-"<enter-command>set my_old_pipe_decode=\$pipe_decode my_old_wait_key=\$wait_key nopipe_decode nowait_key<enter>\
-<pipe-message>notmuch-mutt tag -- -inbox<enter>\
-<enter-command>set pipe_decode=\$my_old_pipe_decode wait_key=\$my_old_wait_key<enter>" \
-"notmuch: remove message from inbox"
-
-macro index <F5> "<enter-command>toggle sidebar_visible<enter>" "Toggle the sidebar"
+macro generic,pager <F5> "<enter-command>toggle sidebar_visible<enter>" "Toggle the sidebar"
 # }}}
 
 # {{{ Hooks
