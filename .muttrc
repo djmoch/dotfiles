@@ -45,7 +45,7 @@ message-hook '~s .*' 'uncolor body brightwhite default "^(diff|index|new|\\+\\+\
 message-hook '~s \\[PATCH' 'color body red default "^-.*"'
 message-hook '~s \\[PATCH' 'color body green default "^\\+.*"'
 message-hook '~s \\[PATCH' 'color body cyan default "^@@.*"'
-message-hook '~s \\[PATCH' 'color body brightwhite default "^(diff|index|new|\\+\\+\\+|---).*"'
+message-hook '~s \\[PATCH' 'color body brightwhite default "^(diff\\s|index\\s|new\\s|\\+\\+\\+|---).*"'
 # }}}
 
 # {{{ General Settings
