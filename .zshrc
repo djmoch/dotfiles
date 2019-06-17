@@ -9,6 +9,7 @@ setopt prompt_subst correct auto_param_slash
 
 bindkey -e
 bindkey '^[[A' history-beginning-search-backward
+bindkey '^[[B' history-beginning-search-forward
 bindkey '^[[7~' beginning-of-line
 bindkey '^[[1~' beginning-of-line
 bindkey '^[[8~' end-of-line
