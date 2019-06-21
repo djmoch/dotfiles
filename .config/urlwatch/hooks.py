@@ -87,7 +87,7 @@ class GitHubFilter(filters.FilterBase):
     def filter(self, data, subfilter=None):
         soup = BeautifulSoup(data, "html5lib")
 
-        releases = soup.select('h4.commit-title a')
+        releases = soup.select('div.release-header div.f1 a')
 
         if releases:
             results = [rel.text for rel in releases]
@@ -107,7 +107,7 @@ class PyPIFilter(filters.FilterBase):
         downloads = soup.select('table.list tr > td > span > a:nth-of-type(1)')
         if downloads:
             downloads = [dl.text for dl in downloads]
-            return '\n'.join(downloads)
+            return ''.join(downloads)
         else:
             return data
 
@@ -121,7 +121,7 @@ class PyPIOrgFilter(filters.FilterBase):
         releases = soup.find_all('p', class_='release__version')
         if releases:
             releases = [rel.text for rel in releases]
-            return '\n'.join(releases)
+            return ''.join(releases)
         else:
             return data
 
