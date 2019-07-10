@@ -33,6 +33,7 @@ config.bind('<Ctrl-Shift-P>', 'completion-item-focus prev-category', mode="comma
 config.bind('<c><e>', 'config-edit')
 config.bind('<c><s>', 'config-source')
 config.bind('<,><c><e>', 'spawn -v my term -e ' + editor + ' .config/qutebrowser/config_local.py')
+config.bind('<,><r>', 'reload --force')
 
 # JavaScript whitelist
 config.set('content.javascript.enabled', True, 'https://duckduckgo.com')
