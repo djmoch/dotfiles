@@ -36,12 +36,10 @@ config.bind('<,><c><e>', 'spawn -v my term -e ' + editor + ' .config/qutebrowser
 config.bind('<,><r>', 'reload --force')
 
 # JavaScript whitelist
-config.set('content.javascript.enabled', True, 'https://duckduckgo.com')
-config.set('content.javascript.enabled', True, 'https://twitter.com')
-config.set('content.javascript.enabled', True, 'https://github.com')
+config.set('content.javascript.enabled', True, 'https://*.duckduckgo.com')
+config.set('content.javascript.enabled', True, 'https://*.twitter.com')
 config.set('content.javascript.enabled', True, 'https://*.djmoch.org')
 config.set('content.javascript.enabled', True, 'https://*.danielmoch.com')
-config.set('content.javascript.enabled', True, 'https://docs.python.org')
 
 try:
     import config_local
