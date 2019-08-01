@@ -171,23 +171,6 @@ function! MySkeleton()
     normal G
 endfunction
 
-function! MyWinWidth()
-    let l:textwidth = &tw ? &tw : 80
-    if &number
-        let l:numwidth = &numberwidth > len(line('$')) + 1 ?
-                    \ &numberwidth : len(line('$')) + 1
-    else
-        let l:numwidth = 0
-    endif
-    return winwidth(0) > (2 * l:textwidth) + (2 * l:numwidth)
-endfunction
-
-function! MyScratchBuffer() abort
-    let l:wincmd = MyWinWidth() ? 'vnew' : 'new'
-    exec l:wincmd
-    setlocal bufhidden=hide buftype=nofile noswapfile
-endfunction
-
 function! MyPasteStatus()
     if &paste && get(w:,'active_window',0)
         return '[p]'
@@ -201,14 +184,6 @@ function! MySpellStatus()
         return '[s]'
     else
         return ''
-    endif
-endfunction
-
-function! MyDiffOpt()
-    if MyWinWidth()
-        set diffopt+=vertical
-    else
-        set diffopt-=vertical
     endif
 endfunction
 
@@ -264,35 +239,6 @@ function! BuildJavaMakeprg()
         let &makeprg = &makeprg.' -cp '.b:vim_java_classpath
     endif
 endfunction
-
-function! MyNewWindow(...)
-    if a:0 == 0
-        let l:filename = ''
-    else
-        let l:filename = a:1
-    endif
-    if MyWinWidth()
-        execute 'vnew '.l:filename
-    else
-        execute 'new '.l:filename
-    endif
-endfunction
-
-function! MyHelp(topic)
-    if MyWinWidth()
-        execute 'vert help '.a:topic
-    else
-        execute 'help '.a:topic
-    endif
-endfunction
-
-function! MyBuffer(...)
-    let l:splitcmd = MyWinWidth() ? 'vsplit' : 'split'
-    execute l:splitcmd
-    if a:0 == 1
-        execute bufnr(a:1).'buffer'
-    endif
-endfunction
 " }}}
 
 " Commands {{{
@@ -301,10 +247,6 @@ if !has('win32') && !has('win64')
                 \ ."'f:1=<-' ix.io | tr -d '\\n' | "
                 \."my copy"
 endif
-command! -complete=file -nargs=? New call MyNewWindow(<f-args>)
-command! -complete=help -nargs=1 Help call MyHelp(<f-args>)
-command! -complete=buffer -nargs=1 Buffer call MyBuffer(<f-args>)
-command! Split call MyBuffer()
 " }}}
 
 " Auto-commands {{{
@@ -316,7 +258,7 @@ augroup myvimrc
     else
         autocmd BufWritePost *imrc so % | call MyItalicize()
     endif
-    autocmd VimResized * wincmd = | call MyDiffOpt()
+    autocmd VimResized * wincmd =
     autocmd User GoyoEnter Limelight | execute MyTmuxStatusLine('off')
     autocmd User GoyoLeave Limelight! | execute MyTmuxStatusLine('')
     autocmd QuickFixCmdPost [^l]* nested cwindow
@@ -324,7 +266,7 @@ augroup myvimrc
     autocmd QuickFixCmdPre [^l]* nested silent! cclose
     autocmd QuickFixCmdPre    l* nested silent! lclose
     autocmd BufNewFile Makefile,*.py,*.cpp,*.java,LICENSE call MySkeleton()
-    autocmd VimEnter * let w:active_window = 1 | call MyItalicize() | call MyDiffOpt()
+    autocmd VimEnter * let w:active_window = 1 | call MyItalicize()
     autocmd WinEnter * let w:active_window = 1
     autocmd WinLeave * unlet! w:active_window
     if has('win32') || has('win64')
@@ -385,7 +327,7 @@ set ttyfast
 set nowrap
 set noshowmode
 set showcmd
-set textwidth=80
+set textwidth=72
 set autoindent
 set visualbell
 set smartcase
