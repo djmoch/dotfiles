@@ -97,6 +97,23 @@ class GitHubFilter(filters.FilterBase):
             fallback = soup.select('div.site')
             return '\n'.join([str(tag) for tag in fallback])
 
+class GitLabTagFilter(filters.FilterBase):
+    """Search for new Github releases or tags"""
+    __kind__ = 'gitlabtag'
+
+    def filter(self, data, subfilter=None):
+        soup = BeautifulSoup(data, "html5lib")
+
+        releases = soup.select('a.ref-name')
+
+        if releases:
+            results = [rel.text for rel in releases]
+            return '\n'.join(results)
+
+        else:
+            fallback = soup.select('div.site')
+            return '\n'.join([str(tag) for tag in fallback])
+
 class PyPIFilter(filters.FilterBase):
     """Search for new releases at pypi.python.org"""
     __kind__ = 'pypi'
