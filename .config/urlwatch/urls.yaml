@@ -41,3 +41,11 @@ url: https://github.com/vi/imlib2-heic/releases
 filter: github
 kind: url
 url: https://github.com/tootsuite/mastodon/releases
+---
+filter: gitlabtag
+kind: url
+url: https://gitlab.com/mailman/mailman/-/tags
+---
+filter: github
+kind: url
+url: https://github.com/halcy/Mastodon.py/releases
