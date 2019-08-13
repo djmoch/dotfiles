@@ -4,8 +4,6 @@
 	signingkey = 84BDDD43
 [core]
 	excludesfile = ~/.cvsignore
-[commit]
-	gpgSign = true
 [push]
 	default = simple
 [diff]
