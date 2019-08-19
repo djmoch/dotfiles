@@ -22,9 +22,9 @@ filter: pypiorg
 kind: url
 url: https://pypi.org/project/sphinx-autorun/#history
 ---
-filter: pypiorg
+filter: github
 kind: url
-url: https://pypi.org/project/pocket/#history
+url: https://github.com/tapanpandita/pocket/releases
 ---
 filter: pypiorg
 kind: url
