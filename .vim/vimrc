@@ -41,7 +41,7 @@ if has('vim_starting')
         endif
         execute pathogen#helptags()
     endif
-    syntax on
+    syntax off
     filetype plugin indent on
 endif
 " }}}
