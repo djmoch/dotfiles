@@ -47,9 +47,7 @@ endif
 " }}}
 
 " Globals {{{
-let readline_has_bash=1
-let delimitMate_expand_space = 1
-let delimitMate_expand_cr    = 1
+let readline_has_bash = 1
 if exists('$TMUX')
     if has('packages')
         packadd vim-slime
