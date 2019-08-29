@@ -49,3 +49,7 @@ url: https://gitlab.com/mailman/mailman/-/tags
 filter: github
 kind: url
 url: https://github.com/halcy/Mastodon.py/releases
+---
+filter: github
+kind: url
+url: https://github.com/vozlt/nginx-module-vts/releases
