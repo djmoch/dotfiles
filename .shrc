@@ -30,15 +30,14 @@ alias la="ls $LSCOLORPARAM -A"
 alias lla="ls $LSCOLORPARAM -lA"
 unset LSCOLORPARAM
 
-COLORIZE_CMDS="pacman grep egrep fgrep"
-for cmd in $COLORIZE_CMDS
+for cmd in pacman grep egrep fgrep
 do
     if type $cmd > /dev/null 2>&1
     then
         alias $cmd="$cmd --color=auto"
     fi
 done
-unset COLORIZE_CMDS
+unset cmd
 
 alias tas="tmux attach-session -t"
 alias tns="tmux new-session -s"
