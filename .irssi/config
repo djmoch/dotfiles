@@ -291,7 +291,7 @@ settings = {
   "fe-common/core" = {
     hilight_nick_matches_everywhere = "yes";
     use_status_window = "yes";
-    theme = "apprentice";
+    theme = "djmoch";
   };
   "perl/core/scripts" = { nicklist_height = "46"; nicklist_width = "29"; };
 };

@@ -24,19 +24,8 @@ GIT_PS1_SHOWDIRTYSTATE=1
 GIT_PS1_SHOWUNTRACKEDFILES=1
 source "$HOME/.local/lib/sh/git-prompt.sh"
 
-autoload -Uz colors && colors
-
-if [[ $TERM = *256color ]]
-then
-    usercolor="$fg[blue]"
-else
-    usercolor="$fg_bold[blue]"
-fi
-
-reset=$'\e[00m'
-
 RPS1="[%?]"
-PS1="%{$usercolor%}%n%{$reset%}@%{$fg[green]%}%m:%{$reset%}%c%{$fg[red]%}\$(__git_ps1 \" (%s)\")%{$reset%}%(!.#.\$) "
+PS1="%n@%m:%c\$(__git_ps1 \" (%s)\")%(!.#.\$) "
 unset usercolor reset
 
 set_title() { print -Pn "\033]0;%n@%m:$1\007" }

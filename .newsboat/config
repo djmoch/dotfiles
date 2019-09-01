@@ -11,9 +11,9 @@ bind-key j down
 bind-key k up
 
 color background            default     default
-color listnormal            white       default
-color listfocus             blue        default   bold    reverse
-color listnormal_unread     default     default
-color listfocus_unread      blue        default   bold    reverse
-color info                  yellow      default   reverse
+color listnormal            default     default
+color listfocus             default     white
+color listnormal_unread     default     default   bold
+color listfocus_unread      default     white     bold
+color info                  blue        default   reverse
 color article               default     default

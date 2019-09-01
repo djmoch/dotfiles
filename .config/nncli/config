@@ -4,14 +4,14 @@ cfg_nn_password_eval=my-netrc nextcloud.djmoch.org password
 cfg_nn_host=nextcloud.djmoch.org
 clr_default_fg=default
 clr_default_bg=default
-clr_status_bar_fg=black
-clr_status_bar_bg=brown
+clr_status_bar_fg=white
+clr_status_bar_bg=dark blue
 clr_log_fg=black
 clr_log_bg=brown
 clr_user_input_bar_fg=default
 clr_user_input_bar_bg=default
 clr_note_focus_fg=black
-clr_note_focus_bg=light blue
+clr_note_focus_bg=light gray
 clr_note_title_day_fg=light blue
 ; clr_note_title_day_bg
 clr_note_title_week_fg=dark green

@@ -320,7 +320,7 @@ set statusline=%{MyShowMode()}%{MySpellStatus()}%{MyPasteStatus()}%<%f%m
 set statusline+=%r%h%q%w%{OptStatus('fugitive#statusline')}%=[%{&ff}]
 set statusline+=%{MyFileEncoding()}%y%{OptStatus('ObsessionStatus')}
 set statusline+=[%p%%][Ln:%l/%L,Col:%v]
-colorscheme apprentice
+colorscheme djmoch
 set ttyfast
 set nowrap
 set noshowmode

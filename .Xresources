@@ -14,24 +14,24 @@ Xft.hintsytle: hintlight
 Xft.lcdfilter: lcddefault
 
 ! Global defaults
-*background: #262626
-*foreground: #BCBCBC
+*background: #FFFFFF
+*foreground: #000000
 *font: FIXED
-*color0:     #1C1C1C
-*color8:     #444444
-*color1:     #AF5F5F
-*color9:     #FF8700
-*color2:     #5F875F
-*color10:    #87AF87
-*color3:     #87875F
-*color11:    #FFFFAF
-*color4:     #5F87AF
-*color12:    #8FAFD7
-*color5:     #5F5F87
-*color13:    #8787AF
-*color6:     #5F8787
-*color14:    #5FAFAF
-*color7:     #6C6C6C
+*color0:     #000000
+*color8:     #3A3A3A
+*color1:     #870000
+*color9:     #D7005F
+*color2:     #00875F
+*color10:    #00D75F
+*color3:     #878700
+*color11:    #D7D787
+*color4:     #005FAF
+*color12:    #5FAFFF
+*color5:     #875FAF
+*color13:    #D787FF
+*color6:     #008080
+*color14:    #87FF87
+*color7:     #BCBCBC
 *color15:    #FFFFFF
 
 ! XTerm
@@ -46,7 +46,7 @@ XTerm*visualBell: true
 XTerm*bellIsUrgent: true
 XTerm*highlightColorMode: true
 XTerm*highlightReverse: false
-XTerm*highlightColor: #8FAFD7
+XTerm*highlightColor: #bcbcbc
 XTerm*metaSendsEscape: true
 XTerm*pointerMode: 2
 
@@ -62,8 +62,8 @@ URxvt.scrollBar: false
 URxvt.secondaryScreen: 1
 URxvt.secondaryScroll: 0
 URxvt.secondaryWheel: 1
-URxvt.highlightColor: #8FAFD7
-URxvt.highlightTextColor: #262626
+URxvt.highlightColor: #bcbcbc
+URxvt.highlightTextColor: #000000
 URxvt.meta8: false
 URxvt.visualBell: true
 URxvt.urgentOnBell: true
@@ -72,8 +72,6 @@ URxvt.pointerBlank: true
 URxvt.pointerBlankDelay: 4
 
 ! XDvi
-XDvi.background: #BCBCBC
-XDvi.foreground: #262626
 XDvi.editor: gvim --servername xdvi --remote +%l %f
 XDvi.wwwBrowser: my-open
 XDvi.expertMode: 31
