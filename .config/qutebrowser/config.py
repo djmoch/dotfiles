@@ -50,6 +50,9 @@ config.set('content.javascript.enabled', True, 'https://*.twitter.com')
 config.set('content.javascript.enabled', True, 'https://*.djmoch.org')
 config.set('content.javascript.enabled', True, 'https://*.danielmoch.com')
 
+# Notifications whitelist
+config.set('content.notifications', True, 'https://*.danielmoch.com')
+
 try:
     import config_local
     config_local.config(config)
