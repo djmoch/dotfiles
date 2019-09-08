@@ -70,6 +70,7 @@ _my()
                 'login:login'
                 'mailto:send email'
                 'search:search DuckDuckGo in the terminal'
+		'processes:list current running processes'
             )
             _describe -t subcommands 'my subcommand' subcommands && ret=0
             ;;

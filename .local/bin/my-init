@@ -102,7 +102,7 @@ then
     lesskey
 fi
 
-if ps -U $LOGNAME | grep systemd > /dev/null 2>&1 \
+if my processes | grep systemd > /dev/null 2>&1 \
     && [ -n "$crontab_init" ]
 then
     echo " Installing systemd timers"

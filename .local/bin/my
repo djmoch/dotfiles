@@ -23,7 +23,7 @@ __getlocker()
 {
     for locker in light-locker cinnamon-screensaver gnome-screensaver xscreensaver
     do
-        if type $locker-command > /dev/null 2>&1 && ps -U $LOGNAME -o command= | grep ^[^_[:space:]]*$locker > /dev/null 2>&1
+        if my processes | grep $locker > /dev/null 2>&1
         then
             echo $locker
             exit 0
@@ -415,6 +415,15 @@ case $command in
         ;;
     login)
         my login_async &
+        ;;
+    processes)
+        if [ -L /bin/ps ]
+        then
+            # busybox
+            ps -o user,comm= | grep $LOGNAME | awk '{print $2;}'
+        else
+            ps -U $LOGNAME -o comm=
+        fi
         ;;
     *) echo "my: command $command not found" >&2
 esac
