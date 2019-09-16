@@ -1,18 +1,4 @@
 #!/bin/sh
-__pygmentize ()
-{
-    if type pygmentize > /dev/null 2>&1
-    then
-        if [ -n "$2" ]
-        then
-            pygmentize -O style=friendly -f 256 -l "$2" "$1"
-        else
-            pygmentize -O style=friendly -f 256 "$1"
-        fi
-    else
-        fail=1
-    fi
-}
 
 if [ -d "$1" ]
 then
@@ -22,34 +8,4 @@ then
     else
         ls -lA "$1"
     fi
-else
-    case "$1" in
-        *.awk|*.groff|*.java|*.js|*.m4|*.php|*.pl|*.pm|*.pod|*.sh|\
-        *.ad[asb]|*.asm|*.inc|*.[ch]|*.[ch]pp|*.[ch]xx|*.cc|*.hh|\
-        *.lsp|*.l|*.pas|*.p|*.xml|*.xps|*.xsl|*.axp|*.ppd|*.pov|\
-        *.diff|*.patch|*.py|*.rb|*.sql|*.ebuild|*.eclass)
-            __pygmentize "$1"
-            ;;
-        *shrc*|*profile*|*PKGBUILD)
-            __pygmentize "$1" "sh"
-            ;;
-        *tar*)
-            tar -tf "$1"
-            ;;
-        *)
-            grep "#\!/bin/*sh" "$1" > /dev/null
-            if [ "$?" -eq "0" ]; then
-                __pygmentize "$1" "sh"
-            else
-                fail=1
-            fi
-    esac
-fi
-
-unset __pygmentize
-if [ -n "$fail" ]
-then
-    exit $fail
-else
-    exit 0
 fi
