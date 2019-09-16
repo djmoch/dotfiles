@@ -139,7 +139,7 @@ color	markers				default		default
 color	attachment			default		default
 color	search				default		default
 color	status				brightwhite	blue
-color	indicator			default		white
+color	indicator			black		white
 color	tree				blue		default
 
 mono	bold		bold

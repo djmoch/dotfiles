@@ -10,10 +10,10 @@ bookmark-cmd "~/.newsboat/bookmark-pinboard.sh"
 bind-key j down
 bind-key k up
 
-color background            default     default
-color listnormal            default     default
-color listfocus             default     white
-color listnormal_unread     default     default   bold
-color listfocus_unread      default     white     bold
-color info                  blue        default   reverse
-color article               default     default
+color background		default		default
+color listnormal		default		default
+color listfocus			black		white
+color listnormal_unread		default		default		bold
+color listfocus_unread		black		white		bold
+color info			blue		default		reverse
+color article			default		default
