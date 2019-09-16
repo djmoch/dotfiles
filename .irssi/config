@@ -408,6 +408,18 @@ windows = {
     sticky = "yes";
     parent = "2";
   };
+  11 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#cat-v";
+        tag = "Sweetwater";
+      }
+    );
+    sticky = "yes";
+    parent = "2";
+  };
 };
 mainwindows = {
   1 = { first_line = "43"; lines = "11"; };
