@@ -5,19 +5,19 @@
 
 if [ "$0" = "sh" -o "$0" = "-sh" ]
 then
-    HOSTNAME=`hostname | cut -d . -f 1`
+    HOSTNAME=`hostname | cut -d . -f 1`; export HOSTNAME
     ENV="$HOME/.shrc"; export ENV
-    printf "\033]0;${USER}@${HOSTNAME}\007"
+    printf "\033]0;${LOGNAME}@${HOSTNAME}\007"
 fi
 
-if type vim > /dev/null 2>&1
+if type ed > /dev/null 2>&1
 then
-    EDITOR=vim
+    EDITOR=ed
 else
-    EDITOR=vi
+    EDITOR=ex
 fi
 
-VISUAL=$EDITOR
+VISUAL=vi
 PAGER=less
 LESS="-FMRqX#10"
 export EDITOR VISUAL PAGER LESS

@@ -6,38 +6,44 @@
 
 set -o emacs
 
-PS1="$LOGNAME@\h:\W\$ "
+__ps1() {
+    echo -n $LOGNAME@$HOSTNAME:
+    if [ "$PWD" = "$HOME" ]
+    then
+        echo -n '~'
+    else
+        echo -n $(basename $PWD)
+    fi
+
+    if type git > /dev/null 2>&1
+    then
+        if git rev-parse --show-toplevel > /dev/null 2>&1
+        then
+            echo " ($(git rev-parse --abbrev-ref HEAD))"
+        else
+            echo
+        fi
+    fi
+}
+PS1='$(__ps1)\$ '
 export PS1
 
 if type dircolors > /dev/null 2>&1
 then
-    if [ -n "$SOURCE_DIRCOLORS" ]
-    then
-        eval `dircolors "$HOME/.dir_colors"`
-        unset SOURCE_DIRCOLORS
-    fi
-    alias ls="ls --color=auto"
-    LSCOLORPARAM="--color=auto"
+    alias ls="ls --color=never"
+    LSCOLORPARAM="--color=never"
 else
-    CLICOLOR=1
-    LSCOLORS=ExFxBxDxCxegedabagacad
-    export CLICOLOR LSCOLORS
     LSCOLORPARAM=""
 fi
+
+num() {
+    pr -tn "$1" | $PAGER
+}
 
 alias ll="ls $LSCOLORPARAM -l"
 alias la="ls $LSCOLORPARAM -A"
 alias lla="ls $LSCOLORPARAM -lA"
 unset LSCOLORPARAM
-
-for cmd in pacman grep egrep fgrep
-do
-    if type $cmd > /dev/null 2>&1
-    then
-        alias $cmd="$cmd --color=auto"
-    fi
-done
-unset cmd
 
 alias tas="tmux attach-session -t"
 alias tns="tmux new-session -s"
