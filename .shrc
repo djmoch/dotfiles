@@ -19,7 +19,12 @@ __ps1() {
     then
         if git rev-parse --show-toplevel > /dev/null 2>&1
         then
-            echo " ($(git rev-parse --abbrev-ref HEAD))"
+            gitref=$(git rev-parse --abbrev-ref HEAD)
+            if [ $gitref = HEAD ]
+            then
+                gitref=\($(git rev-parse --short HEAD)\)
+            fi
+            echo " ($gitref)"
         else
             echo
         fi
