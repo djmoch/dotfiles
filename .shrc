@@ -7,42 +7,42 @@
 set -o emacs
 
 __ps1() {
-    echo -n $LOGNAME@$HOSTNAME:
-    if [ "$PWD" = "$HOME" ]
-    then
-        echo -n '~'
-    else
-        echo -n $(basename $PWD)
-    fi
+	echo -n $LOGNAME@$HOSTNAME:
+	if [ "$PWD" = "$HOME" ]
+	then
+		echo -n '~'
+	else
+		echo -n $(basename $PWD)
+	fi
 
-    if type git > /dev/null 2>&1
-    then
-        if git rev-parse --show-toplevel > /dev/null 2>&1
-        then
-            gitref=$(git rev-parse --abbrev-ref HEAD)
-            if [ $gitref = HEAD ]
-            then
-                gitref=\($(git rev-parse --short HEAD)\)
-            fi
-            echo " ($gitref)"
-        else
-            echo
-        fi
-    fi
+	if type git > /dev/null 2>&1
+	then
+		if git rev-parse --show-toplevel > /dev/null 2>&1
+		then
+			gitref=$(git rev-parse --abbrev-ref HEAD)
+			if [ $gitref = HEAD ]
+			then
+				gitref=\($(git rev-parse --short HEAD)\)
+			fi
+			echo " ($gitref)"
+		else
+			echo
+		fi
+	fi
 }
 PS1='$(__ps1)\$ '
 export PS1
 
 if type dircolors > /dev/null 2>&1
 then
-    alias ls="ls --color=never"
-    LSCOLORPARAM="--color=never"
+	alias ls="ls --color=never"
+	LSCOLORPARAM="--color=never"
 else
-    LSCOLORPARAM=""
+	LSCOLORPARAM=""
 fi
 
 num() {
-    pr -tn "$1" | $PAGER
+	pr -tn "$1" | $PAGER
 }
 
 alias ll="ls $LSCOLORPARAM -l"
@@ -65,30 +65,30 @@ alias psu="ps -U $LOGNAME"
 
 if [ "$VISUAL" = "vi" ]
 then
-    alias vim="vi"
+	alias vim="vi"
 fi
 
 case `uname -s` in
-    *Darwin*)
-        alias jackd="jackd -d coreaudio > /dev/null 2>&1 &"
-        ;;
+	*Darwin*)
+		alias jackd="jackd -d coreaudio > /dev/null 2>&1 &"
+		;;
 esac
 
 if echo $LANG | grep UTF-8 > /dev/null 2>&1
 then
-    alias screen="screen -U"
+	alias screen="screen -U"
 fi
 
 if type gpg-connect-agent > /dev/null 2>&1
 then
-    GPG_TTY=`tty`; export GPG_TTY
-    gpg-connect-agent updatestartuptty /bye > /dev/null 2>&1
+	GPG_TTY=`tty`; export GPG_TTY
+	gpg-connect-agent updatestartuptty /bye > /dev/null 2>&1
 fi
 
 if [ ! -f "$HOME/.hushlogin" ]
 then
-    if [ -r /etc/motd -a -n "$DISPLAY" -a -z "$SSH_TTY" ]
-    then
-        [ $SHLVL -le 1 ] && cat /etc/motd
-    fi
+	if [ -r /etc/motd -a -n "$DISPLAY" -a -z "$SSH_TTY" ]
+	then
+		[ $SHLVL -le 1 ] && cat /etc/motd
+	fi
 fi
