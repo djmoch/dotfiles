@@ -5,6 +5,7 @@
 [ -r "$HOME/.shrc.local" ] && . "$HOME/.shrc.local"
 
 set -o emacs
+printf "\033]0;$LOGNAME@$HOSTNAME\007"
 
 __ps1() {
 	echo -n $LOGNAME@$HOSTNAME:

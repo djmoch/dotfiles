@@ -7,7 +7,6 @@ if [ "$0" = "sh" -o "$0" = "-sh" ]
 then
 	HOSTNAME=`hostname | cut -d . -f 1`; export HOSTNAME
 	ENV="$HOME/.shrc"; export ENV
-	printf "\033]0;${LOGNAME}@${HOSTNAME}\007"
 fi
 
 if type ed > /dev/null 2>&1
