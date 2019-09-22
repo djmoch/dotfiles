@@ -347,7 +347,9 @@ case $command in
         case $predicate in
             check)
                 cd "$HOME"
-                find . -maxdepth 1 -name ._.djmoch -mtime +8 -exec echo "Dotfiles more than one week old" \;
+	        aweekago=$(($(date +%s) - 604800))
+	        lastupdate=$(stat --format=%Y ._.djmoch)
+	        [ $lastupdate -lt $aweekago ] && "Dotfiles more than one week old"
                 ;;
             update)
                 if [ -d "$HOME/.dotfiles_tgz" ]
@@ -418,7 +420,9 @@ case $command in
         if [ -n "$connected" ]
         then
             cd "$HOME"
-            find . -maxdepth 1 -name ._.djmoch -mtime +8 -exec my dotfiles update \;
+	    aweekago=$(($(date +%s) - 604800))
+	    lastupdate=$(stat --format=%Y ._.djmoch)
+	    [ $lastupdate -lt $aweekago ] && my dotfiles update
         fi
         ;;
     login)
