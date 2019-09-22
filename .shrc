@@ -32,23 +32,13 @@ __ps1() {
 PS1='$(__ps1)\$ '
 export PS1
 
-if type dircolors > /dev/null 2>&1
-then
-	alias ls="ls --color=never"
-	LSCOLORPARAM="--color=never"
-else
-	LSCOLORPARAM=""
-fi
-
 num() {
 	pr -tn "$1" | $PAGER
 }
 
-alias ll="ls $LSCOLORPARAM -l"
-alias la="ls $LSCOLORPARAM -A"
-alias lla="ls $LSCOLORPARAM -lA"
-unset LSCOLORPARAM
-
+alias ll="ls -l"
+alias la="ls -A"
+alias lla="ls -lA"
 alias tas="tmux attach-session -t"
 alias tns="tmux new-session -s"
 alias tls="tmux list-sessions"
