@@ -183,7 +183,7 @@ case $command in
         fi
         ;;
     kbopts)
-        setxkbmap -option -option ctrl:nocaps -option terminate:ctrl_alt_bksp
+        setxkbmap -option -option ctrl:nocaps
         ;;
     screen)
         xrandr_options=`xrandr -q | grep ' disconnected' | awk '{print $1}'`
