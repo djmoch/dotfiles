@@ -35,6 +35,13 @@ export PS1
 num() {
 	pr -tn "$1" | $PAGER
 }
+proj() {
+	if [ -d "$HOME/Documents/src/$1" ]
+	then
+		cd "$HOME/Documents/src/$1"
+		[ -f .env ] && . ./.env
+	fi
+}
 
 alias ll="ls -l"
 alias la="ls -A"
