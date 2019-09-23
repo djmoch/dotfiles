@@ -32,6 +32,10 @@ __ps1() {
 PS1='$(__ps1)\$ '
 export PS1
 
+ssh() {
+	$(which ssh) "$@"
+	printf "\033]0;$LOGNAME@$HOSTNAME\007"
+}
 num() {
 	pr -tn "$1" | $PAGER
 }
