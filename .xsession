@@ -3,6 +3,7 @@
 # ~/.xsession
 #
 echo "Running $HOME/.xsession as PID $$" >&2
+[ -r "$HOME/.Xresources.local" ] && xrdb -merge "$HOME/.Xresources.local"
 [ -r "$HOME/.xsession.local" ] && . "$HOME/.xsession.local"
 date +'%m/%d/%Y %H:%M:%S' >&2
 env >&2
