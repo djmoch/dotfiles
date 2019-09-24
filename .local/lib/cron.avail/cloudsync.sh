@@ -80,13 +80,13 @@ then
         rsync -aq $LOCAL_PHOTOS/$lastrun_year/$lastrun_month/* /mnt/nextcloud/Photos/$lastrun_year/$lastrun_month
     fi
 
-    # Rsync from WebDAV to ~/Documents/Mobile
-    echo "Syncing mobile documents from WebDAV to $mobile_docs"
-    rsync -aq /mnt/nextcloud/Documents/* "$mobile_docs"
-
     # Rsync from ~/Documents/Mobile to WebDAV
     echo "Syncing mobile documents from $mobile_docs to WebDAV"
     rsync -aq "$mobile_docs"/* /mnt/nextcloud/Documents
+
+    # Rsync from WebDAV to ~/Documents/Mobile
+    echo "Syncing mobile documents from WebDAV to $mobile_docs"
+    rsync -aq /mnt/nextcloud/Documents/* "$mobile_docs"
 
     # Finish by unmounting the WebDAV folder
     echo "Unmounting $server_fqdn"
