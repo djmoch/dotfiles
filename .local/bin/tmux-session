@@ -37,7 +37,7 @@ then
     name=iterm
     columns=`tput cols`
     width=$(($columns - 80 - 1))
-    tmux new-session -d -x $columns -y `tput lines` -s $name vim
+    tmux new-session -d -x $columns -y `tput lines` -s $name
     tmux rename-window -t $name:1 code
     tmux splitw -h -l 80
     tmux setw main-pane-width $width
@@ -77,7 +77,7 @@ then
     name=code
     columns=`tput cols`
     width=$(($columns - 80 - 1))
-    tmux new-session -d -x $columns -y `tput lines` -s $name vim
+    tmux new-session -d -x $columns -y `tput lines` -s $name
     tmux rename-window -t $name:1 code
     tmux setw main-pane-width $width
     tmux splitw -h -l 80
