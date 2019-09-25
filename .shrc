@@ -23,6 +23,15 @@ __ps1() {
 			gitref=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
 			[ $? -ne 0 ] && gitref="GIT: empty"
 			[ "$gitref" = HEAD ] && gitref=\($(git rev-parse --short HEAD)\)
+			git diff --no-ext-diff --quiet || status="*"
+			git diff --no-ext-diff --cached --quiet || status="$status+"
+			if [ "$(git config --bool sh.showUntrackedFiles)" != "false" ] &&
+				git ls-files --others --exclude-standard --directory \
+				--no-empty-directory --error-unmatch -- ':/*' >/dev/null 2>/dev/null
+			then
+				status="$status%"
+			fi
+			[ -n "$status" ] && gitref="$gitref $status"
 			echo " ($gitref)"
 		else
 			echo
