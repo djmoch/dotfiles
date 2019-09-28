@@ -33,7 +33,7 @@ __autostart()
     fi
 }
 
-xset dpms 0 0 900 s 300 0 s blank s noexpose s on
+xset dpms 0 0 900 s 300 0
 
 SHLVL=0; export SHLVL
 
