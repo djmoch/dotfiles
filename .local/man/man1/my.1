@@ -2,8 +2,9 @@
 .SH NAME
 my \- utility functions for use across dotfiles and elsewhere
 .SH SYNOPSIS
-.B my
-\fI\,SUBCOMMAND\/\fR [\fI\,ARGS\/\fR]
+.SY my
+\fISUBCOMMAND\fR [\fIARGS\fR]
+.YS
 .SH DESCRIPTION
 \fBmy\fR runs the subcommand specified by \fISUBCOMMAND\/\fR, passing any provided
 \fIARGS\/\fR along. Many of the available subcommands amount to a list of providers
@@ -14,20 +15,20 @@ design allows for dotfiles to port across machines with relative ease.
 .TP
 \fBmailto\fR
 Send email.
-
+.sp
 Command synopsis: \fBmy\fR \fBmailto\fR [\fIaddress\fR]\fR [\fIsubject\fR]
 .TP
 \fBsearch\fR
 Search DuckDuckGo in the terminal.
-
+.sp
 Command synopsis: \fBmy\fR \fBsearch\fR [\fIterm\fR] (shell quoting rules apply)
 .TP
 \fBterm\fR
 Open an X terminal window. This subcommand follows an order of preference for which
 terminal emulator is used.
-
+.sp
 The current order is:
-
+.sp
 1. st
 .br
 2. urxvtc (if urxvtd is available)
@@ -58,35 +59,35 @@ sets its permissions via chmod to be inaccessible to everyone except the file ow
 .TP
 \fBinit\fR
 Perform initializations necessary for "moving in."
-
+.sp
 Command synopsis: \fBmy\fR \fBinit\fR [\fI\-f\fR][\fI\-c\fR]
-
+.sp
 When run with \fI\-f\fR, the command is forced to run completely, even if it has
 already been run. When run with \fI\-c\fR, the user crontab is also initialized.
-
+.sp
 In addition to optionally initializing the crontab, init initializes custom termcaps, .less, ensures
 the login shell is set to /bin/sh, creates an autostart entry for an available screen locker based
 on a preference list and availability in \fIPATH\fR, and initializes gpg-agent.conf to point to the
 correct pinentry program. Finally, init creates several folders required for proper behavior of
 dotfiles.
-
+.sp
 When complete, init touches the file $HOME/._.djmoch to act as a flag for the last time the dotfiles
 where updated/initialized. See the \fBlogin\fR subcommand for more details of how this file is used.
 .TP
 \fBopen\fR
 Open a file in the configured XDG handler specific to the file's MIME type, or, optionally, in a
 configured terminal handler.
-
+.sp
 Command synopsis: \fBmy\fR \fBopen\fR [\fI\-T\fR] \fIFILE\fR
-
+.sp
 When the \fI\-T\fR flag is provided, the file is opened in a terminal handler configured in a
 different file. See my-open.config(5) for more information an how to configure terminal handlers.
 .TP
 \fBsound\fR
 Adjust the sound settings or display sound status.
-
+.sp
 Command synopsis: \fBmy\fR \fBsound\fR [\fIstatus\fR] ...
-
+.sp
 If the \fIstatus\fR action is provided, then the current status of the sound sinks and sources
 is put out. If the status is not requested, then other command arguments should be provided
 according to pactl(1).
@@ -99,18 +100,18 @@ Set screen options. This is more or less deprecated in favor of autorandr(1).
 .TP
 \fBbrightness\fR
 Sets the brightness of the provided monitor using the xbacklight(1) utility.
-
+.sp
 Command synopsis: \fBmy\fR \fBbrightness\fR \fICTRL\fR ...
-
+.sp
 The \fICTRL\fR argument should be the name of an attached display device, or the generic
 argument "monitor," which simply looks determines the name of the (only) attached display
 device. The remaider of the command arguments follow the description in xbacklight(1).
 .TP
 \fBbattery\fR
 Show information about the battery.
-
+.sp
 Command synopsis: \fBmy\fR \fBbattery\fR [\fIremaining\fR][\fItotal\fR][\fIpercent\fR]
-
+.sp
 The \fIpercent\fR argument will probably be the only one of any interest. The others are
 used internally to calculate the percent, and their representation is dependent on the
 operating system.
@@ -133,10 +134,10 @@ An os-independent way to paste text from the system clipboard into the terminal.
 Parses netrc to return username/password information for use in configuration files or
 anywhere a service credential might be required. Note that this subcommand calls out
 to a handler written in Python.
-
+.sp
 Command synopsis: \fBmy\fR \fBnetrc\fR \fI<server>\fR [\fIlogin\fR][\fIaccount\fR]
 [\fIpassword\fR]
-
+.sp
 The \fIserver\fR argument should be the fully-qualified domian name of the server whose
 credential is being requested. One of the three optional arguments, \fIlogin\fR,
 \fIaccount\fR, or \fIpassword\fR may also be provided, in which case only that portion
@@ -145,9 +146,9 @@ all three will be returned. All responses are provided on stdout.
 .TP
 \fBdotfiles\fR
 Perform one of several maintanence actions on the dotfiles.
-
+.sp
 Command synopsis: \fBmy\fR \fBdotfiles\fR <\fIargument\fR>
-
+.sp
 \fIargument\fR may be one of \fIcheck\fR, in which case the ._.djmoch file in consulted
 to see when the dotfiles were last updated, or \fIupdate\fR, in which case the dotfiles
 are actually updated. Whether or not \fIupdate\fR actually does anything is conditioned
@@ -157,24 +158,24 @@ Git repository, then \fIupdate\fR does nothing.
 \fBcron\fR
 Run configured cron tasks. This subcommand should be called either from a user crontab
 or a user systemd timer.
-
+.sp
 Command synopsis: \fBmy\fR \fBcron\fR [\fIsystemd\fR]
-
+.sp
 If the \fIsystemd\fR argument is provided, then the job output is sent to stdout,
 otherwise no output is given.
-
+.sp
 Any script located in $HOME/.local/lib/cron.d (either physically or via link) will be
 executed. Note that cron scripts that are included in the dotfiles are located in
 $HOME/.local/lib/cron.avail and must be linked into cron.d before they will be
 activated.
-
+.sp
 Recall that \fBinit\fR will either place an entry in the user crontab or create a user
 systemd timer to call \fBmy cron\fR.
 .TP
 \fBlogin_async\fR
 This should really be called login_sync, since it is the synchronous (i.e. blocking)
 version of the login command (see \fBmy login\fR to run as a background job).
-
+.sp
 \fBlogin_async\fR will attempt to contact the dotfiles server for up to two minutes
 from the point it is called. If it is able to make contact, it consults the ._.djmoch
 file to see if the dotfiles have to updated in the past week. If not, it calls \fBmy
