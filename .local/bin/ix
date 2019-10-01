@@ -1,4 +1,4 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 # Examples:
 #     ix hello.txt              # paste file (name/ext will be set).
