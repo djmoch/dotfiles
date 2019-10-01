@@ -8,6 +8,8 @@ set -o emacs
 printf "\033]0;$LOGNAME@$HOSTNAME\007"
 
 __ps1() {
+	last=$?
+	[ $last -ne 0 ] && echo -n "[$last] "
 	echo -n $LOGNAME@$HOSTNAME:
 	if [ "$PWD" = "$HOME" ]
 	then
