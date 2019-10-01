@@ -1,0 +1,2 @@
+VISUAL=vi
+export VISUAL

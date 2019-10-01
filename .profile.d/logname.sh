@@ -1,0 +1,2 @@
+LOGNAME=$(logname)
+export LOGNAME
