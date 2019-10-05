@@ -372,7 +372,10 @@ case $command in
                         mv /tmp/dotfiles.tgz.$$ "$HOME/.dotfiles_tgz/dotfiles.tar.gz"
                         cd "$HOME"
                         tar xzf .dotfiles_tgz/dotfiles.tar.gz
-                        cp -r dotfiles-master/.* .
+                        for file in $(ls -A dotfiles-master)
+			do
+				cp -r dotfiles-master/$file .
+			done
                         rm -rf dotfiles-master
                     else
                         rm /tmp/dotfiles.tgz.$$
