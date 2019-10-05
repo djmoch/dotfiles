@@ -7,3 +7,5 @@ for file in "$HOME"/.shrc.d/*.sh
 do
 	[ -r $file ] && . $file
 done
+
+unset -v file
