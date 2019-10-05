@@ -3,7 +3,7 @@
 #
 printf "\033]0;$LOGNAME@$HOSTNAME\007"
 
-for file in .shrc.d/*.sh
+for file in "$HOME"/.shrc.d/*.sh
 do
 	[ -r $file ] && . $file
 done

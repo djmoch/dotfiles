@@ -19,7 +19,7 @@ __addpath ()
 	fi
 }
 
-for file in .profile.d/*.sh
+for file in "$HOME"/.profile.d/*.sh
 do
 	[ -r $file ] && . $file
 done
