@@ -27,6 +27,8 @@ channels = (
   { name = "#indieweb-dev"; chatnet = "Sweetwater"; autojoin = "yes"; }
   { name = "#indieweb-meta"; chatnet = "Sweetwater"; autojoin = "yes"; }
   { name = "#lobsters"; chatnet = "Sweetwater"; autojoin = "yes"; }
+  { name = "#cat-v"; chatnet = "Sweetwater"; autojoin = "yes"; }
+  { name = "#suckless"; chatnet = "Sweetwater"; autojoin = "yes"; }
 );
 
 aliases = {
@@ -414,6 +416,18 @@ windows = {
         type = "CHANNEL";
         chat_type = "IRC";
         name = "#cat-v";
+        tag = "Sweetwater";
+      }
+    );
+    sticky = "yes";
+    parent = "2";
+  };
+  12 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#suckless";
         tag = "Sweetwater";
       }
     );
