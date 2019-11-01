@@ -115,4 +115,4 @@ else
     exit -1
 fi
 
-$handler $@
+$handler "$@"
