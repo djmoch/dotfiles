@@ -6,7 +6,7 @@ __ps1() {
 	then
 		echo -n '~'
 	else
-		echo -n $(basename $PWD)
+		echo -n $(basename "$PWD")
 	fi
 
 	if type git > /dev/null 2>&1
