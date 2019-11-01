@@ -284,7 +284,7 @@ nnoremap <Leader>g :GrepJob!<Space>
 nnoremap <Leader>' :vnew<CR>
 nnoremap <Leader>- :new<CR>
 nnoremap <Leader>e :e **/
-nnoremap <Leader>s :call MyScratchBuffer()<CR>
+nnoremap <Leader>s :ScratchBuffer<CR>
 nnoremap <Leader>n :New<Space>
 nnoremap <Leader>h :Help<Space>
 nnoremap <Leader>l :ls<CR>:b
