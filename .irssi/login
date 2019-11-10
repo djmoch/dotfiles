@@ -1,1 +1,2 @@
-connect sweetwater.djmoch.org 7000 <password> djmoch
+connect sweetwater.djmoch.org 7000 djmoch/freenode:<password> djmoch
+connect sweetwater.djmoch.org 7000 djmoch/oftc:<password> djmoch
