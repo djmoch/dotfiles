@@ -39,7 +39,7 @@ else
     exit -1
 fi
 
-if type -p xdg-user-dir > /dev/null 2>&1
+if type xdg-user-dir > /dev/null 2>&1
 then
     LOCAL_PHOTOS=`xdg-user-dir PICTURES`
 else
