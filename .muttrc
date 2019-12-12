@@ -52,7 +52,7 @@ message-hook '~s \\[PATCH' 'color body brightwhite default "^(diff\\s|index\\s|n
 # {{{ General Settings
 set realname			= "Daniel Moch"
 set sendmail_wait		= -1
-set sort			= "reverse-threads"
+set sort			= "threads"
 set strict_threads		= "yes"
 set sort_browser		= "alpha"
 set sort_aux			= "last-date-received"
