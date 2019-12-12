@@ -1,4 +1,7 @@
-if type ed > /dev/null 2>&1
+if type sam > /dev/null 2>&1
+then
+	EDITOR='sam -d'
+elif type ed > /dev/null 2>&1
 then
 	EDITOR=ed
 else
