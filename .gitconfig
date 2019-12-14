@@ -15,11 +15,9 @@
 [mergetool]
 	prompt = false
 [alias]
-	ls = ls-tree --name-only HEAD
 	pretty = log --graph --abbrev-commit --pretty=oneline --decorate --all
-	ls-all = !git ls-tree --name-only -r HEAD $(git rev-parse --show-toplevel)
-	ls-r = ls-tree --name-only -r HEAD
 	ctags = !`git rev-parse --git-dir`/hooks/ctags
+	po = push -u origin HEAD
 [init]
 	templatedir = ~/.local/lib/gitdir
 [credential]
