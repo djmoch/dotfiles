@@ -11,21 +11,33 @@ __ps1() {
 
 	if type git > /dev/null 2>&1
 	then
-		if git rev-parse --show-toplevel > /dev/null 2>&1
+		workdir=$(git rev-parse --is-inside-work-tree 2>/dev/null)
+		if [ $? -eq 0 ]
 		then
-			gitref=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
-			[ $? -ne 0 ] && gitref="GIT: empty"
-			[ "$gitref" = HEAD ] && gitref=\($(git rev-parse --short HEAD)\)
-			git diff --no-ext-diff --quiet || status="*"
-			git diff --no-ext-diff --cached --quiet || status="$status+"
-			if [ "$(git config --bool sh.showUntrackedFiles)" != "false" ] &&
-				git ls-files --others --exclude-standard --directory \
-				--no-empty-directory --error-unmatch -- ':/*' >/dev/null 2>/dev/null
+			if [ "$workdir" = "false" ]
 			then
-				status="$status%"
+				bare=$(git rev-parse --is-bare-repository 2>/dev/null)
+				if [ $? -ne 0 ]
+				then
+					echo
+				else
+					echo " (GIT: bare)"
+				fi
+			else
+				gitref=$(git rev-parse --abbrev-ref HEAD 2>/dev/null)
+				[ $? -ne 0 ] && gitref="GIT: empty"
+				[ "$gitref" = HEAD ] && gitref=\($(git rev-parse --short HEAD)\)
+				git diff --no-ext-diff --quiet || status="*"
+				git diff --no-ext-diff --cached --quiet || status="$status+"
+				if [ "$(git config --bool sh.showUntrackedFiles)" != "false" ] &&
+					git ls-files --others --exclude-standard --directory \
+					--no-empty-directory --error-unmatch -- ':/*' >/dev/null 2>/dev/null
+				then
+					status="$status%"
+				fi
+				[ -n "$status" ] && gitref="$gitref $status"
+				echo " ($gitref)"
 			fi
-			[ -n "$status" ] && gitref="$gitref $status"
-			echo " ($gitref)"
 		else
 			echo
 		fi
