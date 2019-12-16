@@ -1,10 +1,10 @@
 #!/bin/sh
 if [ "$1" = "-r" ]
 then
-    for line in `tmux list-sessions -F "#S"`
+    for line in $(tmux list-sessions -F "#S")
     do
-        session=`echo $line | sed 's~:~~'`
-        columns=`tput cols`
+        session=$(echo $line | sed 's~:~~')
+        columns=$(tput cols)
         echo $session
         case $session in
             iterm|code)
@@ -35,9 +35,9 @@ fi
 if echo $1 | grep iterm > /dev/null 2>&1
 then
     name=iterm
-    columns=`tput cols`
+    columns=$(tput cols)
     width=$(($columns - 80 - 1))
-    tmux new-session -d -x $columns -y `tput lines` -s $name
+    tmux new-session -d -x $columns -y $(tput lines) -s $name
     tmux rename-window -t $name:1 code
     tmux splitw -h -l 80
     tmux setw main-pane-width $width
@@ -62,7 +62,7 @@ then
         tmux renamew "mail-&-rss"
     fi
     tmux new-window -t $name -n vitals htop
-    uname=`uname -s`
+    uname=$(uname -s)
     case $uname in
         *Darwin*)
             tmux splitw -h nettop
@@ -75,9 +75,9 @@ then
 elif [ $1 = "code" ]
 then
     name=code
-    columns=`tput cols`
+    columns=$(tput cols)
     width=$(($columns - 80 - 1))
-    tmux new-session -d -x $columns -y `tput lines` -s $name
+    tmux new-session -d -x $columns -y $(tput lines) -s $name
     tmux rename-window -t $name:1 code
     tmux setw main-pane-width $width
     tmux splitw -h -l 80
@@ -85,13 +85,13 @@ then
 elif [ $1 = "notes" ]
 then
     name=notes
-    tmux new-session -d -x `tput cols` -y `tput lines` -s $name sncli
+    tmux new-session -d -x $(tput cols` -y `tput lines) -s $name sncli
 elif [ $1 = "chat" ]
 then
     name=chat
-    columns=`tput cols`
+    columns=$(tput cols)
     width=$(($columns - 30))
-    tmux new-session -d -x $columns -y `tput lines` -s $name irssi
+    tmux new-session -d -x $columns -y $(tput lines) -s $name irssi
     tmux setw main-pane-width $width
     tmux splitw -h -l 30 cat ~/.irssi/nicklistfifo
     tmux selectl main-vertical
