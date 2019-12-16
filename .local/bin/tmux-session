@@ -96,6 +96,14 @@ then
 	tmux splitw -h -l 30 cat ~/.irssi/nicklistfifo
 	tmux selectl main-vertical
 	tmux send-keys -t $name:1.1 "/keyring" "C-m" "/nicklist fifo" "C-m"
+elif [ $1 = "mail" ]
+then
+	name=mail
+	tmux new-session -s $name mutt
+elif [ $1 = "news" ]
+then
+	name=news
+	tmux new-session -s $name newsboat
 fi
 
 if [ -n "$name" ]
