@@ -284,6 +284,8 @@ globalkeys = gears.table.join(
     -- Standard program
     awful.key({ modkey, "Control"   }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
+    awful.key({ "Mod1", "Control"   }, "BackSpace", awesome.quit,
+                  {description = "quit awesome", group = "awesome"}),
 
     awful.key({ modkey, "Mod1" }, "l",     function () awful.tag.incmwfact( 0.05)          end,
               {description = "increase master width factor", group = "layout"}),
@@ -478,11 +480,6 @@ awful.rules.rules = {
           "pop-up",       -- e.g. Google Chrome's (detached) Developer Tools.
         }
       }, properties = { floating = true }},
-
-    -- Add titlebars to normal clients and dialogs
-    { rule_any = {type = { "normal", "dialog" }
-      }, properties = { titlebars_enabled = true }
-    },
 
     -- Set Firefox to always map on the tag named "2" on screen 1.
     -- { rule = { class = "Firefox" },
