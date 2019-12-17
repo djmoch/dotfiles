@@ -11,6 +11,10 @@ end)
 vis.events.subscribe(vis.events.WIN_OPEN, function(win)
 	-- Your per window configuration options e.g.
 	vis:command('set number')
+	if win.file.name ~= nil and win.file.name:match('.psm1$')
+	then
+		win.syntax = 'powershell'
+	end
 	set_indent(win.syntax)
 end)
 
