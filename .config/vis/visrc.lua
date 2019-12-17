@@ -6,6 +6,7 @@ vis.events.subscribe(vis.events.INIT, function()
 	-- Your global configuration options
 	vis:command('set theme djmoch')
 	vis:command('set autoindent')
+	vis:command('set tags "tags .git/tags"')
 end)
 
 vis.events.subscribe(vis.events.WIN_OPEN, function(win)
