@@ -1,7 +1,9 @@
 #
 # ~/.shrc
 #
-printf "\033]0;$LOGNAME@$HOSTNAME\007"
+case $TERM in
+st*|rxvt*|xterm*) printf "\033]0;$LOGNAME@$HOSTNAME\007" ;;
+esac
 
 for file in "$HOME"/.shrc.d/*.sh
 do
