@@ -1,7 +1,6 @@
 #
 # ~/.config/dunst/dunstrc
 #
-# vim: ft=cfg
 [global]
 monitor = 0
 follow = mouse

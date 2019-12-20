@@ -2,7 +2,6 @@
 #
 # ~/.local/bin/my
 #
-# vim: set sts=4 sw=4 et:
 
 # Command and handlers for them are added as-needed. Some commands only
 # have one handler, but exist to avoid re-writes across my dotfiles
@@ -248,7 +247,7 @@ case $command in
 
         case $1 in
             remaining)
-                case $uname in 
+                case $uname in
                     *Linux*)
                         if [ `acpi | wc -l` -eq 2 ]
                         then
@@ -271,7 +270,7 @@ case $command in
                 exit 0
                 ;;
             total)
-                case $uname in 
+                case $uname in
                     *Linux*|*CYGWIN*)
                         echo 100
                         ;;

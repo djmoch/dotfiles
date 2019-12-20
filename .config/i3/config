@@ -1,5 +1,3 @@
-# vim: set ft=conf
-
 set $mod Mod4
 
 floating_modifier $mod
