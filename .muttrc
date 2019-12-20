@@ -1,11 +1,10 @@
-# {{{ Headers
+# Headers
 ignore *
 unignore from: subject to cc date x-mailer x-url user-agent list-id
 
 hdr_order date from to cc subject list-id
-# }}}
 
-# {{{ Macros
+# Macros
 macro index \eb "<search>~b " "search in message bodies"
 
 macro index,pager,attach,compose \cb "\
@@ -36,9 +35,8 @@ macro index <F4> \
 "notmuch: reconstruct thread"
 
 macro generic,pager <F5> "<enter-command>toggle sidebar_visible<enter>" "Toggle the sidebar"
-# }}}
 
-# {{{ Hooks
+# Hooks
 message-hook '~s .*' 'uncolor body red default "^-.*"'
 message-hook '~s .*' 'uncolor body green default "^\\+.*"'
 message-hook '~s .*' 'uncolor body cyan default "^@@.*"'
@@ -47,9 +45,8 @@ message-hook '~s \\[PATCH' 'color body red default "^-.*"'
 message-hook '~s \\[PATCH' 'color body green default "^\\+.*"'
 message-hook '~s \\[PATCH' 'color body cyan default "^@@.*"'
 message-hook '~s \\[PATCH' 'color body brightwhite default "^(diff\\s|index\\s|new\\s|\\+\\+\\+|---).*"'
-# }}}
 
-# {{{ General Settings
+# General Settings
 set realname			= "Daniel Moch"
 set sendmail_wait		= -1
 set sort			= "threads"
@@ -85,9 +82,8 @@ attachments   -I message/external-body
 
 auto_view text/html
 alternative_order text/plain text/enriched text/html
-# }}}
 
-# {{{ GPG
+# GPG
 set pgp_decode_command="gpg --status-fd=2 %?p?--passphrase-fd 0? --no-verbose --quiet --batch --output - %f"
 set pgp_verify_command="gpg --status-fd=2 --no-verbose --quiet --batch --output - --verify %s %f"
 set pgp_decrypt_command="gpg --status-fd=2 %?p?--passphrase-fd 0? --no-verbose --quiet --batch --output - %f"
@@ -102,9 +98,8 @@ set pgp_list_pubring_command="gpg --no-verbose --batch --quiet --with-colons --w
 set pgp_list_secring_command="gpg --no-verbose --batch --quiet --with-colons --with-fingerprint --with-fingerprint --list-secret-keys %r"
 set pgp_good_sign="^\\[GNUPG:\\] GOODSIG"
 set pgp_decryption_okay="^\\[GNUPG:\\] DECRYPTION_OKAY"
-# }}}
 
-# {{{ S/MIME
+# S/MIME
 set smime_timeout=300
 set crypt_autosign = yes
 set crypt_replyencrypt = yes
@@ -129,9 +124,8 @@ set smime_verify_command="openssl smime -verify -inform DER -in %s %C -content %
 set smime_verify_opaque_command="\
 openssl smime -verify -inform DER -in %s %C || \
 openssl smime -verify -inform DER -in %s -noverify 2>/dev/null"
-# }}}
 
-# {{{ Colors
+# Colors
 color	normal				default		default
 color	error				brightred	default
 color	tilde				default		default
@@ -205,6 +199,5 @@ mono	body		bold						"^gpg: Good signature"
 mono	body		bold						"^gpg: BAD signature from.*"
 color	body				blue		default		"([a-z][a-z0-9+-]*://(((([a-z0-9_.!~*'();:&=+$,-]|%[0-9a-f][0-9a-f])*@)?((([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?|[0-9]+\\.[0-9]+\\.[0-9]+\\.[0-9]+)(:[0-9]+)?)|([a-z0-9_.!~*'()$,;:@&=+-]|%[0-9a-f][0-9a-f])+)(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*(/([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*(;([a-z0-9_.!~*'():@&=+$,-]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?(#([a-z0-9_.!~*'();/?:@&=+$,-]|%[0-9a-f][0-9a-f])*)?|(www|ftp)\\.(([a-z0-9]([a-z0-9-]*[a-z0-9])?)\\.)*([a-z]([a-z0-9-]*[a-z0-9])?)\\.?(:[0-9]+)?(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*(/([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*(;([-a-z0-9_.!~*'():@&=+$,]|%[0-9a-f][0-9a-f])*)*)*)?(\\?([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?(#([-a-z0-9_.!~*'();/?:@&=+$,]|%[0-9a-f][0-9a-f])*)?)[^].,:;!)?	\t\r\n<>\"]"
 color	body				blue		default		"((@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\]),)*@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\.[0-9]?[0-9]?[0-9]\\]):)?[0-9a-z_.+%$-]+@(([0-9a-z-]+\\.)*[0-9a-z-]+\\.?|#[0-9]+|\\[[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\.[0-2]?[0-9]?[0-9]\\])"
-# }}}
 
 source ~/.config/mutt/account.default

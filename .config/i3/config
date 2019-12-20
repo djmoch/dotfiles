@@ -4,7 +4,7 @@ set $mod Mod4
 
 floating_modifier $mod
 
-# {{{ Theme
+# Theme
 font pango:sans 9
 
 # XRDB            alias       xrdb name       default
@@ -35,9 +35,8 @@ client.urgent           $foreground $color3     $foreground $color3     $foregro
 client.placeholder      $foreground $background $foreground $background $foreground
 
 client.background       $background
-# }}}
 
-# {{{ Key Bindings
+# Key Bindings
 bindsym $mod+q kill
 bindsym $mod+r exec dmenu_run
 bindsym $mod+p exec --no-startup-id i3-dmenu-desktop
@@ -85,17 +84,15 @@ bindsym $mod+Shift+8 move container to workspace 8
 bindsym $mod+Shift+9 move container to workspace 9
 
 bindsym $mod+Control+r restart
-# }}}
 
-# {{{ Rules
+# Rules
 for_window [class="^pinentry$"] floating enable
 for_window [title="^xbindkeys_show$"] floating enable
 for_window [title="^xfontsel$"] floating enable
 for_window [window_type="^popup_menu$"] floating enable
 popup_during_fullscreen leave_fullscreen
-# }}}
 
-# {{{ Resize Mode
+# Resize Mode
 bindsym $mod+Mod1+r mode "resize"
 mode "resize" {
     bindsym j resize shrink width 10 px or 10 ppt
@@ -107,7 +104,7 @@ mode "resize" {
 }
 #}}}
 
-# {{{ i3bar
+# i3bar
 bar {
     position top
     tray_output primary
@@ -118,7 +115,7 @@ bar {
         statusline $foreground
         separator $color8
 
-        # color            border      backgr.     text 
+        # color            border      backgr.     text
         focused_workspace  $foreground $color7     $foreground
         active_workspace   $color7     $background $foreground
         inactive_workspace $background $background $color7
@@ -126,4 +123,3 @@ bar {
         binding_mode       $foreground $color1     $foreground
     }
 }
-# }}}

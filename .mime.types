@@ -1,4 +1,4 @@
-# {{{ Application-generated files...
+# Application-generated files...
 application/msword		doc string(0,<D0CF11E0A1B11AE1>)
 application/pdf			pdf regex(0,^[\n\r]*%PDF)
 application/postscript		ai eps ps string(0,%!) string(0,<04>%!) \
@@ -23,9 +23,8 @@ application/vnd.cups-raw	(string(0,<1B>E) + !string(2,<1B>%0B)) \
 				(contains(0,128,<1B>%-12345X) + \
 				 (contains(0,4096,"LANGUAGE=PCL") \
 				  contains(0,4096,"LANGUAGE = PCL")))
-# }}}
 
-# {{{ Image files...
+# Image files...
 image/gif			gif string(0,GIF87a) string(0,GIF89a)
 image/png			png string(0,<89>PNG)
 image/jpeg			jpeg jpg jpe string(0,<FFD8FF>) +\
@@ -50,9 +49,8 @@ image/urf			urf string(0,UNIRAST<00>)
 image/x-alias			pix short(8,8) short(8,24)
 image/x-bitmap			bmp string(0,BM) + !printable(2,14)
 image/x-icon			ico
-# }}}
 
-# {{{ Text files...
+# Text files...
 application/x-cshell		csh printable(0,1024) + string(0,#!) +\
 				(contains(2,80,/csh) contains(2,80,/tcsh))
 application/x-perl		pl printable(0,1024) + string(0,#!) +\
@@ -69,6 +67,5 @@ text/html			html htm printable(0,1024) +\
 				(istring(0,"<HTML>") istring(0,"<!DOCTYPE"))
 text/plain			txt printable(0,1024)
 text/css			css
-# }}}
 
 application/octet-stream
