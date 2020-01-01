@@ -99,11 +99,11 @@ then
 elif [ $1 = "mail" ]
 then
 	name=mail
-	tmux new-session -s $name mutt
+	tmux new-session -ds $name mutt
 elif [ $1 = "news" ]
 then
 	name=news
-	tmux new-session -s $name newsboat
+	tmux new-session -ds $name newsboat
 fi
 
 if [ -n "$name" ]
