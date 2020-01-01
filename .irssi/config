@@ -447,6 +447,30 @@ windows = {
     sticky = "yes";
     parent = "2";
   };
+  15 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#plan9";
+        tag = "Sweetwater";
+      }
+    );
+    sticky = "yes";
+    parent = "2";
+  };
+  16 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#2f30";
+        tag = "Sweetwater3";
+      }
+    );
+    sticky = "yes";
+    parent = "2";
+  };
 };
 mainwindows = {
   1 = { first_line = "43"; lines = "11"; };
