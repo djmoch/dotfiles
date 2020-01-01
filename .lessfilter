@@ -2,10 +2,12 @@
 
 if [ -d "$1" ]
 then
-    if type dircolors > /dev/null 2>&1
-    then
-        ls -lA --color=force "$1"
-    else
-        ls -lA "$1"
-    fi
+	ls -lA "$1"
+	exit
 fi
+
+case "$1" in
+*.tar.gz) gzip -cd $1 | tar -t ;;
+*.tar.xz) xz -cd $1 | tar -t ;;
+*) exit 1 ;;
+esac
