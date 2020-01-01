@@ -19,11 +19,11 @@
 	ctags = !`git rev-parse --git-dir`/hooks/ctags
 	po = push -u origin HEAD
 [init]
-	templatedir = ~/.local/lib/gitdir
+	templatedir = ~/lib/gitdir
 [credential]
 	helper = /usr/share/git/credential/netrc/git-credential-netrc
 [include]
-	path = ~/.gitconfig.local
+	path = ~/etc/gitconfig.local
 [pull]
 	rebase = true
 [sendemail]

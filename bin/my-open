@@ -1,0 +1,118 @@
+#!/bin/sh
+#
+# ~/bin/my-open
+#
+# Every OS seems to use it's own uniquely-named binary to open
+# files using the correct handler for the file's MIME type. This is my
+# attempt to resolve the different handlers into a platform-independent
+# one.
+#
+if [ "$1" = "-T" ]
+then
+    shift
+
+    configfile="${XDG_CONFIG_HOME:-$HOME/.config}/my-open/config"
+
+    if [ ! -f "$configfile" ]
+    then
+        echo "my-open: No config file. Creating skeleton."
+        mkdir -p "${XDG_CONFIG_HOME:-$HOME/.config}/my-open"
+        configname=${configfile/$HOME/'~'}
+        cat >> "$configfile" <<-EOF
+#
+# $configname
+#
+# format: [mimetype]:default fallback1 fallback2 ...:commandline
+# second segment of mimetype can be a wildcard. my-open looks for exact
+# matches first.
+EOF
+        exit 2
+    fi
+
+    if type xdg-mime > /dev/null 2>&1
+    then
+        mimecmd="xdg-mime query filetype %s"
+    elif type mimetype > /dev/null 2>&1
+    then
+        mimecmd="mimetype %s"
+    else
+        echo "my-open: No way to determine MIME type" >&2
+        exit 1
+    fi
+
+    if [ -f "$1" -o -d "$1" ]
+    then
+        mimecmd=`printf "$mimecmd" "$1"`
+        mimetype=`$mimecmd`
+    elif echo "$1" | grep -E '^http:\/\/' > /dev/null 2>&1
+    then
+        mimetype='x-scheme-handler/http'
+    elif echo "$1" | grep -E '^https:\/\/' > /dev/null 2>&1
+    then
+        mimetype='x-scheme-handler/https'
+    elif echo "$1" | grep -E '^ftp:\/\/' > /dev/null 2>&1
+    then
+        mimetype='x-scheme-handler/ftp'
+    else
+        mimetype='application/octet-stream'
+    fi
+
+    handlers=`cat $configfile | grep -Ev '^#' | grep $mimetype | \
+        cut -d ':' -f 2`
+    cmdline=`cat $configfile | grep -Ev '^#' | grep $mimetype | \
+        cut -d ':' -f 3`
+    if [ -z "$handlers" ]
+    then
+        mimetype="`echo $mimetype | cut -d '/' -f 1`/*"
+        handlers=`cat $configfile | grep -Ev '^#' | grep $mimetype | \
+            cut -d ':' -f 2`
+        cmdline=`cat $configfile | grep -Ev '^#' | grep $mimetype | \
+            cut -d ':' -f 3`
+    fi
+    if [ -z "$handlers" ]
+    then
+        echo "my-open: No handler specified" >&2
+        exit 4
+    fi
+
+    for h in $handlers
+    do
+        if type $h > /dev/null 2>&1
+        then
+            handler=$h
+            break
+        fi
+    done
+
+    if [ -z "$handler" ]
+    then
+        echo "my-open: No handler found in \$PATH" >&2
+        exit 8
+    fi
+    set -- `printf -- "$cmdline" "$1"`
+    exec $handler "$@"
+fi
+
+# Find handler, if one is available
+if type cygstart > /dev/null 2>&1
+then
+    handler=cygstart
+elif type xdg-open > /dev/null 2>&1
+then
+    handler=xdg-open
+# Most of the following handlers are used within xdg-open, but we should
+# check for them anyway since xdg-open doesn't exist
+elif type exo-open > /dev/null 2>&1
+then
+    handler=exo-open
+# Because of its ambiguity, open (the macOS handler) should always be
+# tested last
+elif type open > /dev/null 2>&1
+then
+    handler=open
+else
+    echo "my-open: No suitable handler found" > /dev/stderr
+    exit -1
+fi
+
+$handler "$@"

@@ -1,0 +1,13 @@
+#
+# ~/etc/shrc
+#
+case $TERM in
+st*|rxvt*|xterm*|tmux*) printf "\033]0;$LOGNAME@$HOSTNAME\007" ;;
+esac
+
+for file in "$HOME"/etc/shrc.d/*.sh
+do
+	[ -r $file ] && . $file
+done
+
+unset -v file
