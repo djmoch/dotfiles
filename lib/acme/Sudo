@@ -1,0 +1,26 @@
+#!/bin/sh
+
+if [ -z "$SUDO_ASKPASS" ]
+then
+	echo "SUDO_ASKPASS not defined" >&2
+	exit
+fi
+
+if [ $# -eq 0 ]
+then
+	fname=$(9p read acme/$winid/tag | awk '{ print $1 }')
+	9p read acme/$winid/body | sudo tee $fname >/dev/null 2>&1
+	echo clean | 9p write acme/$winid/ctl
+else
+	if echo $1 | grep -E '^/' > /dev/null 2>&1
+	then
+		fname=$1
+	else
+		fname=$(pwd)/$1
+	fi
+	echo name $fname | 9p write acme/new/ctl
+	winid=$(9p read acme/index | grep $fname | awk '{ print $1 }')
+	echo -n 'Sudo ' | 9p write acme/$winid/tag
+	sudo cat $fname | 9p write acme/$winid/body
+	echo clean | 9p write acme/$winid/ctl
+fi
