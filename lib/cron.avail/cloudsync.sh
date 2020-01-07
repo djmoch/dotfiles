@@ -39,12 +39,7 @@ else
     exit -1
 fi
 
-if type xdg-user-dir > /dev/null 2>&1
-then
-    LOCAL_PHOTOS=`xdg-user-dir PICTURES`
-else
-    LOCAL_PHOTOS="$HOME/Pictures"
-fi
+LOCAL_PHOTOS="$HOME/doc/pix"
 
 # Mount the WebDAV folder and set so only we can read it
 if mount /mnt/nextcloud
