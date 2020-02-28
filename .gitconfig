@@ -20,8 +20,6 @@
 	po = push -u origin HEAD
 [init]
 	templatedir = ~/lib/gitdir
-[credential]
-	helper = /usr/share/git/credential/netrc/git-credential-netrc
 [include]
 	path = ~/etc/gitconfig.local
 [pull]
