@@ -297,8 +297,8 @@ windows = {
       {
         type = "CHANNEL";
         chat_type = "IRC";
-        name = "#vim";
-        tag = "Sweetwater";
+        name = "#suckless";
+        tag = "Sweetwater2";
       }
     );
     sticky = "yes";
@@ -308,7 +308,7 @@ windows = {
       {
         type = "CHANNEL";
         chat_type = "IRC";
-        name = "#archlinux";
+        name = "#openbsd";
         tag = "Sweetwater";
       }
     );
@@ -320,7 +320,7 @@ windows = {
       {
         type = "CHANNEL";
         chat_type = "IRC";
-        name = "#archlinux-aur";
+        name = "#orlandobsd";
         tag = "Sweetwater";
       }
     );
@@ -332,7 +332,7 @@ windows = {
       {
         type = "CHANNEL";
         chat_type = "IRC";
-        name = "#archlinux32";
+        name = "#cat-v";
         tag = "Sweetwater";
       }
     );
@@ -404,7 +404,7 @@ windows = {
       {
         type = "CHANNEL";
         chat_type = "IRC";
-        name = "#cat-v";
+        name = "#librelounge";
         tag = "Sweetwater";
       }
     );
@@ -416,8 +416,8 @@ windows = {
       {
         type = "CHANNEL";
         chat_type = "IRC";
-        name = "#suckless";
-        tag = "Sweetwater2";
+        name = "#plan9";
+        tag = "Sweetwater";
       }
     );
     sticky = "yes";
@@ -428,8 +428,8 @@ windows = {
       {
         type = "CHANNEL";
         chat_type = "IRC";
-        name = "#vis-editor";
-        tag = "Sweetwater";
+        name = "#2f30";
+        tag = "Sweetwater3";
       }
     );
     sticky = "yes";
@@ -440,32 +440,8 @@ windows = {
       {
         type = "CHANNEL";
         chat_type = "IRC";
-        name = "#librelounge";
+        name = "#nncli";
         tag = "Sweetwater";
-      }
-    );
-    sticky = "yes";
-    parent = "2";
-  };
-  15 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#plan9";
-        tag = "Sweetwater";
-      }
-    );
-    sticky = "yes";
-    parent = "2";
-  };
-  16 = {
-    items = (
-      {
-        type = "CHANNEL";
-        chat_type = "IRC";
-        name = "#2f30";
-        tag = "Sweetwater3";
       }
     );
     sticky = "yes";
