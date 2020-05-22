@@ -9,6 +9,6 @@ fi
 
 if [ -n "$SSH_TTY" ]
 then
-	PS1="$(hostname -s)$PS1"
+	PS1="${HOSTNAME}${PS1}"
 fi
 export PS1
