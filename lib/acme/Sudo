@@ -21,7 +21,7 @@ else
 		fname=$(pwd)/$1
 	fi
 	echo name $fname | 9p write acme/new/ctl
-	winid=$(9p read acme/index | awk '{ print $1 " " $6 }' | grep /etc/pf.conf | awk '{ print $1 }')
+	winid=$(9p read acme/index | awk '{ print $1 " " $6 }' | grep $fname | awk '{ print $1 }')
 	echo -n 'Sudo ' | 9p write acme/$winid/tag
 	$sudo /bin/cat $fname | 9p write acme/$winid/body
 	echo clean | 9p write acme/$winid/ctl
