@@ -1,9 +1,0 @@
-if !&compatible && !exists('$POSIXLY_CORRECT') && v:version >= 700
-    source ~/.vim/vimrc.normal
-    finish
-end
-
-set runtimepath-=~/.vim
-set runtimepath-=~/.vim/after
-set compatible shortmess+=I t_Co=0
-silent! source ~/.exrc
