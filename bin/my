@@ -60,10 +60,9 @@ case $command in
 		exec my open -T https://duckduckgo.com/?q=$query
 		;;
 	term)
-		SHLVL=0; export SHLVL
-	if type st > /dev/null 2>&1
-	then
-		exec st "$@"
+		if type st > /dev/null 2>&1
+		then
+			exec st "$@"
 		elif type urxvtd > /dev/null 2>&1
 		then
 			urxvtc "$@"

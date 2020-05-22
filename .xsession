@@ -7,8 +7,6 @@ echo "Running $HOME/.xsession as PID $$" >&2
 date +'%m/%d/%Y %H:%M:%S' >&2
 env >&2
 
-SHLVL=0; export SHLVL
-
 if [ $# -eq 0 ]
 then
     for wm in $wm dwm awesome i3 twm
