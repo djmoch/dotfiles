@@ -1,1 +1,1 @@
-__addpath "$HOME/bin"
+__addpath "$HOME/bin" before
