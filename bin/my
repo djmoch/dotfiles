@@ -184,6 +184,11 @@ case $command in
 		setxkbmap -option -option ctrl:nocaps
 		;;
 	screen)
+		# defer to local script if it exists
+		if [ -x "$HOME/bin/my-screen.local" ]
+		then
+			exec "$HOME/bin/my-screen.local"
+		fi
 		xrandr_options=`xrandr -q | grep ' disconnected' | awk '{print $1}'`
 		for option in $xrandr_options
 		do
@@ -258,6 +263,9 @@ case $command in
 		case $1 in
 			remaining)
 				case $uname in
+					*OpenBSD*)
+						apm -l
+						;;
 					*Linux*)
 						if [ `acpi | wc -l` -eq 2 ]
 						then
@@ -281,7 +289,7 @@ case $command in
 				;;
 			total)
 				case $uname in
-					*Linux*|*CYGWIN*)
+					*Linux*|*CYGWIN*|*OpenBSD*)
 						echo 100
 						;;
 					*Darwin*)
@@ -324,8 +332,8 @@ case $command in
 			*CYGWIN*)
 				cat > /dev/clipboard
 				;;
-			*Linux*)
-				xclip -selection clipboard
+			*Linux*|OpenBSD)
+				exec xclip -selection clipboard
 				;;
 			*)
 				return
@@ -341,7 +349,7 @@ case $command in
 			*CYGWIN*)
 				cat /dev/clipboard
 				;;
-			*Linux*)
+			*Linux*|OpenBSD)
 				xclip -o
 				;;
 			*)
@@ -433,7 +441,7 @@ case $command in
 		then
 			cd "$HOME"
 		aweekago=$(($(date +%s) - 604800))
-		lastupdate=$(stat --format=%Y ._.djmoch)
+		lastupdate=$(stat -f %m ._.djmoch)
 		[ $lastupdate -lt $aweekago ] && my dotfiles update
 		fi
 		;;
