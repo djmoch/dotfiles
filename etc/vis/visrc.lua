@@ -1,7 +1,6 @@
 -- load standard vis module, providing parts of the Lua API
 require('vis')
 require('ctags')
-require('vis-commentary')
 
 vis.events.subscribe(vis.events.INIT, function()
 	-- Your global configuration options
@@ -12,7 +11,6 @@ end)
 
 vis.events.subscribe(vis.events.WIN_OPEN, function(win)
 	-- Your per window configuration options e.g.
-	vis:command('set number')
 	if win.file.name ~= nil and win.file.name:match('.psm1$')
 	then
 		win.syntax = 'powershell'
