@@ -333,7 +333,7 @@ case $command in
 				cat > /dev/clipboard
 				;;
 			*Linux*|OpenBSD)
-				exec xclip -selection clipboard
+				exec xclip
 				;;
 			*)
 				return
