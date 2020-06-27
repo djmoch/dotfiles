@@ -1,14 +1,8 @@
-uid=$(id -u)
-
-if [ $uid -ne 0 ]
-then
-	PS1='$ '
-else
-	PS1='# '
-fi
-
 if [ -n "$SSH_TTY" ]
 then
-	PS1="${HOSTNAME}${PS1}"
+	PS1="${HOSTNAME}\$(if [ \$(id -u) -ne 0 ]; then echo \$; else echo \#; fi) "
+else
+	PS1="\$(if [ \$(id -u) -ne 0 ]; then echo \$; else echo \#; fi) "
 fi
+
 export PS1
