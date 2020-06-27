@@ -54,13 +54,7 @@ def generate_forecast():
         current_temp = forecast.currently()
         day = forecast.daily()
 
-        if 'LANG' in os.environ and \
-                os.environ['LANG'].find('UTF-8') != -1:
-            degree_symbol = "\u00b0"
-        else:
-            degree_symbol = ""
-
-        temp = str(current_temp.temperature) + degree_symbol + " F"
+        temp = str(current_temp.temperature) + "F"
         high = str(int(math.ceil(day.data[0].temperatureMax)))
         low = str(int(math.ceil(day.data[0].temperatureMin)))
 
@@ -71,8 +65,7 @@ def generate_forecast():
 
         with open(out_filename, 'w') as outfile:
             outfile.write(temp + ", " + str(current_temp.summary) + \
-                    ", " + high + degree_symbol + "/" +low + \
-                    degree_symbol + " F")
+                    ", " + high + "/" +low + "F")
     except requests.exceptions.ConnectionError:
         error = True
         sys.stdout.writelines(
