@@ -10,8 +10,8 @@ then
 			iterm|code)
 				width=$(($columns - 80))
 				;;
-			chat)
-				width=$(($columns - 30))
+			chat|rio)
+				width=$(($columns - 20))
 				;;
 			*)
 				unset width
@@ -32,46 +32,20 @@ then
 	exit
 fi
 
-if echo $1 | grep iterm > /dev/null 2>&1
+if echo $1 | grep rio > /dev/null 2>&1
 then
-	name=iterm
+	name=rio
 	columns=$(tput cols)
-	width=$(($columns - 80 - 1))
-	tmux new-session -d -x $columns -y $(tput lines) -s $name
-	tmux rename-window -t $name:1 code
-	tmux splitw -h -l 80
+	tmux new-session -d -x $columns -y $(tput lines) -s $name irssi
+	tmux rename-window -t $name:1 chat
+	width=$(($columns - 20))
 	tmux setw main-pane-width $width
+	tmux splitw -h -l 20 cat ~/.irssi/nicklistfifo
 	tmux selectl main-vertical
-	if echo $1 | grep chat > /dev/null 2>&1
-	then
-		width=$(($columns - 30))
-		tmux new-window -t $name -n "chat" irssi
-		tmux setw main-pane-width $width
-		tmux splitw -h -l 30 cat ~/.irssi/nicklistfifo
-		tmux selectl main-vertical
-		tmux select-pane -t $name:2.1
-		tmux send-keys -t $name:2.1 "/keyring" "C-m" "/nicklist fifo" "C-m"
-		tmux new-window -t $name -n "social" tootstream
-		tmux send-keys -t $name:3.1 "stream home" "C-m"
-		tmux splitw -h rainbowstream
-	fi
+	tmux select-pane -t $name:1.1
+	tmux send-keys -t $name:1.1 "/keyring" "C-m" "/nicklist fifo" "C-m"
 	tmux new-window -t $name -n "mail" mutt
-	if echo $1 | grep rss > /dev/null 2>&1
-	then
-		tmux splitw -h newsboat
-		tmux renamew "mail-&-rss"
-	fi
-	tmux new-window -t $name -n vitals htop
-	uname=$(uname -s)
-	case $uname in
-		*Darwin*)
-			tmux splitw -h nettop
-			;;
-		*Linux*)
-			tmux splitw -h sudo jnettop
-			;;
-	esac
-	tmux new-window -t $name -n simplenote sncli
+	tmux new-window -t $name -n "news" newsboat
 elif [ $1 = "code" ]
 then
 	name=code
@@ -90,10 +64,10 @@ elif [ $1 = "chat" ]
 then
 	name=chat
 	columns=$(tput cols)
-	width=$(($columns - 30))
+	width=$(($columns - 20))
 	tmux new-session -d -x $columns -y $(tput lines) -s $name irssi
 	tmux setw main-pane-width $width
-	tmux splitw -h -l 30 cat ~/.irssi/nicklistfifo
+	tmux splitw -h -l 20 cat ~/.irssi/nicklistfifo
 	tmux selectl main-vertical
 	tmux send-keys -t $name:1.1 "/keyring" "C-m" "/nicklist fifo" "C-m"
 elif [ $1 = "mail" ]
