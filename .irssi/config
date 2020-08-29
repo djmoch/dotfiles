@@ -17,8 +17,7 @@ chatnets = {
   };
 };
 
-channels = (
-);
+channels = ( );
 
 aliases = {
   ATAG = "WINDOW SERVER";
@@ -284,14 +283,19 @@ settings = {
     use_status_window = "yes";
     theme = "djmoch";
   };
-  "perl/core/scripts" = { nicklist_height = "46"; nicklist_width = "29"; };
+  "perl/core/scripts" = { nicklist_height = "28"; nicklist_width = "20"; };
 };
 keyboard = (
-  { key = "meta-d"; id = "command"; data = "nicklist scroll +55"; },
-  { key = "meta-u"; id = "command"; data = "nicklist scroll -55"; }
+  { key = "meta-d"; id = "command"; data = "nicklist scroll +27"; },
+  { key = "meta-u"; id = "command"; data = "nicklist scroll -27"; }
 );
 windows = {
-  1 = { immortal = "yes"; name = "(status)"; level = "ALL"; sticky = "yes"; };
+  1 = {
+    immortal = "yes";
+    name = "(status)";
+    level = "ALL";
+    sticky = "yes";
+  };
   2 = {
     items = (
       {
@@ -459,9 +463,33 @@ windows = {
     sticky = "yes";
     parent = "2";
   };
+  16 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#go-nuts";
+        tag = "Sweetwater";
+      }
+    );
+    sticky = "yes";
+    parent = "2";
+  };
+  17 = {
+    items = (
+      {
+        type = "CHANNEL";
+        chat_type = "IRC";
+        name = "#metabug";
+        tag = "Sweetwater";
+      }
+    );
+    sticky = "yes";
+    parent = "2";
+  };
 };
 mainwindows = {
-  1 = { first_line = "43"; lines = "11"; };
-  2 = { first_line = "1"; lines = "42"; };
+  1 = { first_line = "22"; lines = "6"; };
+  2 = { first_line = "1"; lines = "21"; };
 };
 logs = { };
