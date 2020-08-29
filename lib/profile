@@ -1,0 +1,23 @@
+#
+# $home/lib/profile
+#
+
+if(which my-init >/dev/null >[2=1] && test ! -f $home/._.djmoch) {
+	my-init
+}
+
+for(file in $home/etc/profile.d/*.rc) {
+	if(test -r $file) {
+		. $file
+	}
+}
+
+for(file in $HOME/lib/functions.rc.d/*.rc) {
+	if(test -r $file) {
+		. $file
+	}
+}
+
+if(~ $#DISPLAY 0) {
+	my login
+}

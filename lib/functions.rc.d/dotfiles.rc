@@ -1,0 +1,7 @@
+fn dotfiles {
+	git --git-dir=$home/.dotfiles --work-tree=$home $*
+}
+
+fn dot {
+	dotfiles $*
+}

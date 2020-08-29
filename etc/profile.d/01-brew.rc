@@ -1,0 +1,10 @@
+if(which brew >/dev/null >[2=1]) {
+	HOMEBREW_NO_ANALYTICS=1
+	HOMEBREW_NO_INSECURE_REDIRECT=1
+	HOMEBREW_CASK_OPTS=(--require-sha --appdir=$hone/Applications)
+	HOMEBREW_NO_AUTO_UPDATE=1
+	if(~ $path *^`{brew -prefix}/bin^*) {}
+	if not {
+		path=(`{brew --prefix}/bin $path)
+	}
+}

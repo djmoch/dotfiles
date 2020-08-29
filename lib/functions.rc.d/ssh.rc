@@ -1,0 +1,7 @@
+fn ssh {
+	`{which ssh} $*
+	switch($TERM) {
+	case xterm* rxvt* st* tmux*
+		printf '\033]0;%s@%s\007' $LOGNAME $HOSTNAME
+	}
+}

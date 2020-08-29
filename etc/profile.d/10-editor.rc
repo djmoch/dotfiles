@@ -1,0 +1,6 @@
+if(~ $#DISPLAY 0) {
+	EDITOR=(sam -d)
+}
+if not {
+	EDITOR=E
+}

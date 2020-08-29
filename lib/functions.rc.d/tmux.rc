@@ -1,0 +1,15 @@
+fn tas {
+	tmux attach-session -t $*
+}
+
+fn tns {
+	tmux new-session -s $*
+}
+
+fn tls {
+	tmux list-sessions $*
+}
+
+fn ts {
+	tmux-session $*
+}

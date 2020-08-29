@@ -1,0 +1,17 @@
+fn rsync {
+	if(which openrsync >/dev/null >[2=1]) {
+		rsync=openrsync
+	}
+	if(~ $#rsync 0 && which rsync >/dev/null >[2=1]) {
+		rsync=rsync
+	}
+
+	switch($rsync) {
+	case openrsync
+		`{which openrsync} --rsync-path=`{which openrsync} $*
+	case rsync
+		`{which rsync} -C --include=.git $*
+	case *
+		echo 'rsync: No such file or directory'
+	}
+}

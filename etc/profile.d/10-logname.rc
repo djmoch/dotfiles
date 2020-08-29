@@ -1,0 +1,6 @@
+if(logname >/dev/null >[2=1]) {
+	LOGNAME=`{logname}
+}
+if not {
+	LOGNAME=`{basename $home}
+}
