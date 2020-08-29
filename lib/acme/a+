@@ -17,4 +17,4 @@ else
 	token='	'
 fi
 
-sed "s/^/$token/"
+sed "s/^/$token/;s/^[ 	][ 	]*$//"
