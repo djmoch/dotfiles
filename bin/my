@@ -109,6 +109,10 @@ case $command in
 		exec xset dpms force off
 		;;
 	wallpaper)
+		if my processes | grep rio >/dev/null 2>&1
+		then
+			return
+		fi
 		xsetroot -solid "#444444"
 		[ -x "$HOME/.fehbg" ] && "$HOME/.fehbg" >> $log 2>&1
 		;;
@@ -187,7 +191,7 @@ case $command in
 		# defer to local script if it exists
 		if [ -x "$HOME/bin/my-screen.local" ]
 		then
-			exec "$HOME/bin/my-screen.local"
+			exec "$HOME/bin/my-screen.local" "$@"
 		fi
 		xrandr_options=`xrandr -q | grep ' disconnected' | awk '{print $1}'`
 		for option in $xrandr_options
@@ -219,7 +223,7 @@ case $command in
 				[ $option != $selection ] && xrandr --output $option --off
 			done
 		fi
-		exec my wallpaper
+		my wallpaper
 		;;
 	brightness)
 		if type xbacklight > /dev/null 2>&1
