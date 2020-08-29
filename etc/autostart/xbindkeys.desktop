@@ -1,6 +1,0 @@
-[Desktop Entry]
-TryExec=xbindkeys
-Exec=xbindkeys -n
-Name=xbindkeys
-Comment=a grabbing keys program for X
-Type=Application
