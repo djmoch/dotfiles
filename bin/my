@@ -15,7 +15,7 @@ shift
 
 __mylog()
 {
-	echo "$1 (`date +'%m/%d/%Y %H:%M:%S'`): $2" >> $log
+	echo "$1 (`/bin/date +'%m/%d/%Y %H:%M:%S'`): $2" >> $log
 }
 
 __getlocker()
@@ -311,8 +311,8 @@ case $command in
 	status)
 		echo -n "Batt: `my battery percent`% | "
 		cat $HOME/var/forecastio/current_forecast.txt | tr -d '\n'
-		echo -n " | "
-		date +'%l:%M %p'
+		printf " | "
+		/bin/date +'%l:%M %p'
 		exit 0
 		;;
 	i3status)
@@ -364,7 +364,7 @@ case $command in
 		case $predicate in
 			check)
 				cd "$HOME"
-			aweekago=$(($(date +%s) - 604800))
+			aweekago=$(($(/bin/date +%s) - 604800))
 			lastupdate=$(stat --format=%Y ._.djmoch)
 			[ $lastupdate -lt $aweekago ] && "Dotfiles more than one week old"
 				;;
@@ -425,7 +425,7 @@ case $command in
 		done
 		;;
 	login_async)
-		starttime=`date '+%s'`
+		starttime=`/bin/date '+%s'`
 		runningtime=0
 		while [ $runningtime -le 120 ]
 		do
@@ -435,12 +435,12 @@ case $command in
 				break
 			fi
 			sleep 1
-			runningtime=$((`date '+%s'` - $starttime))
+			runningtime=$((`/bin/date '+%s'` - $starttime))
 		done
 		if [ -n "$connected" ]
 		then
 			cd "$HOME"
-		aweekago=$(($(date +%s) - 604800))
+		aweekago=$(($(/bin/date +%s) - 604800))
 		lastupdate=$(stat -f %m ._.djmoch)
 		[ $lastupdate -lt $aweekago ] && my dotfiles update
 		fi
