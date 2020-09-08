@@ -39,9 +39,6 @@ XTerm.termName: xterm-256color
 XTerm*locale: true
 XTerm*utf8Fonts.font: UTF8
 XTerm*font: FIXED
-XTerm*renderFont: true
-XTerm*faceName: monospace
-XTerm*faceSize: 10.0
 XTerm*visualBell: true
 XTerm*bellIsUrgent: true
 XTerm*highlightColorMode: true
@@ -49,9 +46,10 @@ XTerm*highlightReverse: false
 XTerm*highlightColor: #bcbcbc
 XTerm*metaSendsEscape: true
 XTerm*pointerMode: 2
+XTerm*scrollBar: false
 
 ! URvxt
-URxvt.font: xft:monospace:size=10,xft:emoji:size=8
+URxvt.font: FIXED
 URxvt.perl-ext: default,url-select
 URxvt.letterSpace: -1
 URxvt.lineSpace: -1
@@ -111,3 +109,13 @@ XScreenSaver.GetViewPortIsFullOfLies: false
 XScreenSaver.procInterrupts: true
 XScreenSaver.xinputExtensionDev: false
 XScreenSaver.authWarningSlack:   20
+
+! XLock
+XLock.mode: marquee
+XLock.font: -*-helvetica-medium-r-*-*-34-*-*-*-*-iso8859-*
+XLock.messagefont: -*-helvetica-*-*-*-*-34-*-*-*-*-iso8859-*
+XLock.planfont: UTF8
+XLock.mono: on
+XLock.dpmsoff: 600
+XLock.program: fortune /usr/local/plan9/lib/fortunes
+XLock.vtlock: switch
