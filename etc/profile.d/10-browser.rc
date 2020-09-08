@@ -14,7 +14,4 @@ if not {
 	if(which firefox-esr >/dev/null >[2=1]) {
 		BROWSER=firefox-esr
 	}
-	if(which surf >/dev/null >[2=1]) {
-		BROWSER=surf
-	}
 }
