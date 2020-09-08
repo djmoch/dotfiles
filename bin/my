@@ -20,12 +20,15 @@ __mylog()
 
 __getlocker()
 {
-	if type slock > /dev/null 2>&1
-	then
-	echo slock
-	exit 0
-	fi
-	for locker in slock light-locker cinnamon-screensaver gnome-screensaver xscreensaver
+	for locker in slock xlock
+	do
+		if type $locker >/dev/null 2>&1
+		then
+			echo $locker
+			exit 0
+		fi
+	done
+	for locker in light-locker cinnamon-screensaver gnome-screensaver xscreensaver
 	do
 		if my processes | grep $locker > /dev/null 2>&1
 		then
@@ -105,7 +108,10 @@ case $command in
 			__mylog "my lock" "no locker running"
 			exit 1
 		fi
-		[ "$locker" = "light-locker" -o "$locker"="slock" ] || $locker-command -l
+		case $locker in
+			light-locker|xlock|slock) : ;;
+			*) $locker-command -l ;;
+		esac
 		exec xset dpms force off
 		;;
 	wallpaper)
