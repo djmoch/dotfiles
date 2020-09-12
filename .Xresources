@@ -2,8 +2,13 @@
 ! ~/.Xresources
 !
 
+#if WIDTH > 2000
+#define FIXED -misc-fixed-medium-r-normal--24-*-*-*-*-*-iso8859-*
+#define UTF8 -misc-fixed-medium-r-normal--24-*-*-*-*-*-iso10646-*
+#else
 #define FIXED -misc-fixed-medium-r-normal--13-*-*-*-*-*-iso8859-*
 #define UTF8 -misc-fixed-medium-r-normal--13-*-*-*-*-*-iso10646-*
+#endif
 
 ! Xft
 Xft.rgba: rgb
@@ -112,10 +117,15 @@ XScreenSaver.authWarningSlack:   20
 
 ! XLock
 XLock.mode: marquee
+#if WIDTH > 2000
 XLock.font: -*-helvetica-medium-r-*-*-34-*-*-*-*-iso8859-*
 XLock.messagefont: -*-helvetica-*-*-*-*-34-*-*-*-*-iso8859-*
-XLock.planfont: UTF8
+#else
+XLock.font: -*-helvetica-medium-r-*-*-24-*-*-*-*-iso8859-*
+XLock.messagefont: -*-helvetica-*-*-*-*-24-*-*-*-*-iso8859-*
+#endif
+XLock.planfont: FIXED
 XLock.mono: on
 XLock.dpmsoff: 600
-XLock.program: fortune /usr/local/plan9/lib/fortunes
+XLock.program: fortune /home/djmoch/lib/fortunes | sed 's/ ---/\\n\\n	---/g' | fmt
 XLock.vtlock: switch
