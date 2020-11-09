@@ -1,3 +1,0 @@
-fn feh {
-	`{which feh} --auto-rotate --scale-down $*
-}

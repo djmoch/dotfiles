@@ -1,8 +1,0 @@
-fn proj {
-	if(test -d $home/src/$*(1)) {
-		cd $home/src/$*(1)
-		if(test -r .env) {
-			. ./.env
-		}
-	}
-}

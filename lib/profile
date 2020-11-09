@@ -1,23 +1,28 @@
-#
-# $home/lib/profile
-#
+fn %{ $* }
+font=/lib/font/bit/lucsans/unicode.7.font
+PATH=$PATH:$home/bin
+HOSTNAME=`{hostname | cut -d. -f1}
+LANG=en_US.UTF-8
+XDG_CONFIG_HOME=$home/etc
+XDG_CACHE_HOME=$home/var/cache
+XDG_DATA_HOME=$home/var
+PYTHONUSERBASE=$home
+GOPATH=$home
+TMPDIR=$home/tmp
 
-if(which my-init >/dev/null >[2=1] && test ! -f $home/._.djmoch) {
-	my-init
-}
-
-for(file in $home/etc/profile.d/*.rc) {
-	if(test -r $file) {
-		. $file
+switch($HOSTNAME) {
+case carbon
+	PLAN9=/usr/local/plan9
+	PATH=$PATH:$PLAN9/bin
+	BROWSER=firefox-esr
+	EDITOR=E
+	PAGER=nobs
+	SSH_AGENT_PID=()
+	SSH_AUTH_SOCK=`{gpgconf --list-dirs agent-ssh-socket}
+	PKG_PATH=https://cdn.openbsd.org/pub/OpenBSD/snapshots/packages/amd64
+	MOZ_ACCELERATED=1
+	wsconsctl mouse.reverse_scrolling=1 >/dev/null
+	if(~ $#DISPLAY 0) {
+		exec startx
 	}
-}
-
-for(file in $HOME/lib/functions.rc.d/*.rc) {
-	if(test -r $file) {
-		. $file
-	}
-}
-
-if(~ $#DISPLAY 0) {
-	my login
 }

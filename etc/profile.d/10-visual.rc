@@ -1,9 +1,0 @@
-if(~ $#DISPLAY 0) {
-	VISUAL=vi
-	if(which vis >/dev/null >[2=1]) {
-		VISUAL=vis
-	}
-	if(which vise >/dev/null >[2=1]) {
-		VISUAL=vise
-	}
-}

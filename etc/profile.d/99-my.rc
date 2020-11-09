@@ -1,4 +1,0 @@
-if(~ $path *^$home/bin^*) {}
-if not {
-	path=($home/bin $path)
-}
