@@ -1,5 +1,0 @@
-history size 1000
-history unique 1
-bind -e
-bind "^W" ed-delete-prev-word
-bind "\e[A" ed-search-prev-history

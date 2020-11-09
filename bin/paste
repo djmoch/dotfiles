@@ -1,0 +1,17 @@
+#!/bin/sh
+
+uname=`uname -s`
+
+case $uname in
+	*Darwin*)
+		reattach-to-user-namespace pbpaste
+		;;
+	*CYGWIN*)
+		cat /dev/clipboard
+		;;
+	*Linux*|OpenBSD)
+		xclip -o
+		;;
+	*)
+		return
+esac

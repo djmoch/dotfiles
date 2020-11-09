@@ -1,2 +1,0 @@
-#!/bin/sh
-awk 'BEGIN{getline; getline}{print}' > ~/Downloads/$1

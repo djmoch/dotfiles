@@ -1,0 +1,15 @@
+#!/bin/sh
+
+case ":$PATH:" in
+	*:"$HOME/bin":*) ;;
+	*) PATH="$HOME/bin:$PATH" ;;
+esac
+cronpath="$HOME/lib/cron.d"
+logpath="$HOME/var/log"
+for job in $cronpath/*
+do
+	if [ -x $job ]
+	then
+		$job > $logpath/`basename $job` 2>&1
+	fi
+done
