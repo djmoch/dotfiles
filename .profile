@@ -21,6 +21,8 @@ case $HOSTNAME in
 		unset SSH_AGENT_PID
 		SSH_AUTH_SOCK=`gpgconf --list-dirs agent-ssh-socket`; export SSH_AUTH_SOCK
 		PKG_PATH=https://cdn.openbsd.org/pub/OpenBSD/snapshots/packages/amd64; export PKG_PATH
+		GPG_TTY=$(tty)
+		gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
 		HISTSIZE=1000; export HISTSIZE
 		HISTFILE="$HOME/.sh_history"; export HISTFILE
 		HISTCONTROL=erasedups; export HISTCONTROL
