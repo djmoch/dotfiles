@@ -32,7 +32,3 @@ done
 
 echo "my-screen.local: Running cmd $cmd" >> "$HOME/var/log/my"
 $cmd
-if [ "$1" != "rio" ]
-then
-	my wallpaper
-fi
