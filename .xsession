@@ -1,6 +1,7 @@
 #!/bin/sh
 echo "Running $HOME/.xsession as PID $$" >&2
-[ -r "$HOME/.Xresources.local" ] && xrdb -merge "$HOME/.Xresources.local"
+[ -r "$XDG_CONFIG_HOME/Xresources" ] && xrdb -merge "$XDG_CONFIG_HOME/Xresources"
+[ -r "$XDG_CONFIG_HOME/Xresources.local" ] && xrdb -merge "$XDG_CONFIG_HOME/Xresources.local"
 date +'%m/%d/%Y %H:%M:%S' >&2
 env >&2
 

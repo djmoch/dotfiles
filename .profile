@@ -28,6 +28,7 @@ case $HOSTNAME in
 		HISTCONTROL=erasedups; export HISTCONTROL
 		VISUAL=vi; export VISUAL
 		MOZ_ACCELERATED=1; export MOZ_ACCELERATED
+		XAUTHORITY="$XDG_CACHE_HOME/Xauthority"; export XAUTHORITY
 		wsconsctl mouse.reverse_scrolling=1 >/dev/null
 		;;
 esac

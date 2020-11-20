@@ -1,6 +1,4 @@
-#
-# ~/.xinitrc
-#
-exec 2>"$HOME/.xinit-errors"
-[ -r "$HOME/.Xresources" ] && xrdb "$HOME/.Xresources"
+#!/bin/sh
+
+exec 2>"$XDG_DATA_HOME/log/xinit-errors"
 exec "$HOME/.xsession"

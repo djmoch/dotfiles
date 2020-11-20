@@ -30,6 +30,7 @@ case carbon
 	gpg-connect-agent updatestartuptty /bye >/dev/null >[2=1]
 	PKG_PATH=https://cdn.openbsd.org/pub/OpenBSD/snapshots/packages/amd64
 	MOZ_ACCELERATED=1
+	XAUTHORITY=$XDG_CACHE_HOME/Xauthority
 	wsconsctl mouse.reverse_scrolling=1 >/dev/null
 	if(~ $#DISPLAY 0) {
 		exec startx
