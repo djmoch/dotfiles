@@ -1,6 +1,0 @@
-text/html; my-open -T '%s'; copiousoutput;
-application/pdf; my-open -T '%s'; copiousoutput; test=test -z "$DISPLAY"
-application/*; my-open '%s'; needsterminal; test=test -n "$DISPLAY"
-image/*; my-open '%s'; needsterminal; test=test -n "$DISPLAY"
-audio/*; my-open '%s'; needsterminal; test=test -n "$DISPLAY"
-video/*; my-open '%s'; needsterminal; test=test -n "$DISPLAY"
