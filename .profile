@@ -26,7 +26,7 @@ case $HOSTNAME in
 		HISTSIZE=1000; export HISTSIZE
 		HISTFILE="$HOME/.sh_history"; export HISTFILE
 		HISTCONTROL=erasedups; export HISTCONTROL
-		VISUAL=vise; export VISUAL
+		VISUAL=vi; export VISUAL
 		MOZ_ACCELERATED=1; export MOZ_ACCELERATED
 		wsconsctl mouse.reverse_scrolling=1 >/dev/null
 		;;
