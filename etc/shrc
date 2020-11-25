@@ -1,16 +1,20 @@
-set -o emacs
-
+unset HISTFILE
 case $TERM in
 st*|rxvt*|xterm*|tmux*) printf "\033]0;$LOGNAME@$HOSTNAME\007" ;;
 esac
 
 if [ "$termprog" = "9term" -o "$termprog" = "win" ]
 then
+	set +o emacs
+	set +o vi
+	set +m
 	cd() {
 		[ -z "$1" ] && set -- "$HOME"
 		command cd "$1" && awd $HOSTNAME
 	}
 	awd $HOSTNAME
+else
+	set -o emacs
 fi
 
 if type gpg-connect-agent > /dev/null 2>&1
@@ -21,8 +25,8 @@ fi
 
 if [ -n "$SSH_TTY" ]
 then
-	PS1="${HOSTNAME}\$(if [ \$(id -u) -ne 0 ]; then echo \$; else echo \#; fi) "
+	PS1=$HOSTNAME='; '
 else
-	PS1="\$(if [ \$(id -u) -ne 0 ]; then echo \$; else echo \#; fi) "
+	PS1=':; '
 fi
 export PS1

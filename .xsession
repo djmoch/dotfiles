@@ -12,4 +12,4 @@ xcompmgr &
 plumber &
 riostart &
 
-exec rc -l rio
+exec rio
