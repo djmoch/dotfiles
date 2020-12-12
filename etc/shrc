@@ -1,20 +1,23 @@
 unset HISTFILE
-case $TERM in
-st*|rxvt*|xterm*|tmux*) printf "\033]0;$LOGNAME@$HOSTNAME\007" ;;
-esac
 
-if [ "$termprog" = "9term" -o "$termprog" = "win" ]
+if [ "$TERM" = "dumb" ]
 then
 	set +o emacs
 	set +o vi
 	set +m
-	cd() {
-		[ -z "$1" ] && set -- "$HOME"
-		command cd "$1" && awd $HOSTNAME
-	}
-	awd $HOSTNAME
+	if [ "$termprog" = "9term" -o "$termprog" = "win" ]
+	then
+		cd() {
+			[ -z "$1" ] && set -- "$HOME"
+			command cd "$1" && awd $HOSTNAME
+		}
+		awd $HOSTNAME
+	fi
 else
-	set -o emacs
+	set -mbo emacs
+	case $TERM in
+	st*|rxvt*|xterm*|tmux*) printf "\033]0;$LOGNAME@$HOSTNAME\007" ;;
+	esac
 fi
 
 if type gpg-connect-agent > /dev/null 2>&1
