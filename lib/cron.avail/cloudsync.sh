@@ -11,8 +11,9 @@ lastrun_dir="$HOME/var/`basename $0`"
 lastrun_file="$lastrun_dir/lastrun"
 mobile_docs="$HOME/doc/mobile"
 notes="$HOME/doc/notes"
-server_fqdn="nextcloud.djmoch.org"
+server_fqdn="silicon.djmoch.org"
 openrsync_flags="--rsync-path=/usr/bin/openrsync -a"
+nfs_mntpt=/mnt/djmoch
 
 if [ -d "$lastrun_dir" ]
 then
@@ -43,12 +44,12 @@ fi
 LOCAL_PHOTOS="$HOME/doc/pix"
 
 # Mount the folder
-if doas /sbin/mount /mnt/nextcloud
+if doas /sbin/mount $nfs_mntpt
 then
     # Rsync from WebDAV to ~/Photos
-    echo "Syncing Photos from NextCloud to $LOCAL_PHOTOS"
+    echo "Syncing Photos from NFS Share to $LOCAL_PHOTOS"
     [ ! -d $LOCAL_PHOTOS/$year/$month ] && mkdir -p $LOCAL_PHOTOS/$year/$month
-    openrsync $openrsync_flags /mnt/nextcloud/Photos/$year/$month/ $LOCAL_PHOTOS/$year/$month
+    openrsync $openrsync_flags $nfs_mntpt/Photos/$year/$month/ $LOCAL_PHOTOS/$year/$month
     if [ -z "$firstrun" -a $lastrun_month -ne $month ]
     then
         # TODO: What if we're more than a month behind?
@@ -56,36 +57,36 @@ then
         then
             mkdir -p $LOCAL_PHOTOS/$lastrun_year/$lastrun_month
         fi
-        openrsync $openrsync_flags /mnt/nextcloud/Photos/$lastrun_year/$lastrun_month/ $LOCAL_PHOTOS/$lastrun_year/$lastrun_month
+        openrsync $openrsync_flags $nfs_mntpt/Photos/$lastrun_year/$lastrun_month/ $LOCAL_PHOTOS/$lastrun_year/$lastrun_month
     fi
 
-    # Rsync from ~/Photos to NextCloud
-    echo "Syncing Photos from $LOCAL_PHOTOS to NextCloud"
-    [ ! -d /mnt/nextcloud/Photos/$year/$month ] && mkdir -p /mnt/nextcloud/Photos/$year/$month
-    openrsync $openrsync_flags $LOCAL_PHOTOS/$year/$month/ /mnt/nextcloud/Photos/$year/$month
+    # Rsync from ~/Photos to NFS Share
+    echo "Syncing Photos from $LOCAL_PHOTOS to NFS Share"
+    [ ! -d $nfs_mntpt/Photos/$year/$month ] && mkdir -p $nfs_mntpt/Photos/$year/$month
+    openrsync $openrsync_flags $LOCAL_PHOTOS/$year/$month/ $nfs_mntpt/Photos/$year/$month
     if [ -z "$firstrun" -a $lastrun_month -ne $month ]
     then
-        if [ ! -d /mnt/nextcloud/Photos/$lastrun_year/$lastrun_month ]
+        if [ ! -d $nfs_mntpt/Photos/$lastrun_year/$lastrun_month ]
         then
-            mkdir -p /mnt/nextcloud/Photos/$lastrun_year/$lastrun_month
+            mkdir -p $nfs_mntpt/Photos/$lastrun_year/$lastrun_month
         fi
         # TODO: What if we're more than a month behind?
-        openrsync $openrsync_flags $LOCAL_PHOTOS/$lastrun_year/$lastrun_month/ /mnt/nextcloud/Photos/$lastrun_year/$lastrun_month
+        openrsync $openrsync_flags $LOCAL_PHOTOS/$lastrun_year/$lastrun_month/ $nfs_mntpt/Photos/$lastrun_year/$lastrun_month
     fi
 
-    # Rsync from ~/Documents/Mobile to NextCloud
-    echo "Syncing mobile documents from $mobile_docs to NextCloud"
-    openrsync $openrsync_flags "$mobile_docs"/ /mnt/nextcloud/Documents
+    # Rsync from ~/Documents/Mobile to NFS Share
+    echo "Syncing mobile documents from $mobile_docs to NFS Share"
+    openrsync $openrsync_flags "$mobile_docs"/ $nfs_mntpt/Documents
 
-    # Rsync from NextCloud to ~/Documents/Mobile
-    echo "Syncing mobile documents from NextCloud to $mobile_docs"
-    openrsync $openrsync_flags /mnt/nextcloud/Documents/ "$mobile_docs"
+    # Rsync from NFS Share to ~/Documents/Mobile
+    echo "Syncing mobile documents from NFS Share to $mobile_docs"
+    openrsync $openrsync_flags $nfs_mntpt/Documents/ "$mobile_docs"
 
     # Finish by unmounting the WebDAV folder
     echo "Unmounting $server_fqdn"
-    doas /sbin/umount /mnt/nextcloud
+    doas /sbin/umount $nfs_mntpt
 else
-    echo "NextCloud mount FAILED. Exiting."
+    echo "NFS Share mount FAILED. Exiting."
     exit -2
 fi
 
