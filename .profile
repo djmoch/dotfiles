@@ -13,28 +13,24 @@ TMPDIR="$HOME/tmp"; export TMPDIR
 
 case $HOSTNAME in
 	carbon)
-		font=/lib/font/bit/lucsans/unicode.7.font; export font
+		font=/lib/font/bit/lucsans/boldunicode.7.font; export font
 		PLAN9=/usr/local/plan9; export PLAN9
 		PATH="$PATH:$PLAN9/bin"; export PATH
-		BROWSER=w3m; export BROWSER
-		WWW_HOME=https://www.danielmoch.com; export WWW_HOME
+		BROWSER=firefox-esr; export BROWSER
 		EDITOR=E; export EDITOR
+		PAGER=nobs; export PAGER
 		FCEDIT=$EDITOR; export FCEDIT
 		unset SSH_AGENT_PID
 		SSH_AUTH_SOCK=`gpgconf --list-dirs agent-ssh-socket`; export SSH_AUTH_SOCK
 		PKG_PATH=https://cdn.openbsd.org/pub/OpenBSD/snapshots/packages/amd64; export PKG_PATH
 		GPG_TTY=$(tty)
 		gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
-		HISTSIZE=1000; export HISTSIZE
-		HISTFILE="$HOME/.sh_history"; export HISTFILE
-		HISTCONTROL=erasedups; export HISTCONTROL
-		VISUAL=vi; export VISUAL
 		MOZ_ACCELERATED=1; export MOZ_ACCELERATED
 		XAUTHORITY="$XDG_CACHE_HOME/Xauthority"; export XAUTHORITY
 		wsconsctl mouse.reverse_scrolling=1 >/dev/null
 		if [ "$(tty)" = "/dev/ttyC0" ]
 		then
-			startx
+			exec startx
 		fi
 		;;
 esac
