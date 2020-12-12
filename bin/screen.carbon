@@ -1,6 +1,6 @@
 #!/bin/sh
 
-expected="eDP-1 DP-1-3"
+expected="eDP-1 DP-1-2"
 
 for mon in $expected
 do
@@ -19,9 +19,9 @@ do
 	if [ "$mon" = "eDP-1" ]
 	then
 		cmd="$cmd --output eDP-1 --auto --primary"
-	elif [ "$mon" = "DP-1-3" ]
+	elif [ "$mon" = "DP-1-2" ]
 	then
-		cmd="$cmd --output DP-1-3 --auto --right-of eDP-1 --scale 2x2"
+		cmd="$cmd --output DP-1-2 --auto --right-of eDP-1 --scale 2x2"
 	fi
 done
 
