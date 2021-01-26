@@ -26,11 +26,16 @@ case $HOSTNAME in
 		GPG_TTY=$(tty)
 		gpg-connect-agent updatestartuptty /bye >/dev/null 2>&1
 		MOZ_ACCELERATED=1; export MOZ_ACCELERATED
+		PASSWORD_STORE_DIR=$XDG_CACHE_HOME/password-store; export PASSWORD_STORE_DIR
 		XAUTHORITY="$XDG_CACHE_HOME/Xauthority"; export XAUTHORITY
 		wsconsctl mouse.reverse_scrolling=1 >/dev/null
 		if [ "$(tty)" = "/dev/ttyC0" ]
 		then
 			exec startx
 		fi
+		;;
+	mail)
+		MAIL=$HOME/Maildir; export MAIL
+		PAGER=cat; export PAGER
 		;;
 esac
