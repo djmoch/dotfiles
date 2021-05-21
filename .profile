@@ -28,6 +28,8 @@ case $HOSTNAME in
 		MOZ_ACCELERATED=1; export MOZ_ACCELERATED
 		PASSWORD_STORE_DIR=$XDG_CACHE_HOME/password-store; export PASSWORD_STORE_DIR
 		XAUTHORITY="$XDG_CACHE_HOME/Xauthority"; export XAUTHORITY
+		my sound
+		mpd
 		wsconsctl mouse.reverse_scrolling=1 >/dev/null
 		if [ "$(tty)" = "/dev/ttyC0" ]
 		then
