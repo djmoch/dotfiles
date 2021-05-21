@@ -9,7 +9,5 @@ xset dpms 0 0 900
 setxkbmap -option -option ctrl:nocaps
 screen.$HOSTNAME
 xcompmgr &
-plumber &
-riostart &
 
-exec rio
+exec riostart
