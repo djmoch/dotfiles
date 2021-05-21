@@ -4,7 +4,7 @@ if [ "$TERM" = "dumb" ]
 then
 	set +o emacs
 	set +o vi
-	set +m
+	set +mb
 	if [ "$termprog" = "9term" -o "$termprog" = "win" ]
 	then
 		cd() {
