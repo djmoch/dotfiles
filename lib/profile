@@ -1,0 +1,5 @@
+if(~ $#SSH_TTY 0) fn %{ $* }
+if not {
+	prompt=($HOSTNAME'% ' ' ')
+	fn $HOSTNAME% { $* }
+}
