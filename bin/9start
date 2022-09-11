@@ -1,0 +1,9 @@
+#!/bin/sh
+rm -rf "$NAMESPACE"; mkdir "$NAMESPACE"
+pkill plumber
+pkill factotum
+
+9 plumber
+9 factotum -n
+printf 'secstore '
+aescbc -d <"$HOME/lib/secstore.aes" | 9p write -l factotum/ctl

@@ -1,0 +1,13 @@
+/home/djmoch
+/mnt/font/DejaVuSans/10a/font
+/mnt/font/Inconsolata-Regular/10a/font
+  0.0000000  25.0099246  50.0198491  74.9900754
+w Newcol Kill Putall Dump Exit 
+c          0 New Cut Paste Snarf Sort Zerox Delcol 
+c          1 New Cut Paste Snarf Sort Zerox Delcol 
+c          2 New Cut Paste Snarf Sort Zerox Delcol 
+c          3 New Cut Paste Snarf Sort Zerox Delcol 
+f          0           8           0           0   1.0814708 
+          8          36          93           0           0 /home/djmoch/.plan Del Snarf | Look 
+f          3           6         263         287   1.0814708 
+          6          35         287           1           1 /home/djmoch/ Del Snarf Get | Look 

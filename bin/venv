@@ -1,0 +1,41 @@
+#!/bin/sh
+
+help() {
+	echo "usage: $(basename $0) init | run cmd [arg...]"
+}
+
+init() {
+	python3 -m venv .venv
+	. ./.venv/bin/activate
+	pip install --upgrade pip pip-tools
+	find .venv -name cacert.perm -exec ln -sf /etc/ssl/cert.pem '{}' \;
+}
+
+run() {
+	p=$(pwd)
+
+	if [ ! -d .venv ]
+	then
+		echo no .venv found in $p
+		exit 1
+	fi
+
+	. ./.venv/bin/activate
+
+	if [ -r .env ]
+	then
+		echo sourcing $p/.env >&2
+		. ./.env
+	fi
+
+	"$@"
+}
+
+case $1 in
+run) shift && run "$@" ;;
+init) init ;;
+*)
+	help
+	exit 1
+	;;
+esac

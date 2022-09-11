@@ -1,0 +1,24 @@
+#!/usr/lib/plan9/bin/rc
+switch (`{uname -o}) {
+case Linux
+	wget=(wget -qO -)
+case OpenBSD
+	wget=(ftp -Vo -)
+}
+
+if (~ $1 -c) {
+	stat=KORL
+	$wget 'https://w1.weather.gov/data/obhistory/'$stat.html | 9 htmlfmt | \
+		9 awk '{ if (NR==44 || NR==49 || NR==51) print }' | tr '\n' ' ' | \
+		9 awk '{print "conditions as of", $1, "\n\ttemp: ", $2, "\n\thumidity: ", $3}'
+}
+if not {
+	lat=28.5959
+	lon=-81.3437
+	$wget 'https://forecast.weather.gov/MapClick.php?lat='$lat'&lon='$lon'&unit=0&lg=english&FcstType=text&TextType=1' | 9 htmlfmt | 9 awk '
+	/^[A-Za-z ]+:/ {
+		printf "\n", $0
+	} {
+		print $0
+	}'
+}

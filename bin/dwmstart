@@ -1,0 +1,13 @@
+#!/bin/sh
+
+if [ -z "$DISPLAY" ]
+then
+	echo $(basename $0): no X session running
+	exit 1
+fi
+
+acmestart &
+firefox  &
+slstatus &
+
+exec dwm

@@ -1,0 +1,16 @@
+#!/usr/lib/plan9/bin/rc -l
+PATH=$HOME/lib/acme:$PATH
+SHELL=/usr/lib/plan9/bin/rc
+acmeshell=/usr/lib/plan9/bin/rc
+
+if (test -f $home/tmp/autorandr) {
+	autorandr=`{cat $home/tmp/autorandr}
+	switch `{cat $home/tmp/autorandr} {
+	case desk
+		extra=(-l $home/lib/acme-huge.start)
+	case laptop
+		extra=(-l $home/lib/acme.start)
+	}
+}
+
+exec $PLAN9/bin/acme -f $font -F /mnt/font/Inconsolata-Regular/11a/font $extra $*
