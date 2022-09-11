@@ -5,6 +5,12 @@
 
 echo "Beginning cloud sync at `date`"
 
+if ifconfig wg0 >/dev/null 2>&1
+then
+	echo "VPN is active. Exiting to conserve bandwidth."
+	exit
+fi
+
 year=`/bin/date '+%Y'`
 month=`/bin/date '+%m'`
 lastrun_dir="$HOME/var/`basename $0`"
