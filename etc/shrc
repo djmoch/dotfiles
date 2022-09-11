@@ -1,9 +1,7 @@
-unset HISTFILE
+HISTFILE=/dev/null
 
 if [ "$TERM" = "dumb" ]
 then
-	set +o emacs
-	set +o vi
 	set +mb
 	if [ "$termprog" = "9term" -o "$termprog" = "win" ]
 	then
@@ -14,7 +12,6 @@ then
 		awd $HOSTNAME
 	fi
 else
-	set -mbo emacs
 	case $TERM in
 	st*|rxvt*|xterm*|tmux*) printf "\033]0;$LOGNAME@$HOSTNAME\007" ;;
 	esac
