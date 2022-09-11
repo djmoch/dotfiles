@@ -1,2 +1,3 @@
 #!/bin/sh
-git --git-dir="$HOME/.dotfiles" --work-tree="$HOME" "$@"
+d=${XDG_CACHE_HOME:-/home/.cache}
+git --git-dir="$d/dotfiles" --work-tree="$HOME" "$@"
