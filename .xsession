@@ -6,8 +6,14 @@ date +'%m/%d/%Y %H:%M:%S' >&2
 env >&2
 
 xset dpms 0 0 900
-setxkbmap -option -option ctrl:nocaps
-screen.$HOSTNAME
-xcompmgr &
+xset s 300
+xinput set-prop "Synaptics TM3289-021" "libinput Natural Scrolling Enabled" 1
+xinput set-prop "Synaptics TM3289-021" "libinput Click Method Enabled" 0 1
+xinput set-prop "TPPS/2 Elan TrackPoint" "libinput Button Scrolling Button" 0
+xsidle.sh slock &
+mpd &
+picom &
 
-exec riostart
+autorandr -c --default default
+
+exec dwmstart
