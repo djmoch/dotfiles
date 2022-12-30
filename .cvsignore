@@ -26,3 +26,4 @@ TAGS
 .env
 .eggs/
 .venv/
+*.unison.tmp
