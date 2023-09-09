@@ -1,0 +1,5 @@
+import sys
+
+# don't keep an interactive history file
+if hasattr(sys, '__interactivehook__'):
+    del sys.__interactivehook__
