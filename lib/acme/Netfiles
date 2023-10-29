@@ -1,0 +1,20 @@
+#!/bin/sh
+host=$1
+
+echo $(basename $0): requesting confirmation >&2
+/usr/bin/sshfs -o IdentityFile=/home/djmoch/.ssh/id_ed25519_sk -o uid=10000 -o gid=10000 root@${host}:/ /home/djmoch/n/${host}
+
+if [ $? -ne 0 ]
+then
+	echo $(basename $0): connection failed >&2
+	exit
+else
+	echo $(basename $0): connection successful >&2
+fi
+
+#trap "/bin/umount /home/djmoch/n/${host}; exit" EXIT INT TERM
+
+while true
+do
+	sleep 10
+done
