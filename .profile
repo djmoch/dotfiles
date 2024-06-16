@@ -14,8 +14,23 @@ TMPDIR="$HOME/tmp"
 PYTHONSTARTUP="$HOME/etc/pythonrc"
 GOPRIVATE=djmo.ch
 SQLITE_HISTORY=/dev/null
+NO_COLOR=1
 
 case $HOSTNAME in
+	aluminum)
+		unset FCEDIT
+		PATH="/opt/homebrew/bin:/opt/homebrew/sbin${PATH+:$PATH}"
+		INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
+		PLAN9=/usr/local/plan9
+		font=/mnt/font/GoRegular/15a/font
+		EDITOR=E
+		PAGER=nobs
+		PASSAGE_DIR=$XDG_CACHE_HOME/password-store/store
+		PASSAGE_IDENTITIES_FILE=$XDG_CACHE_HOME/password-store/identities
+		PATH=$PATH:$PLAN9/bin
+		MANPATH="/opt/homebrew/share/man::$HOME/man"
+		ZET_HOME="$HOME/Documents/z/zet"
+		;;
 	carbon)
 		unset FCEDIT
 		font=/mnt/font/DejaVuSans/10a/font

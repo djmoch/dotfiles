@@ -1,21 +1,14 @@
-HISTFILE=/dev/null
-
-if [ "$TERM" = "dumb" ]
+if [ "$TERM" = "dumb" -a "$termprog" = "9term" ]
 then
-	set +mb
-	if [ "$termprog" = "9term" -o "$termprog" = "win" ]
-	then
-		cd() {
-			[ -z "$1" ] && set -- "$HOME"
-			command cd "$1" && awd $HOSTNAME
-		}
-		awd $HOSTNAME
-	fi
+	exec rc -l
 else
-	case $TERM in
-	st*|rxvt*|xterm*|tmux*) printf "\033]0;$LOGNAME@$HOSTNAME\007" ;;
-	esac
+	set -m
 fi
+
+export HISTFILE=/dev/null
+case $TERM in
+st*|rxvt*|xterm*|tmux*) printf "\033]0;$LOGNAME@$HOSTNAME\007" ;;
+esac
 
 if type gpg-connect-agent > /dev/null 2>&1
 then
