@@ -1,16 +1,14 @@
-#!/usr/lib/plan9/bin/rc -l
+#!/usr/bin/env rc
 PATH=$HOME/lib/acme:$PATH
-SHELL=/usr/lib/plan9/bin/rc
-acmeshell=/usr/lib/plan9/bin/rc
-
-if (test -f $home/tmp/autorandr) {
-	autorandr=`{cat $home/tmp/autorandr}
-	switch `{cat $home/tmp/autorandr} {
-	case desk
-		extra=(-l $home/lib/acme-huge.start)
-	case laptop
-		extra=(-l $home/lib/acme.start)
-	}
+SHELL=$PLAN9/bin/rc
+acmeshell=$SHELL
+load=lib/acme.start
+if (~ $#1 1) {
+	load=lib/acme-$1.start
 }
 
-exec $PLAN9/bin/acme -f $font -F /mnt/font/Inconsolata-Regular/11a/font $extra $*
+if (test -f acme.dump) {
+	load=acme.dump
+}
+
+exec $PLAN9/bin/acme -f $font -F /mnt/font/GoMono/13a/font -l $load $*
