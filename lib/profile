@@ -1,3 +1,12 @@
+if (pgrep plumber >/dev/null >[2=1]) {}
+if not {
+	plumber &
+}
+
+for (var in `{env | 9 grep '^TERM_|^SHELL|^SHLVL|HIST|PS1|PWD|MATCH|MBEGIN|MEND' | 9 awk 'BEGIN{ FS = "="}{ print $1 }'}) {
+	$var=()
+}
+
 if(~ $#SSH_TTY 0) fn %{ $* }
 if not {
 	prompt=($HOSTNAME'% ' ' ')
