@@ -1,6 +1,11 @@
 if [ "$TERM" = "dumb" -a "$termprog" = "9term" ]
 then
-	exec rc -l
+	if [ "$(uname -s)" = "Darwin" -a "$(uname -m)" = "arm64" ]
+	then
+		exec arch -arm64 rc -l
+	else
+		exec rc -l
+	fi
 else
 	set -m
 fi
