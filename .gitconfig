@@ -1,7 +1,7 @@
 [user]
 	email = daniel@danielmoch.com
 	name = Daniel Moch
-	signingkey = 84BDDD43
+	signingKey = /Users/djmoch/.ssh/id_ed25519.pub
 [core]
 	excludesfile = ~/.cvsignore
 [push]
@@ -21,3 +21,7 @@
 	confirm = auto
 [rebase]
 	autoSquash = true
+[gpg]
+	format = ssh
+[commit]
+	gpgSign = true
