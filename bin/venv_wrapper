@@ -1,0 +1,58 @@
+#!/bin/sh
+# A wrapper script to call $0 within a venv. Symlink to the name
+# of the desired command. The venv can be either in the current or
+# a parent directory.
+#
+# If VENV_WRAPPER_ADJUST_CURDIR is set in the environment, the first
+# argument is assumed to specify a path, and the wrapper is
+# executed starting from that directory.
+venv_dir=.venv
+execname=$(basename $0)
+
+if [ "$execname" = "venv_wrapper" ]
+then
+	execname=$(basename $1)
+	shift
+fi
+
+curdir=$(pwd)
+
+if [ "$VENV_WRAPPER_ADJUST_CURDIR" != "" ]
+then
+	if [ $# -eq 0 ]
+	then
+		echo VENV_WRAPPER_ADJUST_CURDIR set, but no argument supplied >&2
+		exit 1
+	fi
+	curdir=$(dirname $1)
+	shift
+	cd $curdir
+fi
+
+while [ ! -d $venv_dir -a ! -x $venv_dir/bin/$execname ]
+do
+	cd ..
+	[ $(pwd) = "/" ] && break
+done
+if [ ! -d $venv_dir ]
+then
+	echo no $venv_dir found in $curdir or parents >&2
+	exit 1
+fi
+
+. $venv_dir/bin/activate
+
+# prevent infinite recursion
+if [ "$(which $execname)" = "$0" ]
+then
+	echo $execname not found in $(pwd)/$venv_dir >&2
+	exit 1
+fi
+
+#cd $curdir
+
+if ! command -v $execname >/dev/null 2>&1
+then
+	exit 1
+fi
+exec $execname $*
