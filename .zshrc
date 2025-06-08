@@ -11,6 +11,8 @@ preexec() { set_title "$2" }
 precmd() { set_title "%~" }
 
 [ -d /opt/homebrew/share/zsh/site-functions/ ] && fpath=(/opt/homebrew/share/zsh/site-functions/ $fpath)
+[ -d "$HOME/lib/zsh-functions/" ] && fpath=(~/lib/zsh-functions/ $fpath)
+autoload ghcs
 
 zstyle ':completion:*' auto-description 'specify: %d'
 zstyle ':completion:*' completer _complete _ignored

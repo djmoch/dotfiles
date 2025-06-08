@@ -11,4 +11,8 @@ if (test -f acme.dump) {
 	load=acme.dump
 }
 
-exec $PLAN9/bin/acme -f $font -F /mnt/font/GoMono/13a/font -l $load $*
+$PLAN9/bin/acme -f $font -F /mnt/font/GoMono/13a/font -l $load $* &
+sleep 1
+acme-lsp -rpc.trace &
+acmefocused
+9 kill acme-lsp | sh

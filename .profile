@@ -10,11 +10,12 @@ XDG_CACHE_HOME="$HOME/var/cache"
 XDG_DATA_HOME="$HOME/var"
 PYTHONUSERBASE="$HOME"
 GOPATH="$HOME"
-TMPDIR="$HOME/tmp"
 PYTHONSTARTUP="$HOME/etc/pythonrc"
-GOPRIVATE=djmo.ch
 SQLITE_HISTORY=/dev/null
 NO_COLOR=1
+PIPX_HOME="$HOME/var/pipx"
+PIPX_BIN_DIR="$HOME/bin"
+PIPX_MAN_DIR="$HOME/man"
 
 case $HOSTNAME in
 	aluminum)
@@ -23,7 +24,7 @@ case $HOSTNAME in
 		INFOPATH="/opt/homebrew/share/info:${INFOPATH:-}"
 		PLAN9=/usr/local/plan9
 		font=/mnt/font/GoRegular/15a/font
-		EDITOR=E
+		EDITOR=editinacme
 		PAGER=nobs
 		PASSAGE_DIR=$XDG_CACHE_HOME/password-store/store
 		PASSAGE_IDENTITIES_FILE=$XDG_CACHE_HOME/password-store/identities
