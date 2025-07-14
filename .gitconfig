@@ -6,10 +6,7 @@
 	excludesfile = ~/.cvsignore
 [push]
 	default = simple
-[alias]
-	pretty = log --graph --abbrev-commit --pretty=oneline --decorate --all
-	ctags = !`git rev-parse --git-dir`/hooks/ctags
-	po = push -u origin HEAD
+	autoSetupRemote = true
 [init]
 	templatedir = ~/lib/gitdir
 	defaultBranch = main
