@@ -1,9 +1,14 @@
+*.bash  diff=bash
 *.cpp   diff=cpp
 *.cc    diff=cpp
 *.cs    diff=csharp
 *.css   diff=css
+*.go    diff=golang
 *.html  diff=html
 *.java  diff=java
+*.md    diff=markdown
 *.py    diff=python
+*.rs    diff=rust
+*.sh    diff=bash
 *.tex   diff=tex
 *.latex diff=tex
