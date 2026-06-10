@@ -1,0 +1,21 @@
+#!/bin/sh
+lowdown_args="-s --roff-no-numbered -Tms -M shiftheadinglevelby=-1"
+if [ "$1" = "-a5" ]
+then
+	groff_args="-d paper=a5"
+	gropdf_args="-P-pA5"
+	shift
+elif [ "$1" = "-2c" ]
+then
+	lowdown_args="$lowdown_args -M 'msheader=.2C'"
+	shift
+elif [ "$1" = "-d" ]
+then
+	lowdown_args="$lowdown_args -M 'msheader=.nr VS 24p'"
+	shift
+fi
+d=$(lowdown -Xdate $1)
+d=$(date -jf '%Y-%m-%dT%T%z' $d '+%B %e, %Y')
+lowdown_args="$lowdown_args -M 'date=$d'"
+outname=$(echo $1 | sed 's/md$/pdf/')
+eval $(echo "lowdown $lowdown_args $1 | groff -Kutf8 -t -ms $groff_args -Tpdf $gropdf_args >$outname")
